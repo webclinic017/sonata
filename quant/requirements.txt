@@ -1,0 +1,4 @@
+PyYAML
+tushare
+easytrader
+APScheduler
