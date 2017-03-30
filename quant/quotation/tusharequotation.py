@@ -117,12 +117,12 @@ class TushareQuotation:
 
 def main(argv):
     t = TushareQuotation()
-    #d = t.get_stock_basics(0)
-    #print d
+    d = t.get_stock_basics(0)
+    print d
     #d = t.get_h_data('002337')
     #print d
-    d = t.get_tick_data('000001', '2016-05-20')
-    print d
+    #d = t.get_tick_data('000001', '2016-05-20')
+    #print d
     return
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ from trader.trader import Trader
 import utils.const as CT
 import yaml
 
-t = Trader('ht')
+t = Trader('xq')
 
 def my_job(conf):
     print conf
@@ -33,7 +33,7 @@ def add_job(sched):
     #sched.add_job(my_job, 'interval', seconds=5)
     #sched.add_job(my_job, 'cron', second='*/30', args = [CT.CONF_DIR + 'trader/ht.json'])
     #sched.add_job(my_job, 'cron', minute = 10, hour = 13, args = [CT.CONF_DIR + 'trader/ht.json'])
-    sched.add_job(my_job, 'cron', second='*/30', minute='*', hour='*', day='*', month='*', year='*', day_of_week='*', args = [CT.CONF_DIR + 'trader/ht.json'])
+    sched.add_job(my_job, 'cron', second='*/30', minute='*', hour='*', day='*', month='*', year='*', day_of_week='*', args = [CT.CONF_DIR + 'trader/xq.json'])
     return
 
 

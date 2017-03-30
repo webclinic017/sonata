@@ -53,7 +53,7 @@ class Quotation:
         :param expire: 本地数据失效时间(分)，超过时间更新本地数据,强制更新传0
         """
         d = self.tushare.get_stock_basics(expire)
-        print d
+        return d
 
 
     def get_h_data(self, symbol, expire=60):

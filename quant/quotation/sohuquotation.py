@@ -21,6 +21,8 @@ from utils.symbol import em_symbol_of
 from utils.symbol import symbol_of
 from utils.symbol import zs_symbol_of
 from utils.symbol import code_of
+from utils.type_converter import to_int
+from utils.type_converter import to_float
 
 
 class SohuQuotation(BaseQuotation):
@@ -60,35 +62,35 @@ class SohuQuotation(BaseQuotation):
         if 'cn' == price_A1[0][:2]:
             q.symbol = symbol_of(price_A1[0][-6:])
         q.name = price_A1[1].decode('utf-8')
-        q.now = float(price_A1[2])
-        q.open = float(price_A2[3])
-        q.close = float(price_A2[1])
-        q.high = float(price_A2[5])
-        q.low = float(price_A2[7])
-        q.buy = float(perform[12])
-        q.sell = float(perform[10])
-        q.volume = int(price_A2[8]) * 100
-        q.turnover = float(price_A2[12]) * 10000
-        q.bid1_volume = int(perform[13]) * 100
-        q.bid1 = float(perform[12])
-        q.bid2_volume = int(perform[15]) * 100
-        q.bid2 = float(perform[14])
-        q.bid3_volume = int(perform[17]) * 100
-        q.bid3 = float(perform[16])
-        q.bid4_volume = int(perform[19]) * 100
-        q.bid4 = float(perform[18])
-        q.bid5_volume = int(perform[21]) * 100
-        q.bid5 = float(perform[20])
-        q.ask1_volume = int(perform[11]) * 100
-        q.ask1 = float(perform[10])
-        q.ask2_volume = int(perform[9]) * 100
-        q.ask2 = float(perform[8])
-        q.ask3_volume = int(perform[7]) * 100
-        q.ask3 = float(perform[6])
-        q.ask4_volume = int(perform[5]) * 100
-        q.ask4 = float(perform[4])
-        q.ask5_volume = int(perform[3]) * 100
-        q.ask5 = float(perform[2])
+        q.now = to_float(price_A1[2])
+        q.open = to_float(price_A2[3])
+        q.close = to_float(price_A2[1])
+        q.high = to_float(price_A2[5])
+        q.low = to_float(price_A2[7])
+        q.buy = to_float(perform[12])
+        q.sell = to_float(perform[10])
+        q.volume = to_int(price_A2[8]) * 100
+        q.turnover = to_float(price_A2[12]) * 10000
+        q.bid1_volume = to_int(perform[13]) * 100
+        q.bid1 = to_float(perform[12])
+        q.bid2_volume = to_int(perform[15]) * 100
+        q.bid2 = to_float(perform[14])
+        q.bid3_volume = to_int(perform[17]) * 100
+        q.bid3 = to_float(perform[16])
+        q.bid4_volume = to_int(perform[19]) * 100
+        q.bid4 = to_float(perform[18])
+        q.bid5_volume = to_int(perform[21]) * 100
+        q.bid5 = to_float(perform[20])
+        q.ask1_volume = to_int(perform[11]) * 100
+        q.ask1 = to_float(perform[10])
+        q.ask2_volume = to_int(perform[9]) * 100
+        q.ask2 = to_float(perform[8])
+        q.ask3_volume = to_int(perform[7]) * 100
+        q.ask3 = to_float(perform[6])
+        q.ask4_volume = to_int(perform[5]) * 100
+        q.ask4 = to_float(perform[4])
+        q.ask5_volume = to_int(perform[3]) * 100
+        q.ask5 = to_float(perform[2])
         t = '%s-%s-%s %s:%s:%s' % (g[0], g[1], g[2], g[3], g[4], g[5])
         q.time = date_time.str_to_time(t)
 
@@ -192,18 +194,18 @@ def main(argv):
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
-    r = q.get_realtime_quotes('000001')
-    for (k,v) in r.items():
-        string = v.__str__()
-        print string.encode('utf-8')
-    r = q.get_realtime_quotes('204001')
-    for (k,v) in r.items():
-        string = v.__str__()
-        print string.encode('utf-8')
-    #r = q.get_realtime_quotes('131810')
+    #r = q.get_realtime_quotes('000001')
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
+    #r = q.get_realtime_quotes('204001')
+    #for (k,v) in r.items():
+    #    string = v.__str__()
+    #    print string.encode('utf-8')
+    r = q.get_realtime_quotes('131810')
+    for (k,v) in r.items():
+        string = v.__str__()
+        print string.encode('utf-8')
     #r = q.get_realtime_quotes('000006')
     #for (k,v) in r.items():
     #    string = v.__str__()
