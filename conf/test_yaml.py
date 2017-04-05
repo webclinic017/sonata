@@ -10,5 +10,5 @@
 
 import yaml
 
-s = yaml.load(file('t.yaml'))
+s = yaml.load(file('quant.yaml'))
 print s

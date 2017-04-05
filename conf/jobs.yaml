@@ -1,0 +1,19 @@
+- name: 'test'
+  switch: 1
+  trader: 'xq'
+  cron:
+      second: '*/5'
+      minute: '*'
+      hour: '*'
+      day: '*'
+      month: '*'
+      year: '*'
+      day_of_week: '*'
+  portfolio: 'reverse_repos.yaml'
+  strategies:
+      - name: 'BaseStrategy'
+        switch: 1
+        
+      - name: 'BaseStrategy'
+        switch: 1
+

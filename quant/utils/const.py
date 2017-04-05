@@ -17,6 +17,7 @@ HFQ_DIR = HOME + 'data/hfq/'
 TICK_DIR = HOME + 'data/tick/'
 LOG_DIR = HOME + 'log/'
 CONF_DIR = HOME + 'conf/'
+PORTFOLIO_CONF_DIR = CONF_DIR + 'portfolio/'
 
 #历史数据开始时间
 START = '2001-01-01'
