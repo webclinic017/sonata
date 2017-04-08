@@ -26,7 +26,8 @@ def execute(job):
 
     job['contex'] = {}
     job['contex']['status'] = 1
-    if 'portfolio' in job.keys():
+    job['contex']['result'] = []
+    if 'portfolio' in job.keys() and job['portfolio'] != None:
         portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + job['portfolio']))
         job['contex']['result'] = portfolio
 

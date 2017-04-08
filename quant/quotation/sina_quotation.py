@@ -15,6 +15,7 @@ from base_quotation import BaseQuotation
 from quote import Quote
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.date_time as date_time
+from utils.symbol import code_from_symbol
 
 class SinaQuotation(BaseQuotation):
     """新浪免费行情获取"""
@@ -31,6 +32,7 @@ class SinaQuotation(BaseQuotation):
             stock = stock_match_object.groups()
             q = Quote()
             q.symbol = stock[0]
+            q.code = code_from_symbol(stock[0])
             q.name = stock[1]
             q.open = float(stock[2])
             q.close = float(stock[3])
@@ -64,7 +66,7 @@ class SinaQuotation(BaseQuotation):
             #q.date = date_time.str_to_date(stock[31])
             q.time = date_time.str_to_time(stock[31] + ' ' + stock[32])
 
-            result[q.symbol] = q
+            result[q.code] = q
 
         return result
 
@@ -72,12 +74,12 @@ class SinaQuotation(BaseQuotation):
 def main(argv):
     q = SinaQuotation()
     #r = q.get_realtime_quotes(['sh', '000001', '000006'])
-    r = q.get_realtime_quotes(['sh'])
-    #r = q.get_realtime_quotes(['sh','sz','hs300','sz50','zxb','cyb', 'zx300', 'zh500'])
+    #r = q.get_realtime_quotes(['sh'])
+    r = q.get_realtime_quotes(['sh','sz','hs300','sz50','zxb','cyb', 'zx300', 'zh500'])
     for (k,v) in r.items():
+        print k
         string = v.__str__()
         print string.encode('utf-8')
-#        print string
 
 
 if __name__ == "__main__":

@@ -16,6 +16,7 @@ from base_quotation import BaseQuotation
 from quote import Quote
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.date_time as date_time
+from utils.symbol import code_from_symbol
 
 class TencentQuotation(BaseQuotation):
     """腾讯免费行情获取"""
@@ -38,6 +39,7 @@ class TencentQuotation(BaseQuotation):
             stock = stock_match_object.groups()
             q = Quote()
             q.symbol = stock[0]
+            q.code = code_from_symbol(q.symbol)
             q.name = stock[2]
             q.open = float(stock[6])
             q.close = float(stock[5])
@@ -71,7 +73,7 @@ class TencentQuotation(BaseQuotation):
             #q.date = date_time.str_to_date(stock[31])
             q.time = datetime.datetime.strptime(stock[31], '%Y%m%d%H%M%S')
 
-            result[q.symbol] = q
+            result[q.code] = q
 
         return result
 
@@ -81,9 +83,9 @@ def main(argv):
     r = q.get_realtime_quotes(['sh', '000001', '000006'])
     #r = q.get_realtime_quotes(['sh','sz','hs300','sz50','zxb','cyb'])
     for (k,v) in r.items():
+        print k
         string = v.__str__()
         print string.encode('utf-8')
-#        print string
 
 
 if __name__ == "__main__":

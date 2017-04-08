@@ -9,7 +9,7 @@
 #***************************************************************#
 
 SH_INDEX_LIST = {'sh':'000001', 'sz50':'000016', 'zh500':'000905'}
-SZ_INDEX_LIST = {'sz':'399001', 'hs300':'399300', 'zxb':'sz399005', 'cyb':'399006', 'zx300':'399008'}
+SZ_INDEX_LIST = {'sz':'399001', 'hs300':'399300', 'zxb':'399005', 'cyb':'399006', 'zx300':'399008'}
 
 def symbol_of(code):
     """
@@ -50,6 +50,7 @@ def em_symbol_of(code):
             return code + '2'
         return ''
 
+
 def ne_symbol_of(code):
     """
     生成网易symbol代码标志
@@ -89,6 +90,40 @@ def code_of(code):
         return SZ_INDEX_LIST[code]
     return code
 
+def code_from_symbol(symbol):
+    """
+    从股票symbol得到编码，如是是指数则返回sh
+    """
+    return _code_index_of(symbol[2:], symbol[:2])
+
+def code_from_em_symbol(em_symbol):
+    """
+    从东方财富symbol代码标志生成code
+    如是是指数则返回sh
+    """
+    code = em_symbol[:-1]
+    if em_symbol[-1:] == "1":
+        return _code_index_of(code, 'sh')
+    if em_symbol[-1:] == "2":
+        return _code_index_of(code, 'sz')
+
+def _code_index_of(code, exchange):
+    """
+    从指数code得到指数字串sha或股票代码,若非指数则返回""
+    """
+    code_to_index = {}
+    if exchange == 'sh':
+        for k, v in SH_INDEX_LIST.items():
+            code_to_index[v] = k
+    elif exchange == 'sz':
+        for k, v in SZ_INDEX_LIST.items():
+            code_to_index[v] = k
+
+    if code in code_to_index:
+        return code_to_index[code]
+    else:
+        return code
+
 def is_index(code):
     """
     判断一个代码是否是指数
@@ -110,3 +145,8 @@ if __name__ == '__main__':
     print code_of('000001')
     print is_index('000001')
     print is_index('sh')
+    print _code_index_of('000001', 'sh')
+    print _code_index_of('000001', 'sz')
+    print code_from_symbol('sh000001')
+    print code_from_em_symbol('0000011')
+    print code_from_em_symbol('0000012')

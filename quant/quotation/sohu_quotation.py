@@ -21,6 +21,7 @@ from utils.symbol import em_symbol_of
 from utils.symbol import symbol_of
 from utils.symbol import zs_symbol_of
 from utils.symbol import code_of
+from utils.symbol import code_from_symbol
 from utils.type_converter import to_int
 from utils.type_converter import to_float
 
@@ -61,6 +62,7 @@ class SohuQuotation(BaseQuotation):
             q.symbol = zs_symbol_of(price_A1[0][-6:])
         if 'cn' == price_A1[0][:2]:
             q.symbol = symbol_of(price_A1[0][-6:])
+        q.code = code_from_symbol(q.symbol)
         q.name = price_A1[1].decode('utf-8')
         q.now = to_float(price_A1[2])
         q.open = to_float(price_A2[3])
@@ -94,7 +96,7 @@ class SohuQuotation(BaseQuotation):
         t = '%s-%s-%s %s:%s:%s' % (g[0], g[1], g[2], g[3], g[4], g[5])
         q.time = date_time.str_to_time(t)
 
-        result[q.symbol] = q
+        result[q.code] = q
 
         return result
 
@@ -204,6 +206,7 @@ def main(argv):
     #    print string.encode('utf-8')
     r = q.get_realtime_quotes('131810')
     for (k,v) in r.items():
+        print k
         string = v.__str__()
         print string.encode('utf-8')
     #r = q.get_realtime_quotes('000006')

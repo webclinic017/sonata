@@ -20,6 +20,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.date_time as date_time
 from utils.symbol import em_symbol_of
 from utils.symbol import symbol_of
+from utils.symbol import code_from_em_symbol
 
 class EastmoneyQuotation(BaseQuotation):
     """东方财富免费行情获取"""
@@ -48,6 +49,7 @@ class EastmoneyQuotation(BaseQuotation):
 
             s = re.split(r',', groups[0])
             q.symbol = symbol_of(s[1])
+            q.code = code_from_em_symbol(s[1] + s[0])
             q.name = s[2]
             q.now = float(s[3])
             q.open = float(s[8])
@@ -80,7 +82,7 @@ class EastmoneyQuotation(BaseQuotation):
             q.ask5 = float(ask_bid[0][0])
             q.time = date_time.str_to_time(s[27])
 
-            result[q.symbol] = q
+            result[q.code] = q
 
         return result
 
@@ -145,23 +147,25 @@ class EastmoneyQuotation(BaseQuotation):
 
 def main(argv):
     q = EastmoneyQuotation()
-    #r = q.get_realtime_quotes('sh')
-    #for (k,v) in r.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
+    r = q.get_realtime_quotes('sh')
+    for (k,v) in r.items():
+        print k
+        string = v.__str__()
+        print string.encode('utf-8')
     #r = q.get_realtime_quotes('000001')
     #for (k,v) in r.items():
+    #    print k
     #    string = v.__str__()
     #    print string.encode('utf-8')
     #r = q.get_realtime_quotes('204001')
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
-    r = q.get_realtime_quotes('131810')
-    for (k,v) in r.items():
-        string = v.__str__()
-        print string.encode('utf-8')
-    #print d.encode('utf-8')
+    #r = q.get_realtime_quotes('131810')
+    #for (k,v) in r.items():
+    #    print k
+    #    string = v.__str__()
+    #    print string.encode('utf-8')
     #d = q.get_today_ticks('sh')
     #print d.symbol
     #print d.df

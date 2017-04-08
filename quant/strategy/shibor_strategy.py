@@ -25,10 +25,9 @@ class ShiborStrategy(BaseStrategy):
         return
 
     def execute(self, job):
-        print job
         q = Quotation()
         shibor_ON = q.get_today_shibor_ON()
-        job['contex']['status'] = 0
+        job['contex']['status'] = 1
 
         return 0
 

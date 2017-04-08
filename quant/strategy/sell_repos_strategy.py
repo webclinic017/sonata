@@ -28,7 +28,11 @@ class SellReposStrategy(BaseStrategy):
 
     def execute(self, job):
         q = Quotation()
-        print job
+        d = q.get_realtime_quotes(['sh204001', 'sz131810'])
+        for (k,v) in d.items():
+            print k
+            string = v.__str__()
+            print string.encode('utf-8')
 
         return 0
 

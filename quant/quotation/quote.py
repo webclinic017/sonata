@@ -23,7 +23,7 @@ class Quote:
         #完整代码
         self.symbol = ''
         #股票代码
-        #self.code = ''
+        self.code = ''
         #股票名字
         self.name = ''
         #当前价格
@@ -94,13 +94,13 @@ class Quote:
         """
         行情字符串输出
         """
-        format = '<symbol:%s, name:%s, now:%.2f, open:%.2f, close:%.2f, high:%.2f, low:%.2f, ' \
-                + 'buy:%.2f, sell:%.2f, turnover:%d, volume:%2f, ' \
+        format = '<symbol:%s, code:%s, name:%s, now:%.2f, open:%.2f, close:%.2f,' \
+                + ' high:%.2f, low:%.2f, buy:%.2f, sell:%.2f, turnover:%d, volume:%2f, ' \
                 + 'b1v:%d, b1:%.2f, b2v:%d, b2:%.2f, b3v:%d, b3:%.2f, b4v:%d, b4:%.2f, b5v:%d, b5:%.2f, ' \
                 + 'a1v:%d, a1:%.2f, a2v:%d, a2:%.2f, a3v:%d, a3:%.2f, a4v:%d, a4:%.2f, a5v:%d, a5:%.2f, ' \
                 'time:%s>'
-        result = format % (self.symbol, self.name, self.now, self.open, self.close, self.high, self.low, \
-                    self.buy, self.sell, self.turnover, self.volume, \
+        result = format % (self.symbol, self.code, self.name, self.now, self.open, self.close,
+                    self.high, self.low, self.buy, self.sell, self.turnover, self.volume, \
                     self.bid1_volume, self.bid1, self.bid2_volume, self.bid2, self.bid3_volume, \
                     self.bid3, self.bid4_volume, self.bid4, self.bid5_volume, self.bid5, \
                     self.ask1_volume, self.ask1, self.ask2_volume, self.ask2, self.ask3_volume, \

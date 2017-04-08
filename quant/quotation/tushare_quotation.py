@@ -129,8 +129,8 @@ def main(argv):
     #print d
     #d = t.get_h_data('002337')
     #print d
-    #d = t.get_tick_data('000001', '2016-05-20')
-    #print d
+    d = t.get_tick_data('000001', '2016-05-20')
+    print d
     d = t.get_today_shibor_ON()
     print d
     return
