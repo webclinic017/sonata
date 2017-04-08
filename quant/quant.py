@@ -8,6 +8,7 @@
 # Copyright ? 2016 Baidu Incorporated. All rights reserved.
 #***************************************************************#
 
+import os
 import sys
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -16,14 +17,18 @@ from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 from trader.trader import Trader
 import utils.const as CT
 import yaml
+import logging
+import logging.config
 from strategy import *
 
 
 def execute(job):
 
     job['contex'] = {}
-    portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + job['portfolio']))
-    job['contex']['result'] = portfolio
+    job['contex']['status'] = 1
+    if 'portfolio' in job.keys():
+        portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + job['portfolio']))
+        job['contex']['result'] = portfolio
 
     for strategy in job['strategies']:
         if strategy['switch'] != 1:
@@ -32,6 +37,10 @@ def execute(job):
         job['contex']['strategy'] = strategy
         obj = eval(strategy['name'])()
         obj.execute(job)
+
+        #job终止
+        if job['contex']['status'] == 0:
+            break
 
     return 0
 
@@ -60,7 +69,13 @@ def add_job(scheduler, jobs):
 
     return 0
 
+
 def main(argv):
+    #设置当前工作目录
+    os.chdir(CT.HOME)
+    logging.config.fileConfig(CT.CONF_DIR + "logger.conf")
+    #logging.getLogger("warn").warning('This is warning message')
+
     jobstores = {'default':MemoryJobStore()}
     executors = {
         'default': ThreadPoolExecutor(10),

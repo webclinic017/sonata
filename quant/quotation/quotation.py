@@ -9,11 +9,11 @@
 #***************************************************************#
 
 import sys
-from eastmoneyquotation import EastmoneyQuotation
-from sohuquotation import SohuQuotation
-from sinaquotation import SinaQuotation
-from tencentquotation import TencentQuotation
-from tusharequotation import TushareQuotation
+from eastmoney_quotation import EastmoneyQuotation
+from sohu_quotation import SohuQuotation
+from sina_quotation import SinaQuotation
+from tencent_quotation import TencentQuotation
+from tushare_quotation import TushareQuotation
 
 class Quotation:
     """ 行情类 """
@@ -73,6 +73,12 @@ class Quotation:
         d = self.tushare.get_tick_data(symbol, date, expire)
         return d
 
+    def get_today_shibor_ON(self):
+        """
+        获取今天的银行间拆借利率 隔夜(O/N)
+        """
+        d = self.tushare.get_today_shibor_ON()
+        return d
 
 
 def main(argv):
@@ -81,6 +87,10 @@ def main(argv):
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
+    d = q.get_realtime_quotes(['000001', '000002'])
+    for (k,v) in d.items():
+        string = v.__str__()
+        print string.encode('utf-8')
     #d = q.get_today_ticks('sh')
     #print d.symbol
     #print d.df
@@ -88,8 +98,8 @@ def main(argv):
     #print d
     #d = q.get_stock_basics()
     #print d
-    d = q.get_tick_data('000001', '2016-05-20')
-    print d
+    #d = q.get_tick_data('000001', '2016-05-20')
+    #print d
 
     return
 

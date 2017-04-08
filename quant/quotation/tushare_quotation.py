@@ -115,14 +115,24 @@ class TushareQuotation:
         else:
             return ''
 
+    def get_today_shibor_ON(self):
+        """
+        获取今天的银行间拆借利率 隔夜(O/N)
+        """
+        d = ts.shibor_data() #取当前年份的数据
+        #print d.sort('date', ascending=False).head(10)
+        return d['ON'][len(d['ON']) - 1]
+
 def main(argv):
     t = TushareQuotation()
-    d = t.get_stock_basics(0)
-    print d
+    #d = t.get_stock_basics(0)
+    #print d
     #d = t.get_h_data('002337')
     #print d
     #d = t.get_tick_data('000001', '2016-05-20')
     #print d
+    d = t.get_today_shibor_ON()
+    print d
     return
 
 if __name__ == "__main__":

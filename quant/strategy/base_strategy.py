@@ -20,13 +20,13 @@ class BaseStrategy:
         return
 
     def execute(self, job):
-        t = Trader('xq')
+        t = Trader(job['trader'])
         d = t.balance()
         for b in d:
             for (k,v) in b.items():
                 print (k + ':' + str(v)).encode('utf-8')
 
-        return
+        return 0
 
 
 def main(argv):

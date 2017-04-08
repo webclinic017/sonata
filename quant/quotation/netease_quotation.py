@@ -13,7 +13,7 @@ import os
 import re
 import xlrd
 from ticks import Ticks
-from basequotation import BaseQuotation
+from base_quotation import BaseQuotation
 from quote import Quote
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.date_time as date_time
