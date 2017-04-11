@@ -3,7 +3,7 @@
 # @Brief: quant_control.sh
 # @Author: www.zhangyunsheng.com@gmail.com
 # @CreateDate: 2017-04-06 01:22
-# @ModifyDate: 2017-04-07 00:39
+# @ModifyDate: 2017-04-11 13:17
 # Copyright ? 2017 Baidu Incorporated. All rights reserved.
 #***************************************************************#
 
@@ -17,7 +17,7 @@ case "$INTERFACE" in
     start)
         START_PARA=$*
         echo "start"
-        python $root"/quant/quant.py" >>$root"/log/quant.log" 2>>$root"/log/quant.wf.log" &
+        python $root"/quant/quant.py" >>$root"/log/out.log" 2>&1 &
         RET=$?
         exit $RET
         ;;

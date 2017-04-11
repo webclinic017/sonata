@@ -1,53 +1,35 @@
-- name: 'unittest'
+- name: 'all_repos'
   switch: 1
+  type: 'sell'
+  trader: 'yh'
+  portfolio: 'repos.yaml'
+  cron:
+      second: '0'
+      minute: '36'
+      hour: '14'
+      day: '*'
+      month: '*'
+      year: '*'
+      day_of_week: '*'
+  strategies:
+      - name: 'SellReposStrategy'
+        switch: 1
+- name: 'unittest'
+  switch: 0
   type: ~
   trader: ~
+  portfolio: ~
   cron:
-      second: '*/10'
+      second: '*/5'
       minute: '*'
       hour: '*'
       day: '*'
       month: '*'
       year: '*'
       day_of_week: '*'
-  portfolio: ~
   strategies:
       - name: 'UnittestStrategy'
         switch: 1
-- name: 'test'
-  switch: 0
-  type: 'buy'
-  trader: 'xq'
-  cron:
-      second: '*/5'
-      minute: '*'
-      hour: '*'
-      day: '*'
-      month: '*'
-      year: '*'
-      day_of_week: '*'
-  portfolio: 'repos.yaml'
-  strategies:
-      - name: 'BaseStrategy'
-        switch: 1
-        
-      - name: 'BaseStrategy'
-        switch: 0
-- name: 'shibor test'
-  switch: 0
-  type: 'buy'
-  trader: ~
-  cron:
-      second: '*/5'
-      minute: '*'
-      hour: '*'
-      day: '*'
-      month: '*'
-      year: '*'
-      day_of_week: '*'
-  portfolio: 'repos.yaml'
-  strategies:
-      - name: 'ShiborStrategy'
-        switch: 1
-      - name: 'SellReposStrategy'
-        switch: 1
+            #tradertest
+
+#限时撤单

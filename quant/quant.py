@@ -19,29 +19,12 @@ import utils.const as CT
 import yaml
 import logging
 import logging.config
-from strategy import *
+#from strategy import *
+from strategy.job import Job
 
-
-def execute(job):
-
-    job['contex'] = {}
-    job['contex']['status'] = 1
-    job['contex']['result'] = []
-    if 'portfolio' in job.keys() and job['portfolio'] != None:
-        portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + job['portfolio']))
-        job['contex']['result'] = portfolio
-
-    for strategy in job['strategies']:
-        if strategy['switch'] != 1:
-            continue
-
-        job['contex']['strategy'] = strategy
-        obj = eval(strategy['name'])()
-        obj.execute(job)
-
-        #job终止
-        if job['contex']['status'] == 0:
-            break
+def execute(conf):
+    job = Job(conf)
+    job.execute()
 
     return 0
 

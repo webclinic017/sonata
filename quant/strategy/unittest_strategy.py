@@ -17,6 +17,7 @@ import logging
 from unit_test.test_quotation import TestQuotation
 from unit_test.HTMLTestRunner import HTMLTestRunner
 
+
 class UnittestStrategy(BaseStrategy):
     """
     测试sonata依赖的接口
@@ -36,7 +37,8 @@ class UnittestStrategy(BaseStrategy):
                 for i in range(len(failure)):
                     failure_report += str(failure[i])
                 failure_report += '--------------------------------------------------\n'
-            logging.getLogger("smtp").warning(failure_report)
+            #logging.getLogger("smtp").warning(failure_report)
+            job.smtp(failure_report)
         return 0
 
 def main(argv):

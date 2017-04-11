@@ -87,13 +87,13 @@ def main(argv):
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
-    #d = q.get_realtime_quotes(['000001', '000002'])
-    #print len(d)
-    #for (k,v) in d.items():
-    #    print k
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #    print v.name.encode('utf-8')
+    d = q.get_realtime_quotes(['000001', '000002'])
+    print len(d)
+    for (k,v) in d.items():
+        print k
+        string = v.__str__()
+        print string.encode('utf-8')
+        print v.name.encode('utf-8')
     #d = q.get_one_realtime_quotes('131800')
     #for (k,v) in d.items():
     #    string = v.__str__()
@@ -110,8 +110,8 @@ def main(argv):
     #d = q.get_tick_data('000001', '2016-05-20')
     #print d
     #print len(d)
-    d = q.get_today_shibor_ON()
-    print d
+    #d = q.get_today_shibor_ON()
+    #print d
 
     return
 

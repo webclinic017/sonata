@@ -40,12 +40,12 @@ class TestQuotation(unittest.TestCase):
         d = q.get_one_realtime_quotes('131800')
         self.assertIn('131800', d)
         self.assertEqual(d['131800'].symbol, 'sz131800')
-        self.assertEqual(d['131800'].code, ' 131800')
+        self.assertEqual(d['131800'].code, '131800')
 
     def test_get_today_ticks(self):
         q = Quotation()
         d = q.get_today_ticks('sh')
-        self.assertEqual(d.symbol, ' sh000001')
+        self.assertEqual(d.symbol, 'sh000001')
 
     def test_get_stock_basics(self):
         q = Quotation()

@@ -1,0 +1,187 @@
+
+balance:
+
+{u'result_type': u'error', u'result_msg': u"-150904025[-150904025]\u5e02\u4ef7\u59d4\u6258\u8bc1\u5238'601288'\u7684\u884c\u60c5\u4fe1\u606f\u65e5\u671f20170410\u4e0e\u7cfb\u7edf\u59d4\u6258\u65e5\u671f20170411\u4e0d\u7b26"}
+{"result_type":"error","result_msg":"-150904025[-150904025]市价委托证券'601288'的行情信息日期20170410与系统委托日期20170411不符"}
+
+[{u'\u8d44\u91d1\u5e10\u53f7': u'210600043559\u4e3b', u'\u5e01\u79cd': u'0', u'\u80a1\u4efd\u53c2\u8003\u76c8\u4e8f': -7.01, u'\u8d44\u91d1\u4f59\u989d': 349.91, u'\u53ef\u7528\u8d44\u91d1': 1011.98, u'\u603b\u8d44\u4ea7': 1342.98, u'\u53c2\u8003\u5e02\u503c': 331.0}]
+资金帐号:210600043559主
+币种:0
+股份参考盈亏:-7.01
+资金余额:349.91
+可用资金:1011.98
+总资产:1342.98
+参考市值:331.0
+
+
+position:
+
+[]
+
+[{u'\u8bc1\u5238\u540d\u79f0': u'\u519c\u4e1a\u94f6\u884c', u'\u5f53\u524d\u6301\u4ed3': 100, u'\u76c8\u4e8f\u6bd4\u4f8b(%)': u'-1.78%', u'\u4ea4\u6613\u5e02\u573a': u'\u6caaA', u'\u53c2\u8003\u6210\u672c\u4ef7': 3.38, u'\u5356\u51fa\u51bb\u7ed3': 0, u'\u80a1\u4efd\u4f59\u989d': 0, u'\u8bc1\u5238\u4ee3\u7801': u'601288', u'\u53c2\u8003\u5e02\u4ef7': 3.32, u'\u80a1\u4e1c\u4ee3\u7801': u'A799834282', u'\u4e70\u5165\u51bb\u7ed3': 100, u'\u80a1\u4efd\u53ef\u7528': 0, u'\u53c2\u8003\u76c8\u4e8f': -6.01, u'\u53c2\u8003\u5e02\u503c': 332.0}]
+证券名称:农业银行
+当前持仓:100
+盈亏比例(%):-1.78%
+交易市场:沪A
+参考成本价:3.38
+卖出冻结:0
+股份余额:0
+证券代码:601288
+参考市价:3.32
+股东代码:A799834282
+买入冻结:100
+股份可用:0
+参考盈亏:-6.01
+参考市值:332.0
+
+
+entrust:
+
+[]
+
+[{u'\u8bc1\u5238\u540d\u79f0': u'\u4ea4\u901a\u94f6\u884c', u'\u59d4\u6258\u65e5\u671f': u'20170411', u'\u4ea4\u6613\u5e02\u573a': u'\u6caaA', u'\u59d4\u6258\u4ef7\u683c': 6.83, u'\u4e70\u5356\u6807\u5fd7': u'\u8f6c\u9650\u4e70\u5165', u'\u59d4\u6258\u5e8f\u53f7': u'507053', u'\u6210\u4ea4\u6570\u91cf': 0, u'\u8bc1\u5238\u4ee3\u7801': u'601328', u'\u64a4\u5355\u6570\u91cf': 0, u'\u80a1\u4e1c\u4ee3\u7801': u'A799834282', u'\u72b6\u6001\u8bf4\u660e': u'\u672a\u62a5', u'\u59d4\u6258\u65f6\u95f4': u'12:29:57', u'\u59d4\u6258\u6570\u91cf': 100}, {u'\u8bc1\u5238\u540d\u79f0': u'\u519c\u4e1a\u94f6\u884c', u'\u59d4\u6258\u65e5\u671f': u'20170411', u'\u4ea4\u6613\u5e02\u573a': u'\u6caaA', u'\u59d4\u6258\u4ef7\u683c': 3.67, u'\u4e70\u5356\u6807\u5fd7': u'\u8f6c\u9650\u4e70\u5165', u'\u59d4\u6258\u5e8f\u53f7': u'505819', u'\u6210\u4ea4\u6570\u91cf': 0, u'\u8bc1\u5238\u4ee3\u7801': u'601288', u'\u64a4\u5355\u6570\u91cf': 100, u'\u80a1\u4e1c\u4ee3\u7801': u'A799834282', u'\u72b6\u6001\u8bf4\u660e': u'\u5df2\u64a4', u'\u59d4\u6258\u65f6\u95f4': u'12:22:47', u'\u59d4\u6258\u6570\u91cf': 100}, {u'\u8bc1\u5238\u540d\u79f0': u'\u519c\u4e1a\u94f6\u884c', u'\u59d4\u6258\u65e5\u671f': u'20170411', u'\u4ea4\u6613\u5e02\u573a': u'\u6caaA', u'\u59d4\u6258\u4ef7\u683c': 3.67, u'\u4e70\u5356\u6807\u5fd7': u'\u8f6c\u9650\u4e70\u5165', u'\u59d4\u6258\u5e8f\u53f7': u'505247', u'\u6210\u4ea4\u6570\u91cf': 0, u'\u8bc1\u5238\u4ee3\u7801': u'601288', u'\u64a4\u5355\u6570\u91cf': 100, u'\u80a1\u4e1c\u4ee3\u7801': u'A799834282', u'\u72b6\u6001\u8bf4\u660e': u'\u5df2\u64a4', u'\u59d4\u6258\u65f6\u95f4': u'12:18:35', u'\u59d4\u6258\u6570\u91cf': 100}, {u'\u8bc1\u5238\u540d\u79f0': u'\u519c\u4e1a\u94f6\u884c', u'\u59d4\u6258\u65e5\u671f': u'20170411', u'\u4ea4\u6613\u5e02\u573a': u'\u6caaA', u'\u59d4\u6258\u4ef7\u683c': 3.67, u'\u4e70\u5356\u6807\u5fd7': u'\u8f6c\u9650\u4e70\u5165', u'\u59d4\u6258\u5e8f\u53f7': u'504786', u'\u6210\u4ea4\u6570\u91cf': 0, u'\u8bc1\u5238\u4ee3\u7801': u'601288', u'\u64a4\u5355\u6570\u91cf': 100, u'\u80a1\u4e1c\u4ee3\u7801': u'A799834282', u'\u72b6\u6001\u8bf4\u660e': u'\u5df2\u64a4', u'\u59d4\u6258\u65f6\u95f4': u'12:15:19', u'\u59d4\u6258\u6570\u91cf': 100}, {u'\u8bc1\u5238\u540d\u79f0': u'\u767b\u8bb0\u6307\u5b9a', u'\u59d4\u6258\u65e5\u671f': u'20170411', u'\u4ea4\u6613\u5e02\u573a': u'\u6caaA', u'\u59d4\u6258\u4ef7\u683c': 1.0, u'\u4e70\u5356\u6807\u5fd7': u' ', u'\u59d4\u6258\u5e8f\u53f7': u'8463', u'\u6210\u4ea4\u6570\u91cf': 0, u'\u8bc1\u5238\u4ee3\u7801': u'799999', u'\u64a4\u5355\u6570\u91cf': 0, u'\u80a1\u4e1c\u4ee3\u7801': u'A799834282', u'\u72b6\u6001\u8bf4\u660e': u'\u5df2\u6210', u'\u59d4\u6258\u65f6\u95f4': u'09:04:08', u'\u59d4\u6258\u6570\u91cf': 1}]
+证券名称:交通银行
+委托日期:20170411
+交易市场:沪A
+委托价格:6.83
+买卖标志:转限买入
+委托序号:507053
+成交数量:0
+证券代码:601328
+撤单数量:0
+股东代码:A799834282
+状态说明:未报
+委托时间:12:29:57
+委托数量:100
+--------------------------------
+证券名称:农业银行
+委托日期:20170411
+交易市场:沪A
+委托价格:3.67
+买卖标志:转限买入
+委托序号:505819
+成交数量:0
+证券代码:601288
+撤单数量:100
+股东代码:A799834282
+状态说明:已撤
+委托时间:12:22:47
+委托数量:100
+--------------------------------
+证券名称:农业银行
+委托日期:20170411
+交易市场:沪A
+委托价格:3.67
+买卖标志:转限买入
+委托序号:505247
+成交数量:0
+证券代码:601288
+撤单数量:100
+股东代码:A799834282
+状态说明:已撤
+委托时间:12:18:35
+委托数量:100
+--------------------------------
+
+
+buy:
+
+{u'orderid': u'0801003340', u'ordersno': u'504786'}
+
+{u'result_type': u'error', u'result_msg': u'-990221020[-990221020]\u65e0\u6b64\u8bc1\u5238\u4ee3\u7801!\nstkcode = 601327 market = 1'}
+{"result_type":"error","result_msg":"-990221020[-990221020]无此证券代码!\nstkcode = 601327 market = 1"}
+
+{"result_type":"error","result_msg":"-150906130[-150906130]资金可用数不足，尚需988.22"}
+
+d = t.buy('601288', price=3.01, entrust_prop='market')
+{u'result_type': u'error', u'result_msg': u'\u7cfb\u7edf\u8fd0\u884c\u9519\u8bef'}
+{"result_type":"error","result_msg":"系统运行错误"}
+
+
+sell:
+
+{ u'orderid': u'0801003438', u'ordersno': u'520132'}
+
+d = t.sell('131810', price=3, amount=10)
+{ u'orderid': u'I5003945', u'ordersno': u'525588'}
+
+cancel_entrust:
+
+{u'msgok': u'\u64a4\u5355\u7533\u62a5\u6210\u529f'}
+{"msgok":"撤单申报成功"}
+
+{u'result_type': u'error', u'result_msg': u'-410413020[-990268050]\u8be5\u7b14\u59d4\u6258\u5df2\u7ecf\u5168\u90e8\u6210\u4ea4\u6216\u5168\u90e8\u64a4\u5355ordersno = 507053\uff0c orderdate = 20170411'}
+{"result_type":"error","result_msg":"-410413020[-990268050]该笔委托已经全部成交或全部撤单ordersno = 507053， orderdate = 20170411"}
+
+
+cancel_entrusts:
+
+[{u'failed': u'0', u'success': u'2'}]
+
+
+未报/已报/已报待撤/已撤
+
+check_available_cancels:
+
+[{u'status': u'\u672a\u62a5', u'code': u'601288', u'trans_vol': 0, u'price': 3.1, u'investor_code': u'A799834282', u'volume': 100, u'iotype': u'\u4e70\u5165', u'account': u'210600043559', u'entrust_num': u'508995', u'name': u'\u519c\u4e1a\u94f6\u884c', u'canceled_vol': 0, u'time': u'12:41:55'}, {u'status': u'\u672a\u62a5', u'code': u'601288', u'trans_vol': 0, u'price': 3.1, u'investor_code': u'A799834282', u'volume': 100, u'iotype': u'\u4e70\u5165', u'account': u'210600043559', u'entrust_num': u'508370', u'name': u'\u519c\u4e1a\u94f6\u884c', u'canceled_vol': 0, u'time': u'12:38:01'}]
+status:未报
+code:601288
+trans_vol:0
+price:3.1
+investor_code:A799834282
+volume:100
+iotype:买入
+account:210600043559
+entrust_num:508995
+name:农业银行
+canceled_vol:0
+time:12:41:55
+--------------------------------
+status:未报
+code:601288
+trans_vol:0
+price:3.1
+investor_code:A799834282
+volume:100
+iotype:买入
+account:210600043559
+entrust_num:508370
+name:农业银行
+canceled_vol:0
+time:12:38:01
+--------------------------------
+
+[{u'status': u'\u5df2\u62a5', u'code': u'131810', u'trans_vol': 0, u'price': 3.0, u'investor_code': u'0203087051', u'volume': 10, u'iotype': u'\u878d\u5238', u'account': u'210600043559', u'entrust_num': u'525588', u'name': u'\uff32-001', u'canceled_vol': 0, u'time': u'13:07:42'}]
+status:已报
+code:131810
+trans_vol:0
+price:3.0
+investor_code:0203087051
+volume:10
+iotype:融券
+account:210600043559
+entrust_num:525588
+name:Ｒ-001
+canceled_vol:0
+time:13:07:42
+
+get_current_deal:
+
+[]
+
+get_deal:
+
+[]
+
+[{u'\u8bc1\u5238\u540d\u79f0': u'\u519c\u4e1a\u94f6\u884c', u'\u4ea4\u6613\u5e02\u573a': u'\u6caaA', u'\u4e70\u5356\u6807\u5fd7': u'\u8f6c\u9650\u4e70\u5165', u'\u6210\u4ea4\u65f6\u95f4': u'13:00:13', u'\u6210\u4ea4\u6570\u91cf': 100, u'\u6210\u4ea4\u65e5\u671f': u'20170411', u'\u8bc1\u5238\u4ee3\u7801': u'601288', u'\u6210\u4ea4\u4ef7\u683c': 3.33, u'\u59d4\u6258\u5e8f\u53f7': u'511642', u'\u6210\u4ea4\u91d1\u989d': 333.0, u'\u80a1\u4e1c\u4ee3\u7801': u'A799834282'}]
+证券名称:农业银行
+交易市场:沪A
+买卖标志:转限买入
+成交时间:13:00:13
+成交数量:100
+成交日期:20170411
+证券代码:601288
+成交价格:3.33
+委托序号:511642
+成交金额:333.0
+股东代码:A799834282

@@ -20,7 +20,7 @@ class BaseStrategy:
         return
 
     def execute(self, job):
-        t = Trader(job['trader'])
+        t = Trader(job.conf['trader'])
         d = t.balance()
         for b in d:
             for (k,v) in b.items():
