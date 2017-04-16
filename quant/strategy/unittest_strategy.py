@@ -15,6 +15,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import unittest
 import logging
 from unit_test.test_quotation import TestQuotation
+from unit_test.test_trader import TestTrader
 from unit_test.HTMLTestRunner import HTMLTestRunner
 
 
@@ -39,6 +40,20 @@ class UnittestStrategy(BaseStrategy):
                 failure_report += '--------------------------------------------------\n'
             #logging.getLogger("smtp").warning(failure_report)
             job.smtp(failure_report)
+
+        suite = unittest.TestLoader().loadTestsFromTestCase(TestTrader)
+        test_result = unittest.TextTestRunner(verbosity=2).run(suite)
+        if not test_result.wasSuccessful():
+            failure_report = 'FAIL: unittest_strategy failed!\n'
+            failure_report += '==================================================\n'
+            for failure in test_result.failures:
+                for i in range(len(failure)):
+                    failure_report += str(failure[i])
+                failure_report += '--------------------------------------------------\n'
+            #logging.getLogger("smtp").warning(failure_report)
+            job.smtp(failure_report)
+
+
         return 0
 
 def main(argv):

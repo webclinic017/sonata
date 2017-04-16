@@ -1,2 +1,12 @@
-buy: 1
-sell: 1
+buy: 
+    switch: 1
+    white:
+    black:
+        - '601288'
+sell:
+    switch: 1
+    white:
+        - '204001'
+        - '131810'
+    black:
+        - '601288'

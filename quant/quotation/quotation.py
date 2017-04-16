@@ -80,6 +80,13 @@ class Quotation:
         d = self.tushare.get_today_shibor_ON()
         return d
 
+    def get_hgt_capital(self):
+        """
+        得到当前沪股通资金情况
+        """
+        d = self.eastmoney.get_hgt_capital()
+        return d
+
 
 def main(argv):
     q = Quotation()
@@ -87,13 +94,13 @@ def main(argv):
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
-    d = q.get_realtime_quotes(['000001', '000002'])
-    print len(d)
-    for (k,v) in d.items():
-        print k
-        string = v.__str__()
-        print string.encode('utf-8')
-        print v.name.encode('utf-8')
+    #d = q.get_realtime_quotes(['000001', '000002'])
+    #print len(d)
+    #for (k,v) in d.items():
+    #    print k
+    #    string = v.__str__()
+    #    print string.encode('utf-8')
+    #    print v.name.encode('utf-8')
     #d = q.get_one_realtime_quotes('131800')
     #for (k,v) in d.items():
     #    string = v.__str__()
@@ -112,6 +119,8 @@ def main(argv):
     #print len(d)
     #d = q.get_today_shibor_ON()
     #print d
+    d = q.get_hgt_capital()
+    print d
 
     return
 

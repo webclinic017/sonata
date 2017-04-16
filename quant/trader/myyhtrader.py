@@ -11,6 +11,7 @@
 import easytrader
 import sys
 import os
+import logging
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
 
@@ -18,22 +19,40 @@ class MyYHTrader(easytrader.YHTrader):
     def __init__(self, remove_zero=True):
         super(MyYHTrader, self).__init__(remove_zero)
         self.conf = CT.CONF_DIR + 'trader/yh.json'
-        self.valid = False
+        self.prepare(self.conf)
 
     def balance(self):
         """资金"""
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).balance
+        if self.s == None:
+            self.prepare(self.conf)
+        try:
+            return super(MyYHTrader, self).balance
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).balance
 
     def position(self):
         """持仓"""
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).position
+        if self.s == None:
+            self.prepare(self.conf)
+        try:
+            return super(MyYHTrader, self).position
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).position
 
     def entrust(self):
         """委托单"""
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).entrust
+        if self.s == None:
+            self.prepare(self.conf)
+        try:
+            return super(MyYHTrader, self).entrust
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).entrust
 
     def buy(self, stock_code, price, amount=0, volume=0, entrust_prop='limit'):
         """买入股票
@@ -44,8 +63,14 @@ class MyYHTrader(easytrader.YHTrader):
         :param entrust_prop: 委托类型 'limit' 限价单 , 'market'　市价单, 'market_cancel' 五档即时成交剩余转限制
         市价就是以涨停价申报
         """
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).buy(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
+        if self.s == None:
+            self.prepare(self.conf)
+        try:
+            return super(MyYHTrader, self).buy(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).buy(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
 
     def sell(self, stock_code, price, amount=0, volume=0, entrust_prop='limit'):
         """卖出股票
@@ -55,23 +80,39 @@ class MyYHTrader(easytrader.YHTrader):
         :param volume: 卖出总金额 由 volume / price 取整， 若指定 amount 则此参数无效
         :param entrust_prop: str 委托类型 'limit' 限价单 , 'market'　市价单, 'market_cancel' 五档即时成交剩余转限制
         """
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).sell(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
+        if self.s == None:
+            self.prepare(self.conf)
+        try:
+            return super(MyYHTrader, self).sell(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).sell(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
 
     def check_available_cancels(self, parsed=True):
         """
         @Contact: Emptyset <21324784@qq.com>
         检查撤单列表
         """
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).check_available_cancels(parsed)
+        try:
+            return super(MyYHTrader, self).check_available_cancels(parsed)
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).check_available_cancels(parsed)
 
     def cancel_entrust(self, entrust_no, stock_code):
         """撤单
         :param entrust_no: 委托单号
         """
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).cancel_entrust(entrust_no, stock_code)
+        if self.s == None:
+            self.prepare(self.conf)
+        try:
+            return super(MyYHTrader, self).cancel_entrust(entrust_no, stock_code)
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).cancel_entrust(entrust_no, stock_code)
 
     def cancel_entrusts(self, entrust_no):
         """
@@ -86,7 +127,8 @@ class MyYHTrader(easytrader.YHTrader):
             e.g.:
             [{"success":15, "failed":0},{"success":7, "failed":0}]
         """
-        self.prepare(self.conf)
+        if self.s == None:
+            self.prepare(self.conf)
         return super(MyYHTrader, self).cancel_entrusts(entrust_no)
 
 
@@ -94,7 +136,8 @@ class MyYHTrader(easytrader.YHTrader):
         """
         撤单所有委托
         """
-        self.prepare(self.conf)
+        if self.s == None:
+            self.prepare(self.conf)
         entrusts= self.check_available_cancels()
         entrust_list = []
         if isinstance(entrusts, list):
@@ -108,8 +151,14 @@ class MyYHTrader(easytrader.YHTrader):
         """
         获取当日成交列表.
         """
-        self.prepare(self.conf)
-        return super(MyYHTrader, self).get_current_deal(date)
+        if self.s == None:
+            self.prepare(self.conf)
+        try:
+            return super(MyYHTrader, self).get_current_deal(date)
+        except Exception, e:
+            logging.warning(e)
+            self.prepare(self.conf)
+            return super(MyYHTrader, self).get_current_deal(date)
 
     def get_deal(self, date=None):
         """
@@ -120,33 +169,29 @@ class MyYHTrader(easytrader.YHTrader):
             返回值格式与get_current_deal相同
             遇到提示“系统超时请重新登录”或者https返回状态码非200或者其他异常情况会返回False
         """
+        if self.s == None:
+            self.prepare(self.conf)
+        ret =  super(MyYHTrader, self).get_deal(date)
+        if ret != False:
+            return ret
+        logging.warning('get_deal error')
         self.prepare(self.conf)
         return super(MyYHTrader, self).get_deal(date)
 
-    def check_account_live(self, response):
-        if isinstance(response, list):
-            self.valid = True
-            return True
-        else:
-            self.valid = False
-            return False
-
     def prepare(self, need_data):
-        if self.valid != True:
-            super(MyYHTrader, self).prepare(need_data)
-            self.valid = True
+        super(MyYHTrader, self).prepare(need_data)
 
 def main(argv):
     t = MyYHTrader()
-    d = t.balance()
+    #d = t.balance()
     #d = t.position()
     #d = t.buy('601288', price=3.1, amount=100)
-    d = t.sell('131810', price=2, amount=10)
+    #d = t.sell('131810', price=2, amount=10)
     #d = t.sell('601288', price=3.3, amount=100)
     #d = t.entrust()
     #d = t.check_available_cancels()
     #d = t.cancel_entrust('505819', '601288')
-    #d = t.cancel_entrusts('508370,508995')
+    d = t.cancel_entrusts('508370,508995')
     #d = t.cancel_all_entrust()
     #d = t.get_current_deal()
     #d = t.get_deal()

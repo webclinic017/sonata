@@ -30,6 +30,8 @@ class EastmoneyQuotation(BaseQuotation):
     realtime_quotes_format = re.compile(r'var js=\{skif:"(.+)",bsif:(\[.+\]),dtif:(\[.+\]),dpif:(\[.+\])\}')
     today_ticks_api = 'http://hqdigi2.eastmoney.com/EM_Quote2010NumericApplication/CompatiblePage.aspx?Type=OB&Reference=xml&limit=0&stk=%s&page=%d'
     today_ticks_format = re.compile(r'var jsTimeSharingData={pages:(\d+),data:(\[.+\])}')
+    hsgt_api = 'http://nufm.dfcfw.com/EM_Finance2014NumericApplication/JS.aspx?type=CT&cmd=P.(x),(x)|0000011|0000011&sty=SHSTDTA|SZSTDTA&st=z&sr=&p=&ps=&cb=&token=70f12f2f4f091e459a279469fe49eca5&js=var%20tSgkmQ=({data:[(x)]})'
+    hsgt_format = re.compile(r'data:\[\"(.+)\",\"(.+)\"\]')
 
     def __init__(self):
         self.ticks = Ticks()
@@ -144,14 +146,33 @@ class EastmoneyQuotation(BaseQuotation):
             return ''
         return self.today_ticks_api % (symbol, page)
 
+    def get_hgt_capital(self):
+        """
+        得到当前沪股通资金情况
+        """
+        capital = 0.0
+        hsgt_detail = self._request(self.hsgt_api)
+        grep_result = self.hsgt_format.finditer(hsgt_detail)
+        for stock_match_object in grep_result:
+            groups = stock_match_object.groups()
+            hgt = groups[0]
+            sgt = groups[1]
+            sp = re.split(r',', hgt)
+            capital = sp[6]
+            if capital[-2:] == u'亿元':
+                capital = float(capital[:-2])
+
+        return capital
+
+
 
 def main(argv):
     q = EastmoneyQuotation()
-    r = q.get_realtime_quotes('sh')
-    for (k,v) in r.items():
-        print k
-        string = v.__str__()
-        print string.encode('utf-8')
+    #r = q.get_realtime_quotes('sh')
+    #for (k,v) in r.items():
+    #    print k
+    #    string = v.__str__()
+    #    print string.encode('utf-8')
     #r = q.get_realtime_quotes('000001')
     #for (k,v) in r.items():
     #    print k
@@ -169,6 +190,8 @@ def main(argv):
     #d = q.get_today_ticks('sh')
     #print d.symbol
     #print d.df
+    d = q.get_hgt_capital()
+    print d
 
 
 if __name__ == "__main__":

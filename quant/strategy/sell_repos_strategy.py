@@ -33,11 +33,9 @@ class SellReposStrategy(BaseStrategy):
         return
 
     def execute(self, job):
-        t = Trader(job['trader'])
+        t = Trader.get_instance(job['trader'])
         balance = t.balance()
-        if isinstance(balance, list):
-            balance = balance[0]
-        enable_balance = balance[u'可用资金']
+        enable_balance = balance[0].enable_balance
 
         q = Quotation()
         quote = q.get_realtime_quotes([self.GC001, self.R001])
@@ -48,29 +46,29 @@ class SellReposStrategy(BaseStrategy):
         if quote[self.GC001].buy > quote[self.R001].buy and enable_balance >= self.GC001_UNIT * self.HAND:
             amount=int(enable_balance/self.HAND/self.GC001_UNIT)*self.GC001_UNIT
             ret = t.sell(self.GC001, price=quote[self.GC001].buy, amount=int(enable_balance/self.HAND/self.GC001_UNIT)*self.GC001_UNIT)
-            if isinstance(ret, list):
-                ret = ret[0]
-            trade_info = ""
-            for (k,v) in ret.items():
-                trade_info += k + ':' + str(v) + ', '
-            job.notice(trade_info)
-            job.trade(trade_info)
+            job.notice(str(ret))
+            job.trade(str(ret))
 
         quote = q.get_realtime_quotes([self.GC001, self.R001])
         amount=int(enable_balance/self.HAND/self.R001_UNIT)*self.R001_UNIT
         ret = t.sell(self.R001, price=quote[self.R001].buy, amount=amount)
 
-        #ret = t.sell('601288', price=3.36, amount=100)
+        job.notice(str(ret))
+        job.trade(str(ret))
 
 
-        #trade_info = '%s' % (ret)
-        if isinstance(ret, list):
-            ret = ret[0]
-        trade_info = ""
-        for (k,v) in ret.items():
-            trade_info += k + ':' + str(v) + ', '
-        job.notice(trade_info)
-        job.trade(trade_info)
+        #t = Trader.get_instance(job['trader'])
+        #d = t.position()
+        ##d = t.entrust()
+        ##d = t.buy('601288', price=3.1, amount=100)
+        ##d = t.sell('601288', price=3.5, amount=100)
+        ##d = t.entrust()
+        ##d = t.check_available_cancels()
+        ##d = t.cancel_all_entrust()
+        ##d = t.cancel_entrust('500', '601288')
+        ##d = t.get_deal('2017-04-11')
+        #job.notice(str(d))
+        #job.trade(str(d))
 
         return 0
 

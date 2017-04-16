@@ -71,10 +71,11 @@ class MyXueQiuTrader(easytrader.XueQiuTrader):
     def cancel_entrust(self, entrust_no, stock_code):
         """撤单
         :param entrust_no: 委托单号
+        xueqiu cancel 不可用
         """
         #TODO
         self.prepare(self.conf)
-        return super(MyXueQiuTrader, self).cancel_entrust(long(entrust_no), stock_code)
+        return super(MyXueQiuTrader, self).cancel_entrust(long(entrust_no))
 
     def cancel_all_entrust(self):
         """
@@ -89,14 +90,13 @@ class MyXueQiuTrader(easytrader.XueQiuTrader):
         entrusts = self.entrust()
         return entrusts
 
-
-    def check_account_live(self, response):
-        if isinstance(response, list):
-            self.valid = True
-            return True
-        else:
-            self.valid = False
-            return False
+    #def check_account_live(self, response):
+    #    if isinstance(response, list):
+    #        self.valid = True
+    #        return True
+    #    else:
+    #        self.valid = False
+    #        return False
 
     def prepare(self, need_data):
         super(MyXueQiuTrader, self).prepare(need_data)

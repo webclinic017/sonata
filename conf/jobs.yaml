@@ -15,13 +15,13 @@
       - name: 'SellReposStrategy'
         switch: 1
 - name: 'unittest'
-  switch: 0
+  switch: 1
   type: ~
   trader: ~
   portfolio: ~
   cron:
-      second: '*/5'
-      minute: '*'
+      second: '0'
+      minute: '*/10'
       hour: '*'
       day: '*'
       month: '*'
@@ -30,6 +30,24 @@
   strategies:
       - name: 'UnittestStrategy'
         switch: 1
-            #tradertest
+
+
+- name: 'all_repos test'
+  switch: 1
+  type: 'sell'
+  trader: 'yh'
+  portfolio: 'repos.yaml'
+  cron:
+      second: '0'
+      minute: '05'
+      hour: '23'
+      day: '*'
+      month: '*'
+      year: '*'
+      day_of_week: '*'
+  strategies:
+      - name: 'SellReposStrategy'
+        switch: 1
 
 #限时撤单
+

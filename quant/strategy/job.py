@@ -90,6 +90,24 @@ class Job():
         logging.getLogger("smtp").warning(message)
         return 0
 
+    def format(self, information):
+        if isinstance(information, str):
+            return information
+        info_list = []
+        if isinstance(information, list):
+            info_list = information
+        else:
+            info_list.append(information)
+
+        info_str = "["
+        for item in info_list:
+            info_str += "{"
+            for (k,v) in item.items():
+                info_str += k + ':' + str(v) + ', '
+            info_str += '}, '
+        info_str += "]"
+        return info_str
+
 
 
 def main(argv):

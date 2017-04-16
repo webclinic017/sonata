@@ -33,9 +33,9 @@ def add_job(sched):
     #sched.add_job(my_job, 'interval', seconds=5)
     #sched.add_job(my_job, 'cron', second='*/30', args = [CT.CONF_DIR + 'trader/ht.json'])
     #sched.add_job(my_job, 'cron', minute = 10, hour = 13, args = [CT.CONF_DIR + 'trader/ht.json'])
-    #sched.add_job(my_job, 'cron', second='*/30', minute='*', hour='*', day='*', month='*', year='*', day_of_week='*', args = [CT.CONF_DIR + 'trader/xq.json'])
-    conf = yaml.load(file(CT.CONF_DIR + 'quant.yaml'))
-    sched.add_job(eval(conf['input']), 'cron', second='*/10', minute='*', hour='*', day='*', month='*', year='*', day_of_week='*', args = [CT.CONF_DIR + 'trader/xq.json'])
+    sched.add_job(my_job, 'cron', second='*/10', minute='*', hour='*', day='*', month='*', year='*', day_of_week='*', args = [CT.CONF_DIR + 'trader/xq.json'])
+    #conf = yaml.load(file(CT.CONF_DIR + 'quant.yaml'))
+    #sched.add_job(eval(conf['input']), 'cron', second='*/10', minute='*', hour='*', day='*', month='*', year='*', day_of_week='*', args = [CT.CONF_DIR + 'trader/xq.json'])
     return
 
 
@@ -51,7 +51,7 @@ def main(argv):
     }
 
     sched = BlockingScheduler(jobstores=jobstores, executors=executors, job_defaults=job_defaults)
-#    #sched = BackgroundScheduler(jobstores=jobstores, executors=executors, job_defaults=job_defaults)
+    #sched = BackgroundScheduler(jobstores=jobstores, executors=executors, job_defaults=job_defaults)
 #    #sched = BlockingScheduler()
 #
 #    #sched.add_job(my_job, 'interval', seconds=5)

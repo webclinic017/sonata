@@ -63,6 +63,10 @@ class TestQuotation(unittest.TestCase):
         d = q.get_today_shibor_ON
         self.assertTrue(d > 0)
 
+    def test_get_hgt_capital(self):
+        q = Quotation()
+        d = q.get_hgt_capital()
+        self.assertTrue(isinstance(d, float))
 
 if __name__ == '__main__':
     #print unittest.main()
