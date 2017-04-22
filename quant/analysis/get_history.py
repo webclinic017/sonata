@@ -16,8 +16,8 @@ import sys
 import logging
 import getopt
 #from tushare_quotation import TushareQuotation
-from quotation import Quotation
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
+from quotation.quotation import Quotation
 import utils.const as CT
 import utils.date_time as date_time
 

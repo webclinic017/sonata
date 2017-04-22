@@ -91,6 +91,9 @@ class TushareQuotation:
                 return d
             d.to_csv(CT.HIS_DIR + symbol, sep='\t')
             #return d
+
+        if not os.path.exists(file_path):
+            return None
         d = pd.read_csv(file_path, sep='\t', index_col=0)
         return d
 
@@ -114,6 +117,9 @@ class TushareQuotation:
             if d is None or len(d) < 10:
                 return None
             d.to_csv(file_path, sep='\t')
+
+        if not os.path.exists(file_path):
+            return None
 
         d = pd.read_csv(file_path, sep='\t', index_col=1)
 
