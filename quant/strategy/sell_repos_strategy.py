@@ -49,6 +49,10 @@ class SellReposStrategy(BaseStrategy):
             job.notice(str(ret))
             job.trade(str(ret))
 
+        #不要过于频繁操作
+        time.sleep(2)
+        balance = t.balance()
+        enable_balance = balance[0].enable_balance
         quote = q.get_realtime_quotes([self.GC001, self.R001])
         amount=int(enable_balance/self.HAND/self.R001_UNIT)*self.R001_UNIT
         ret = t.sell(self.R001, price=quote[self.R001].buy, amount=amount)

@@ -80,6 +80,13 @@ class Quotation:
         d = self.tushare.get_today_shibor_ON()
         return d
 
+    def get_sina_dd(self, code, date='', vol=400):
+        """
+        大单交易数据
+        """
+        d = self.tushare.get_sina_dd(code, date, vol)
+        return d
+
     def get_hgt_capital(self):
         """
         得到当前沪股通资金情况
@@ -119,8 +126,10 @@ def main(argv):
     #print len(d)
     #d = q.get_today_shibor_ON()
     #print d
-    d = q.get_hgt_capital()
-    print d
+    #d = q.get_hgt_capital()
+    #print d
+    d = q.get_sina_dd('600340', date='2017-04-21', vol=400)
+    d.to_csv('tt.csv', sep='\t')
 
     return
 

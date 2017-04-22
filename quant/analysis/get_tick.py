@@ -16,7 +16,7 @@ import sys
 import threading
 import logging
 import getopt
-from tusharequotation import TushareQuotation
+from quotation import Quotation
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
 import utils.date_time as date_time
@@ -40,9 +40,9 @@ def get_tick_data_mul(symbol, dates):
             self.dates = dates
 
         def run(self):
-            t = TushareQuotation()
+            q = Quotation()
             for date in self.dates:
-                t.get_tick_data(self.symbol, date)
+                q.get_tick_data(self.symbol, date)
 
     sep_len = (len(dates) + CT.TICK_THRD_CNT -1)/CT.TICK_THRD_CNT
     threads = []
@@ -64,8 +64,8 @@ def get_tick_data_symbol(symbol, index, thrd_cnt):
     """
     if not os.path.exists(CT.TICK_DIR + symbol):
         os.makedirs(CT.TICK_DIR + symbol)
-    t = TushareQuotation()
-    d = t.get_his_data(symbol)
+    q = Quotation()
+    d = q.get_his_data(symbol)
     sep_len = (len(d.index) + thrd_cnt -1)/thrd_cnt
     start = sep_len * index
     end = sep_len * (index + 1)
@@ -87,9 +87,9 @@ def get_tick_data_date(date, index, thrd_cnt):
     start = sep_list_len * index
     end = sep_list_len * (index + 1)
     sep_symbols_list = symbols_list[start:end]
-    t = TushareQuotation()
+    q = Quotation()
     for s in sep_symbols_list:
-        t.get_tick_data(s, date)
+        q.get_tick_data(s, date)
     return True
 
 def get_symbol_tick_data_since(symbol, date):
@@ -102,10 +102,10 @@ def get_symbol_tick_data_since(symbol, date):
     since = date_time.str_to_date(date)
     today = datetime.datetime.today()
     days = (today - since).days
-    t = TushareQuotation()
+    q = Quotation()
     for delta in range(0, days + 1):
         day = date_time.compute_date(since, delta)
-        t.get_tick_data(symbol, day)
+        q.get_tick_data(symbol, day)
 
     return True
 
@@ -204,8 +204,8 @@ def main(argv):
     elif mode == 'since':
         get_symbol_tick_data_since(symbol, date)
     elif mode == 'tick':
-        t = TushareQuotation()
-        t.get_tick_data(symbol, date)
+        q = Quotation()
+        q.get_tick_data(symbol, date)
     else:
         print('args err mode[%s]' %(mode))
         logging.error('args err mode[%s]' %(mode))

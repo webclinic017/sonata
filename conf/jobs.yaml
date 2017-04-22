@@ -5,7 +5,7 @@
   portfolio: 'repos.yaml'
   cron:
       second: '0'
-      minute: '36'
+      minute: '12'
       hour: '14'
       day: '*'
       month: '*'

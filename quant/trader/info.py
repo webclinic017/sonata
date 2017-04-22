@@ -316,6 +316,8 @@ class Info():
         return result
 
     def format(self, raw_data):
+        print raw_data #TODO
+
         self.raw_data = raw_data
         info_list = []
         if isinstance(raw_data, list):

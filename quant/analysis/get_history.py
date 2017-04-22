@@ -15,7 +15,8 @@ import os
 import sys
 import logging
 import getopt
-from tusharequotation import TushareQuotation
+#from tushare_quotation import TushareQuotation
+from quotation import Quotation
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
 import utils.date_time as date_time
@@ -41,8 +42,8 @@ def get_h_data_mul(index, thread):
     #print sep_symbols_list
     for c in sep_symbols_list:
         global g_expire
-        t = TushareQuotation()
-        t.get_h_data(c, g_expire)
+        q = Quotation()
+        q.get_h_data(c, g_expire)
 
 def help():
     print( u'''
@@ -110,8 +111,8 @@ def main(argv):
     if mode == 'all':
         get_h_data_mul(index, thread)
     elif mode == 'symbol':
-        h = TushareQuotation()
-        h.get_h_data(symbol, g_expire)
+        q = Quotation()
+        q.get_h_data(symbol, g_expire)
     else:
         print ('args err mode[%s]' %(mode))
         logging.error('args err mode[%s]' %(mode))

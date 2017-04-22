@@ -54,10 +54,11 @@ class TushareQuotation:
         basics_file_path = CT.BASICS_DIR + './basics.csv'
 
         expired = date_time.check_file_expired(basics_file_path, expire)
-        if expired:
+        if expired or not os.path.exists(basics_file_path):
             d = ts.get_stock_basics()
             d = d.sort_index()
-            d.to_csv(CT.BASICS_DIR + './basics.csv')
+            #d.to_csv(CT.BASICS_DIR + './basics.csv', sep='\t', index=True)
+            d.to_csv(CT.BASICS_DIR + './basics.csv', sep='\t')
 
             all_stock_symbol = open(CT.BASICS_DIR + './symbols.csv', 'w')
             stock_symbol = []
@@ -66,9 +67,10 @@ class TushareQuotation:
             all_stock_symbol.writelines(stock_symbol)
             all_stock_symbol.close()
             return d
-        else:
-            d = pd.read_csv(basics_file_path)
-            return d
+
+        d = pd.read_csv(basics_file_path, index_col=0)
+        #d = pd.read_csv(basics_file_path)
+        return d
 
     def get_h_data(self, symbol, expire=60):
         """
@@ -78,14 +80,19 @@ class TushareQuotation:
             os.makedirs(CT.HIS_DIR)
         file_path = CT.HIS_DIR + symbol
         expired = date_time.check_file_expired(file_path, expire)
-        if expired:
+        if expired or not os.path.exists(file_path):
             today = date_time.get_today_str()
             d = ts.get_h_data(symbol, autype=None, start=CT.START, end=today, drop_factor=False)
-            d.to_csv(CT.HIS_DIR + symbol)
-            return d
-        else:
-            d = pd.read_csv(file_path)
-            return d
+            #index = []
+            #for i in list(d.index):
+            #    index.append(date_time.date_to_str(i))
+            #d = d.reindex(index, method='ffill')
+            if d is None:
+                return d
+            d.to_csv(CT.HIS_DIR + symbol, sep='\t')
+            #return d
+        d = pd.read_csv(file_path, sep='\t', index_col=0)
+        return d
 
     def get_tick_data(self, symbol, date, expire=60*24*365*10):
         """
@@ -101,19 +108,19 @@ class TushareQuotation:
 
         file_path = CT.TICK_DIR + symbol + '/' + date
         expired = date_time.check_file_expired(file_path, expire)
-        if expired:
+        if expired or not os.path.exists(file_path):
             d = ts.get_tick_data(symbol, date)
             #过掉当天没数据的
-            if len(d) > 10:
-                d.to_csv(file_path)
-        else:
-            d = pd.read_csv(file_path)
+            if d is None or len(d) < 10:
+                return None
+            d.to_csv(file_path, sep='\t')
+
+        d = pd.read_csv(file_path, sep='\t', index_col=1)
 
         #过掉当天没数据的
-        if len(d) > 10:
-            return d
-        else:
-            return ''
+        if d is None or len(d) < 10:
+            return None
+        return d
 
     def get_today_shibor_ON(self):
         """
@@ -123,16 +130,39 @@ class TushareQuotation:
         #print d.sort('date', ascending=False).head(10)
         return d['ON'][len(d['ON']) - 1]
 
+    def get_sina_dd(self, code, date='', vol=400):
+        """
+        大单交易数据
+        """
+        if date == '':
+            date = date_time.get_today_str()
+        d = ts.get_sina_dd(code, date=date, vol=vol)
+        return d
+
 def main(argv):
     t = TushareQuotation()
+
     #d = t.get_stock_basics(0)
-    #print d
-    #d = t.get_h_data('002337')
-    #print d
-    d = t.get_tick_data('000001', '2016-05-20')
+    #print d.index
+    #print d['pe'][d.index[0]]
+    #d.to_csv('tt.csv', sep='\t', index=True)
+
+    d = t.get_h_data('002337', expire=0)
+    print d.index[0]
+    print d.index
+    d.to_csv('tt.csv', sep='\t', index=True)
     print d
-    d = t.get_today_shibor_ON()
-    print d
+
+    #d = t.get_tick_data('000001', '2017-04-20', expire=0)
+    #print d
+    #print d.index
+    #d.to_csv('tt.csv', sep='\t')
+
+    #d = t.get_today_shibor_ON()
+    #print d
+
+    #d = t.get_sina_dd('600340', date='2017-04-21', vol=400)
+    #d.to_csv('tt.csv', sep='\t')
     return
 
 if __name__ == "__main__":

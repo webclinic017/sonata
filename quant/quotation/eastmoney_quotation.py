@@ -161,6 +161,8 @@ class EastmoneyQuotation(BaseQuotation):
             capital = sp[6]
             if capital[-2:] == u'亿元':
                 capital = float(capital[:-2])
+            elif capital[-2:] == u'万元':
+                capital = float(capital[:-2])/10000
 
         return capital
 
