@@ -10,4 +10,4 @@
 bin=`dirname $(readlink -f $0)`
 root=$bin"/../"
 
-python $root"/quant/quant.py" >>$root"/log/out.log" 2>&1
+python $root"/quant/quant.py" 2>&1 |awk '{print "["strftime("%F %H:%M:%S")"]"$0}' >>$root"/log/out.log"

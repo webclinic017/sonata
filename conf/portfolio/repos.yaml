@@ -1,4 +1,8 @@
-#GC001 sh
-- '204001'
-#R-001 sz
-- '131810'
+- name: 'GC001'
+  code: '204001'
+  amount: 0
+  price: 0
+- name: 'R-001'
+  code: '131810'
+  amount: 0
+  price: 0

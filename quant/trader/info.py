@@ -178,12 +178,14 @@ class Entrust(Status):
         self.entrust_amount = 0
         #成交数量
         self.business_amount = 0
-        #委托时间
+        #委托类型
+        self.iotype = ''
+        #委托时间, 买入、卖出  buy、sell
         self.time = 0
 
     def __str__(self):
-        result = '<Entrust entrust_no:%s, entrust_status:%s, stock_name:%s, stock_code:%s, entrust_price:%f, entrust_amount:%d, business_amount:%d, time:%s>' \
-                % (self.entrust_no, self.entrust_status, self.stock_name, self.stock_code, self.entrust_price, self.entrust_amount, self.business_amount, date_time.time_to_str(self.time, '%H:%M:%S'))
+        result = '<Entrust entrust_no:%s, entrust_status:%s, stock_name:%s, stock_code:%s, entrust_price:%f, entrust_amount:%d, business_amount:%d, iotype:%s, time:%s>' \
+                % (self.entrust_no, self.entrust_status, self.stock_name, self.stock_code, self.entrust_price, self.entrust_amount, self.business_amount, self.iotype, date_time.time_to_str(self.time, '%H:%M:%S'))
 
         return result
 
@@ -195,6 +197,7 @@ class Entrust(Status):
             return self.format_xq(information)
 
     def format_yh(self, information):
+        print information
         super(Entrust, self).format_yh(information)
         if self.status == 'error':
             return 'error'
@@ -207,6 +210,10 @@ class Entrust(Status):
             self.entrust_price = information[u'委托价格']
             self.entrust_amount = information[u'委托数量']
             self.business_amount = information[u'成交数量']
+            if information[u'买卖标志'] == u'买入':
+                self.iotype = 'buy'
+            elif information[u'买卖标志'] == u'卖出 ':
+                self.iotype = 'sell'
             self.time = date_time.str_to_date(information[u'委托时间'], '%H:%M:%S')
         else:
             self.entrust_no = information[u'entrust_num']
@@ -216,6 +223,10 @@ class Entrust(Status):
             self.entrust_price = information[u'price']
             self.entrust_amount = information[u'volume']
             self.business_amount = information[u'trans_vol']
+            if information[u'iotype'] == u'买入':
+                self.iotype = 'buy'
+            elif information[u'iotype'] == u'卖出 ':
+                self.iotype = 'sell'
             self.time = date_time.str_to_date(information[u'time'], '%H:%M:%S')
 
         return True
@@ -316,7 +327,9 @@ class Info():
         return result
 
     def format(self, raw_data):
-        print raw_data #TODO
+        #print 'format raw_data'
+        #print raw_data # TODO
+        print >> sys.stderr, 'format raw_data:\n' + str(raw_data) + '\n'
 
         self.raw_data = raw_data
         info_list = []

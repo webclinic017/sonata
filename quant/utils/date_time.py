@@ -88,6 +88,34 @@ def check_file_expired(file, expire):
     else:
         return False
 
+def get_today_time(hour=0, minute=0, second=0):
+    """
+    根据小时数,得到当天时间
+    """
+    now = time.time()
+    today_start = now - (now % 86400) + time.timezone
+    return today_start + hour * 60 * 60 + minute * 60 + second
+
+def get_exchange_time():
+    """
+    得到当天已经交易的时间
+    """
+    exchange_time = 0
+    now = time.time()
+    if now <= get_today_time(9, 30):
+        exchange_time = 0
+    elif now <= get_today_time(11, 30):
+        exchange_time = now - get_today_time(9, 30)
+    elif now <= get_today_time(13):
+        exchange_time = 2 * 60 * 60
+    elif now <= get_today_time(15):
+        exchange_time = 2 * 60 * 60 + now - get_today_time(13)
+    elif now > get_today_time(15):
+        exchange_time = 4 * 60 * 60
+
+    return exchange_time
+
+
 def main(argv):
     #d = get_his_data('000001')
     #for date in d.index:
@@ -96,8 +124,10 @@ def main(argv):
     #print get_today_str()
     #print date_to_str(datetime.date(2005, 7, 14))
     #print str_to_date('2016-04-09')
-    print compute_date('2016-04-09', -3)
+    #print compute_date('2016-04-09', -3)
     #print compute_date(datetime.datetime.today(), -3)
+    #print get_today_time(0)
+    print get_exchange_time()
 
 if __name__ == "__main__":
     main(sys.argv)

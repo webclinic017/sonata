@@ -19,19 +19,24 @@ from base_strategy import BaseStrategy
 from unittest_strategy import UnittestStrategy
 from shibor_strategy import ShiborStrategy
 from sell_repos_strategy import SellReposStrategy
+from buy_strategy import BuyStrategy
+from sell_strategy import SellStrategy
+from portfolio import Portfolio
 
 class Job():
 
     def __init__(self, conf):
         self.conf = conf
         self.status = 1
-        self.result = []
+        self.result = Portfolio()
         self.info = []
         self.contex = {}
-        self.logid = conf['name'] + '-' + str(int(time.time())) #TODO
+        self.logid = conf['name'] + '-' + str(int(time.time()))
         if 'portfolio' in self.conf.keys() and self.conf['portfolio'] != None:
-            portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + self.conf['portfolio']))
-            self.result = portfolio
+            self.result = Portfolio(CT.CONF_DIR + 'portfolio/' + self.conf['portfolio'])
+        #if 'portfolio' in self.conf.keys() and self.conf['portfolio'] != None:
+        #    portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + self.conf['portfolio']))
+        #    self.result = portfolio
 
     def __getitem__(self, key):
         return self.conf[key]
@@ -50,7 +55,8 @@ class Job():
         return True
 
     def execute(self):
-        self.notice('JOB[%s][%d:%s]' % (self.logid, self.status, ','.join(self.result)))
+        #self.notice('JOB[%s][%d:%s]' % (self.logid, self.status, ','.join(self.result)))
+        self.notice('JOB[%s][%d:%s]' % (self.logid, self.status, self.result.__str__()))
         for strategy in self.conf['strategies']:
             if strategy['switch'] != 1:
                 continue
@@ -60,7 +66,8 @@ class Job():
             obj = eval(strategy['name'])()
             obj.execute(self)
 
-            self.notice('[%d:%s]' % (self.status, ','.join(self.result)))
+            #self.notice('[%d:%s]' % (self.status, ','.join(self.result)))
+            self.notice('[%d:%s]' % (self.status, self.result.__str__()))
             #job终止
             if self.status == 0:
                 break
@@ -111,10 +118,21 @@ class Job():
 
 
 def main(argv):
-    conf = {'name':'all repos', 'switch':1, 'trader':'xq', 'portfolio': 'repos.yaml'}
+    #conf = {'name':'all repos', 'switch':1, 'trader':'xq', 'portfolio': 'portfolio_template.yaml'}
+    #job = Job(conf)
+    ##strategy = SellReposStrategy()
+    #strategy = BaseStrategy()
+    #strategy.execute(job)
+    #print job.result.__str__().encode('utf-8')
+
+    conf = {'name':'all repos', 'switch':1, 'trader':'yh', 'portfolio': 'repos.yaml'}
     job = Job(conf)
     strategy = SellReposStrategy()
     strategy.execute(job)
+    strategy = SellStrategy()
+    strategy.execute(job)
+    print job.result.__str__().encode('utf-8')
+
 
 if __name__ == "__main__":
     main(sys.argv)

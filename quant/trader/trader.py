@@ -254,21 +254,11 @@ def main(argv):
     #d = t.buy('601288', price=3.1, amount=100)
     #d = t.sell('601288', price=3.5, amount=100)
     #d = t.entrust()
-    #d = t.check_available_cancels()
+    d = t.check_available_cancels()
     #d = t.cancel_entrust('1090', '601288')
-    #d = t.cancel_entrusts('1092,1095')
+    #d = t.cancel_entrusts('2345,2346')
     #d = t.cancel_all_entrust()
     #d = t.get_deal('2017-04-11')
-
-    #print d
-    #if isinstance(d, list):
-    #    for b in d:
-    #        for (k,v) in b.items():
-    #            print (k + ':' + str(v)).encode('utf-8')
-    #        print '--------------------------------'
-    #if isinstance(d, dict):
-    #    for (k,v) in d.items():
-    #        print (k + ':' + str(v)).encode('utf-8')
 
     print str(d).encode('utf-8')
 

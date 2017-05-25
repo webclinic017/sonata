@@ -15,6 +15,7 @@ from base_strategy import BaseStrategy
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from quotation.quotation import Quotation
 from trader.trader import Trader
+from portfolio import Invest
 
 class SellReposStrategy(BaseStrategy):
     GC001 = '204001'
@@ -39,26 +40,48 @@ class SellReposStrategy(BaseStrategy):
 
         q = Quotation()
         quote = q.get_realtime_quotes([self.GC001, self.R001])
-        for (k,v) in quote.items():
-            string = v.__str__()
-            print string.encode('utf-8')
+        #for (k,v) in quote.items():
+        #    string = v.__str__()
+        #    print string.encode('utf-8')
 
+        #job.result.invest = []
+        job.result.clear()
         if quote[self.GC001].buy > quote[self.R001].buy and enable_balance >= self.GC001_UNIT * self.HAND:
             amount=int(enable_balance/self.HAND/self.GC001_UNIT)*self.GC001_UNIT
-            ret = t.sell(self.GC001, price=quote[self.GC001].buy, amount=int(enable_balance/self.HAND/self.GC001_UNIT)*self.GC001_UNIT)
-            job.notice(str(ret))
-            job.trade(str(ret))
+            #invest = Invest({'name':'GC001', 'code':self.GC001, 'amount':amount, 'price':quote[self.GC001].buy})
+            invest = {'name':'GC001', 'code':self.GC001, 'amount':amount, 'price':quote[self.GC001].buy}
+            job.result.append(invest)
+            enable_balance = enable_balance - amount * self.HAND
 
-        #不要过于频繁操作
-        time.sleep(2)
-        balance = t.balance()
-        enable_balance = balance[0].enable_balance
         quote = q.get_realtime_quotes([self.GC001, self.R001])
         amount=int(enable_balance/self.HAND/self.R001_UNIT)*self.R001_UNIT
-        ret = t.sell(self.R001, price=quote[self.R001].buy, amount=amount)
+        #invest = Invest({'name':'R001', 'code':self.R001, 'amount':amount, 'price':quote[self.R001].buy})
+        invest = {'name':'R001', 'code':self.R001, 'amount':amount, 'price':quote[self.R001].buy}
+        job.result.append(invest)
 
-        job.notice(str(ret))
-        job.trade(str(ret))
+
+        #q = Quotation()
+        #quote = q.get_realtime_quotes([self.GC001, self.R001])
+        #for (k,v) in quote.items():
+        #    string = v.__str__()
+        #    print string.encode('utf-8')
+
+        #if quote[self.GC001].buy > quote[self.R001].buy and enable_balance >= self.GC001_UNIT * self.HAND:
+        #    amount=int(enable_balance/self.HAND/self.GC001_UNIT)*self.GC001_UNIT
+        #    ret = t.sell(self.GC001, price=quote[self.GC001].buy, amount=int(enable_balance/self.HAND/self.GC001_UNIT)*self.GC001_UNIT)
+        #    job.notice(str(ret))
+        #    job.trade(str(ret))
+
+        ##不要过于频繁操作
+        #time.sleep(2)
+        #balance = t.balance()
+        #enable_balance = balance[0].enable_balance
+        #quote = q.get_realtime_quotes([self.GC001, self.R001])
+        #amount=int(enable_balance/self.HAND/self.R001_UNIT)*self.R001_UNIT
+        #ret = t.sell(self.R001, price=quote[self.R001].buy, amount=amount)
+
+        #job.notice(str(ret))
+        #job.trade(str(ret))
 
 
         #t = Trader.get_instance(job['trader'])
@@ -82,6 +105,7 @@ def main(argv):
     job = Job(conf)
     strategy = SellReposStrategy()
     strategy.execute(job)
+    print job.result.__str__().encode('utf-8')
 
 if __name__ == "__main__":
     main(sys.argv)

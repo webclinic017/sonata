@@ -50,8 +50,8 @@ class TestQuotation(unittest.TestCase):
     def test_get_stock_basics(self):
         q = Quotation()
         d = q.get_stock_basics()
-        self.assertIn('code', d)
-        self.assertGreater(len(d['code']), 1000)
+        self.assertIn('name', d)
+        self.assertGreater(len(d), 1000)
 
     def test_get_tick_data(self):
         q = Quotation()

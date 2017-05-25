@@ -116,20 +116,25 @@ def main(argv):
     #d = q.get_today_ticks('sh')
     #print d.symbol
     #print d.df
+
     #d = q.get_stock_basics()
     #print d
-    #print len(d['code'])
+    #print d.index
+    #print len(d['name'])
+
     #d = q.get_h_data('000001')
     #print d
     #d = q.get_tick_data('000001', '2016-05-20')
     #print d
     #print len(d)
-    #d = q.get_today_shibor_ON()
-    #print d
-    #d = q.get_hgt_capital()
-    #print d
-    d = q.get_sina_dd('600340', date='2017-04-21', vol=400)
-    d.to_csv('tt.csv', sep='\t')
+
+    d = q.get_today_shibor_ON()
+    print d
+    d = q.get_hgt_capital()
+    print d
+
+    #d = q.get_sina_dd('600340', date='2017-04-21', vol=400)
+    #d.to_csv('tt.csv', sep='\t')
 
     return
 

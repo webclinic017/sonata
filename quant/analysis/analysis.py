@@ -50,9 +50,40 @@ def dd_analysis():
     return
 
 def main(argv):
-    dd_analysis()
+    reload(sys)
+    sys.setdefaultencoding( "utf-8" )
+    #dd_analysis()
+
     #d = ts.get_cashflow_data(2017,3)
     #d.to_csv('tt.csv', sep='\t')
+
+    d = ts.sh_margins(start='2016-01-01', end='2017-04-22')
+    print d
+    d.to_csv('tt.csv', sep='\t')
+
+    #d = ts.xsg_data()
+    #d.to_csv('tt.csv', sep='\t')
+
+    #d = ts.fund_holdings(2017, 1)
+    #print d['amount']
+    #d.to_csv('tt.csv', sep='\t')
+
+    #d = ts.get_area_classified()
+    #d.to_csv('tt.csv', sep='\t')
+
+    #d = ts.get_report_data(2017,1)
+    #d.to_csv('tt.csv', sep='\t')
+
+    #d = ts.get_money_supply()
+    #d.to_csv('tt.csv', sep='\t')
+
+    #d = ts.get_cpi()
+    #d.to_csv('tt.csv', sep='\t')
+
+
+    #d =  ts.realtime_boxoffice()
+    #d.to_csv('tt.csv', sep='\t')
+
     return
 
 if __name__ == "__main__":

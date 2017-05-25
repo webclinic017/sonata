@@ -25,7 +25,7 @@ class TushareQuotation:
     def __init__(self):
         return
 
-    def get_stock_basics(self, expire=60*24):
+    def get_stock_basics(self, expire=60*6):
         """
         获取沪深上市公司基本情况
         :param expire: 本地数据失效时间(分)，超过时间更新本地数据,强制更新传0
@@ -66,13 +66,13 @@ class TushareQuotation:
                 stock_symbol.append(symbol + '\n')
             all_stock_symbol.writelines(stock_symbol)
             all_stock_symbol.close()
-            return d
+            #return d
 
-        d = pd.read_csv(basics_file_path, index_col=0)
+        d = pd.read_csv(basics_file_path, sep='\t', index_col=0)
         #d = pd.read_csv(basics_file_path)
         return d
 
-    def get_h_data(self, symbol, expire=60):
+    def get_h_data(self, symbol, expire=60*6):
         """
         获取一支股票所有历史数据保存到本地
         """
@@ -148,16 +148,17 @@ class TushareQuotation:
 def main(argv):
     t = TushareQuotation()
 
-    #d = t.get_stock_basics(0)
-    #print d.index
-    #print d['pe'][d.index[0]]
-    #d.to_csv('tt.csv', sep='\t', index=True)
-
-    d = t.get_h_data('002337', expire=0)
-    print d.index[0]
+    d = t.get_stock_basics(0)
     print d.index
+    print d['pe'][d.index[0]]
+    print d['name']
     d.to_csv('tt.csv', sep='\t', index=True)
-    print d
+
+    #d = t.get_h_data('002337', expire=0)
+    #print d.index[0]
+    #print d.index
+    #d.to_csv('tt.csv', sep='\t', index=True)
+    #print d
 
     #d = t.get_tick_data('000001', '2017-04-20', expire=0)
     #print d

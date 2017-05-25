@@ -11,6 +11,7 @@
 import easytrader
 import sys
 import os
+import time
 import logging
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
@@ -23,14 +24,34 @@ class MyYHTrader(easytrader.YHTrader):
 
     def balance(self):
         """资金"""
+        result = False
+        exception = False
+
         if self.s == None:
             self.prepare(self.conf)
         try:
-            return super(MyYHTrader, self).balance
+            retry = 0
+            while(result == False and retry < 3):
+                result = super(MyYHTrader, self).balance
+                retry += 1
+                time.sleep(1)
         except Exception, e:
-            logging.warning(e)
+            exception = e
+
+        if result == False or exception != False:
+            logging.warning('trader error, relogin and retry, err: ' + str(exception))
             self.prepare(self.conf)
-            return super(MyYHTrader, self).balance
+            result = super(MyYHTrader, self).balance
+        return result
+
+        #if self.s == None:
+        #    self.prepare(self.conf)
+        #try:
+        #    return super(MyYHTrader, self).balance
+        #except Exception, e:
+        #    logging.warning(e)
+        #    self.prepare(self.conf)
+        #    return super(MyYHTrader, self).balance
 
     def position(self):
         """持仓"""
@@ -183,7 +204,7 @@ class MyYHTrader(easytrader.YHTrader):
 
 def main(argv):
     t = MyYHTrader()
-    #d = t.balance()
+    d = t.balance()
     #d = t.position()
     #d = t.buy('601288', price=3.1, amount=100)
     #d = t.sell('131810', price=2, amount=10)
@@ -191,7 +212,7 @@ def main(argv):
     #d = t.entrust()
     #d = t.check_available_cancels()
     #d = t.cancel_entrust('505819', '601288')
-    d = t.cancel_entrusts('508370,508995')
+    #d = t.cancel_entrusts('508370,508995')
     #d = t.cancel_all_entrust()
     #d = t.get_current_deal()
     #d = t.get_deal()
