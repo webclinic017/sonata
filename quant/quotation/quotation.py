@@ -101,13 +101,13 @@ def main(argv):
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
-    #d = q.get_realtime_quotes(['000001', '000002'])
-    #print len(d)
-    #for (k,v) in d.items():
-    #    print k
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #    print v.name.encode('utf-8')
+    d = q.get_realtime_quotes(['000001', '000002'])
+    print len(d)
+    for (k,v) in d.items():
+        print k
+        string = v.__str__()
+        print string.encode('utf-8')
+        print v.name.encode('utf-8')
     #d = q.get_one_realtime_quotes('131800')
     #for (k,v) in d.items():
     #    string = v.__str__()
@@ -128,10 +128,10 @@ def main(argv):
     #print d
     #print len(d)
 
-    d = q.get_today_shibor_ON()
-    print d
-    d = q.get_hgt_capital()
-    print d
+    #d = q.get_today_shibor_ON()
+    #print d
+    #d = q.get_hgt_capital()
+    #print d
 
     #d = q.get_sina_dd('600340', date='2017-04-21', vol=400)
     #d.to_csv('tt.csv', sep='\t')

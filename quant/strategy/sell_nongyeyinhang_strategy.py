@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
 #****************************************************************#
-# @Brief: buy_nongyeyinhang_strategy.py
+# @Brief: sell_nongyeyinhang_strategy.py
 # @@Author: www.zhangyunsheng.com@gmail.com
 # @CreateDate: 2017-04-08 09:53
 # @ModifyDate: 2017-04-08 09:53
@@ -20,18 +20,18 @@ from utils.tool import estimate_to_close
 from utils.tool import get_turnover_brokerage
 import copy
 
-class BuyNongyeyinhangStrategy(BaseStrategy):
+class SellNongyeyinhangStrategy(BaseStrategy):
     """
-    * 农业银行价格波动比较小，风险较低
-    * 主要赚波动的钱
-    * 农业银行在 买入价格 跟卖出价格 1分钱内 上下波动， 在买入价格买进，有一定概率收在卖出价格
-    * 农业银行走势比较随大盘，可以以沪港通资金作为买入指标
-    * 沪港通  > 2 可以买入
-    * 沪港通 10点之后 当天预计 > 6, 买入
-    * 10点之后参考沪港通预估值，10点之前预估波动太大
+    * 沪港通 < -0.5, 价格涨3分(约0.85%)以上， 卖出
+    * 沪港通 当天预计 < 2,  价格涨3分(约0.85%)以上， 卖出
+    * 沪港通 < -1 ,  价格不低于买入价格， 保本卖出
+    * 沪港通 当天预计 < -4, 价格不低于买入价格， 保本卖出
     """
-    HGT_LIM = 2
-    HGT_ESTIMATE_LIM = 6
+    HGT_ESTIMATE_LIM = 2
+    HGT_LIM = -0.5
+    INCOME_RATION_LIM = 0.008
+    HGT_KEEP_LIM = -1
+    HGT_KEEP_ESTIMATE_LIM = 2
 
     def __init__(self):
         return
@@ -42,24 +42,26 @@ class BuyNongyeyinhangStrategy(BaseStrategy):
         hgt_estimate = estimate_to_close(hgt)
 
         #沪港通指标
-        buy = 0
-        if hgt > self.HGT_LIM:
-            buy = 1
-        if get_exchange_time() > 30 * 60 and hgt_estimate > self.HGT_ESTIMATE_LIM:
-            buy = 1
+        sell = 0
+        if hgt < self.HGT_LIM:
+            sell = 1
+        if get_exchange_time() > 30 * 60 and hgt_estimate < self.HGT_ESTIMATE_LIM:
+            sell = 1
+        if hgt < self.HGT_KEEP_LIM:
+            sell = 2
+        if get_exchange_time() > 30 * 60 and hgt_estimate < self.HGT_KEEP_ESTIMATE_LIM:
+            sell = 2
 
-        if buy == 0:
+        if sell == 0:
             job.status = 0
             job.result.clear()
             return 0
 
-        if buy == 1:
+        if sell != 0:
             job.status = 1
 
         t = Trader.get_instance(job['trader'])
         position = t.position()
-        balance = t.balance()
-        enable_balance = balance[0].enable_balance
 
         codes = []
         for i,v in enumerate(job.result):
@@ -74,14 +76,19 @@ class BuyNongyeyinhangStrategy(BaseStrategy):
             for p in position:
                 if p.stock_code == v.code:
                     v_position = p
-            #达到持仓上限
-            if v_position != '' and v_position.current_amount >= v.amount:
+            #没有持仓
+            if v_position == '':
                 continue
-            #设置买入参数
-            v.price = quotes[v.code].buy
-            if get_turnover_brokerage(v.price * v.amount) > enable_balance:
-                continue
-            enable_balance -= get_turnover_brokerage(v.price * v.amount)
+            #盈利卖出
+            if sell == 1:
+                v.price = max(quotes[v.code].buy, round(v_position.keep_cost_price * (1 + self.INCOME_RATION_LIM), 2))
+            #保本卖出
+            elif sell == 2:
+                v.price = v_position.keep_cost_price
+
+            # TODO 取消托单量
+            #设置卖出参数
+            v.amount = v_position.enable_amount
             job.result.append(v)
 
         return 0
@@ -90,7 +97,7 @@ def main(argv):
     from job import Job
     conf = {'name':'nongyeyinhang', 'switch':1, 'trader':'yh', 'portfolio': 'nongyeyinhang.yaml'}
     job = Job(conf)
-    strategy = BuyNongyeyinhangStrategy()
+    strategy = SellNongyeyinhangStrategy()
     strategy.execute(job)
     print job.status
     print job.result.__str__().encode('utf-8')

@@ -1,21 +1,3 @@
-- name: 'all_repos'
-  switch: 1
-  type: 'sell'
-  trader: 'yh'
-  portfolio: 'repos.yaml'
-  cron:
-      second: '0'
-      minute: '12'
-      hour: '13'
-      day: '*'
-      month: '*'
-      year: '*'
-      day_of_week: '*'
-  strategies:
-      - name: 'SellReposStrategy'
-        switch: 1
-      - name: 'SellStrategy'
-        switch: 1
 - name: 'unittest'
   switch: 1
   type: ~
@@ -24,14 +6,71 @@
   cron:
       second: '0'
       minute: '*/10'
-      hour: '*'
+      hour: '7-16'
       day: '*'
       month: '*'
       year: '*'
-      day_of_week: '*'
+      day_of_week: 'mon-fri'
   strategies:
       - name: 'UnittestStrategy'
         switch: 1
+- name: 'all_repos'
+  switch: 1
+  type: 'sell'
+  trader: 'yh'
+  portfolio: 'repos.yaml'
+  cron:
+      second: '0'
+      minute: '0-10/2'
+      hour: '14'
+      day: '*'
+      month: '*'
+      year: '*'
+      day_of_week: 'mon-fri'
+  strategies:
+      - name: 'SellReposStrategy'
+        switch: 1
+      - name: 'SellStrategy'
+        switch: 1
+#- name: 'buy_nongyeyinhang'
+#  # TODO testing
+#  switch: 0
+#  type: 'buy'
+#  trader: 'yh'
+#  portfolio: 'nongyeyinhang.yaml'
+#  cron:
+#      second: '0'
+#      minute: '28'
+#      hour: '0'
+#      day: '*'
+#      month: '*'
+#      year: '*'
+#      day_of_week: '*'
+#  strategies:
+#      - name: 'BuyNongyeyinhangStrategy'
+#        switch: 1
+#      - name: 'BuyStrategy'
+#        switch: 1
+#- name: 'sell_nongyeyinhang'
+#  # TODO testing
+#  switch: 0
+#  type: 'sell'
+#  trader: 'yh'
+#  portfolio: 'nongyeyinhang.yaml'
+#  cron:
+#      second: '0'
+#      minute: '19'
+#      hour: '3'
+#      day: '*'
+#      month: '*'
+#      year: '*'
+#      day_of_week: '*'
+#  strategies:
+#      - name: 'SellNongyeyinhangStrategy'
+#        switch: 1
+#      - name: 'SellStrategy'
+#        switch: 1
+#
 
 
 #限时撤单

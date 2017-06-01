@@ -22,6 +22,8 @@ from sell_repos_strategy import SellReposStrategy
 from buy_strategy import BuyStrategy
 from sell_strategy import SellStrategy
 from portfolio import Portfolio
+from buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
+from sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
 
 class Job():
 

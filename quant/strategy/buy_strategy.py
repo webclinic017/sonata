@@ -46,6 +46,8 @@ class BuyStrategy(BaseStrategy):
             time.sleep(1)
 
         for invest in job.result:
+            if invest.amount == 0:
+                continue
             ret = t.buy(invest.code, invest.price, invest.amount)
             job.notice(str(ret))
             job.trade(str(ret))

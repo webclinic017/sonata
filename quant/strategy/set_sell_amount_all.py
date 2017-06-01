@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
 #****************************************************************#
-# @Brief: sell_strategy.py
+# @Brief: set_sell_amount_all.py
 # @@Author: www.zhangyunsheng.com@gmail.com
 # @CreateDate: 2017-04-08 09:53
 # @ModifyDate: 2017-04-08 09:53
@@ -16,10 +16,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from quotation.quotation import Quotation
 from trader.trader import Trader
 
-class SellStrategy(BaseStrategy):
+class SetSellAmountAll(BaseStrategy):
     """
-    卖出操作
-    如果股票还有委托未成交，并且委托价格不一样，撤销重新委托，如果价格一样就不操作
+    设置卖出量为所有可卖出股票
+    如果已经有委托卖单且价格不一样，则撤销原委托单，重新委托卖出
     """
 
     def __init__(self):
@@ -45,14 +45,19 @@ class SellStrategy(BaseStrategy):
             #不要过于频繁操作
             time.sleep(1)
 
-        for invest in job.result:
-            if invest.amount == 0:
+        position = t.position()
+        for i,v in enumerate(job.result):
+            #找到该股的持仓数据
+            v_position = ''
+            for p in position:
+                if p.stock_code == v.code:
+                    v_position = p
+            #没有持仓
+            if v_position == '':
                 continue
-            ret = t.sell(invest.code, invest.price, invest.amount)
-            job.notice(str(ret))
-            job.trade(str(ret))
-            #不要过于频繁操作
-            time.sleep(1)
+
+            #设置卖出参数
+            job.result[i].amount = v_position.enable_amount
 
         return 0
 
@@ -60,7 +65,7 @@ def main(argv):
     from job import Job
     conf = {'name':'buy', 'switch':1, 'trader':'yh', 'portfolio': 'portfolio_template.yaml'}
     job = Job(conf)
-    strategy = SellStrategy()
+    strategy = SetSellAmountAll()
     strategy.execute(job)
     print job.result.__str__().encode('utf-8')
 

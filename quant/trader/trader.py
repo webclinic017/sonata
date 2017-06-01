@@ -249,12 +249,12 @@ def main(argv):
 
     ######################################################
     t = Trader.get_instance('yh')
-    #d = t.balance()
+    d = t.balance()
     #d = t.position()
-    #d = t.buy('601288', price=3.1, amount=100)
-    #d = t.sell('601288', price=3.5, amount=100)
+    #d = t.buy('601288', price=3.3, amount=100)
+    #d = t.sell('601288', price=3.65, amount=100)
     #d = t.entrust()
-    d = t.check_available_cancels()
+    #d = t.check_available_cancels()
     #d = t.cancel_entrust('1090', '601288')
     #d = t.cancel_entrusts('2345,2346')
     #d = t.cancel_all_entrust()
@@ -262,14 +262,14 @@ def main(argv):
 
     print str(d).encode('utf-8')
 
-    #if isinstance(d.raw_data, list):
-    #    for b in d.raw_data:
-    #        for (k,v) in b.items():
-    #            print (k + ':' + str(v)).encode('utf-8')
-    #        print '--------------------------------'
-    #if isinstance(d.raw_data, dict):
-    #    for (k,v) in d.raw_data.items():
-    #        print (k + ':' + str(v)).encode('utf-8')
+    if isinstance(d.raw_data, list):
+        for b in d.raw_data:
+            for (k,v) in b.items():
+                print (k + ':' + str(v)).encode('utf-8')
+            print '--------------------------------'
+    if isinstance(d.raw_data, dict):
+        for (k,v) in d.raw_data.items():
+            print (k + ':' + str(v)).encode('utf-8')
 
 
 

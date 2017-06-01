@@ -197,7 +197,6 @@ class Entrust(Status):
             return self.format_xq(information)
 
     def format_yh(self, information):
-        print information
         super(Entrust, self).format_yh(information)
         if self.status == 'error':
             return 'error'
@@ -212,7 +211,7 @@ class Entrust(Status):
             self.business_amount = information[u'成交数量']
             if information[u'买卖标志'] == u'买入':
                 self.iotype = 'buy'
-            elif information[u'买卖标志'] == u'卖出 ':
+            elif information[u'买卖标志'] == u'卖出':
                 self.iotype = 'sell'
             self.time = date_time.str_to_date(information[u'委托时间'], '%H:%M:%S')
         else:
@@ -225,7 +224,7 @@ class Entrust(Status):
             self.business_amount = information[u'trans_vol']
             if information[u'iotype'] == u'买入':
                 self.iotype = 'buy'
-            elif information[u'iotype'] == u'卖出 ':
+            elif information[u'iotype'] == u'卖出':
                 self.iotype = 'sell'
             self.time = date_time.str_to_date(information[u'time'], '%H:%M:%S')
 
@@ -327,8 +326,6 @@ class Info():
         return result
 
     def format(self, raw_data):
-        #print 'format raw_data'
-        #print raw_data # TODO
         print >> sys.stderr, 'format raw_data:\n' + str(raw_data) + '\n'
 
         self.raw_data = raw_data

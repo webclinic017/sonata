@@ -18,17 +18,17 @@ from trader.trader import Trader
 from portfolio import Invest
 
 class SellReposStrategy(BaseStrategy):
-    GC001 = '204001'
-    R001 = '131810'
-    HAND = 100
-    GC001_UNIT = 1000
-    R001_UNIT = 10
     """
     逆回购策略
     资金全部购买逆回购
     比较GC001 R-001价格，GC001价格高优先买GC001，不够10W的资金全部买R-001，R-001价格高全部买R-001
     GC003 R-003暂不考虑，周五节价日前价格都比较低，差不多是GC001 R-001的1/3
     """
+    GC001 = '204001'
+    R001 = '131810'
+    HAND = 100
+    GC001_UNIT = 1000
+    R001_UNIT = 10
 
     def __init__(self):
         return
