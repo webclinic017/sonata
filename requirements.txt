@@ -3,3 +3,4 @@ tushare
 easytrader
 APScheduler
 xlrd
+Flask

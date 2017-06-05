@@ -24,6 +24,7 @@ from sell_strategy import SellStrategy
 from portfolio import Portfolio
 from buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
 from sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
+from set_sell_amount_all import SetSellAmountAll
 
 class Job():
 

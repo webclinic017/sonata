@@ -17,6 +17,7 @@ from quote import Quote
 from ticks import Ticks
 import pandas as pd
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
+import utils.const as CT
 import utils.date_time as date_time
 from utils.symbol import em_symbol_of
 from utils.symbol import symbol_of
@@ -32,6 +33,15 @@ class EastmoneyQuotation(BaseQuotation):
     today_ticks_format = re.compile(r'var jsTimeSharingData={pages:(\d+),data:(\[.+\])}')
     hsgt_api = 'http://nufm.dfcfw.com/EM_Finance2014NumericApplication/JS.aspx?type=CT&cmd=P.(x),(x)|0000011|0000011&sty=SHSTDTA|SZSTDTA&st=z&sr=&p=&ps=&cb=&token=70f12f2f4f091e459a279469fe49eca5&js=var%20tSgkmQ=({data:[(x)]})'
     hsgt_format = re.compile(r'data:\[\"(.+)\",\"(.+)\"\]')
+    #hsgt_top_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTCJB&token=70f12f2f4f091e459a279469fe49eca5&sty=HGT&filter=(DetailDate=^2017-04-11^)(MarketType=1)&js=var%20amRIvPQq={%22data%22:(x),%22pages%22:(tp)}&ps=10&p=1&sr=1&st=Rank&rt=49882594'
+    hsgt_top_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTCJB&token=70f12f2f4f091e459a279469fe49eca5&sty=%s&filter=(DetailDate=^%s^)(MarketType=%d)&js=var%%20amRIvPQq={%%22data%%22:(x),%%22pages%%22:(tp)}&ps=10&p=1&sr=1&st=Rank&rt=49882594'
+    hsgt_top_format = re.compile(r'\"data\":(\[.+\]),\"\pages":1')
+    #hsgt_his_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTHIS&token=70f12f2f4f091e459a279469fe49eca5&filter=(MarketType=%d)&js=var%%20FDehqpDw={%%22data%22:(x),%22pages%22:(tp)}&ps=%d&p=1&sr=-1&st=DetailDate&rt=49883996'
+    #hsgt_his_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTHIS&token=70f12f2f4f091e459a279469fe49eca5&filter=(MarketType=1)&ps=5&p=1&sr=-1&st=DetailDate&rt=49883996'
+    hsgt_his_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTHIS&token=70f12f2f4f091e459a279469fe49eca5&filter=(MarketType=%d)&ps=%d&p=1&sr=-1&st=DetailDate&rt=49883996'
+
+    hsgt_his_format = re.compile(r'\"data\":(\[.+\]),\"\pages":')
+
 
     def __init__(self):
         self.ticks = Ticks()
@@ -166,6 +176,122 @@ class EastmoneyQuotation(BaseQuotation):
 
         return capital
 
+    def get_hsgt_top(self, date_str, expire = 60*24*30):
+        """
+        得到沪股通、深股通 十大成交股
+        """
+        if not os.path.exists(CT.HSGT_DIR):
+            os.makedirs(CT.HSGT_DIR)
+
+        file_path = CT.HSGT_DIR + date_str
+        expired = date_time.check_file_expired(file_path, expire)
+        if expired or not os.path.exists(file_path):
+            hgt_top_detail = self._request(self.hsgt_top_api % ('HGT', date_str, 1))
+            hgt_grep_result = self.hsgt_top_format.finditer(hgt_top_detail)
+            hgt_top_result = []
+            for stock_match_object in hgt_grep_result:
+                groups = stock_match_object.groups()
+                hgt_top_result = json.loads(groups[0])
+
+            sgt_top_result = []
+            sgt_top_detail = self._request(self.hsgt_top_api % ('SGT', date_str, 3))
+            sgt_grep_result = self.hsgt_top_format.finditer(sgt_top_detail)
+            for stock_match_object in sgt_grep_result:
+                groups = stock_match_object.groups()
+                sgt_top_result = json.loads(groups[0])
+
+            if not hgt_top_result or not sgt_top_result:
+                return pd.DataFrame()
+
+            code = []
+            name = []
+            jme = []
+            mrje = []
+            mcje = []
+            cjje = []
+            ratio = []
+            market = []
+
+            for v in hgt_top_result:
+                code.append(v['Code'])
+                name.append(v['Name'].encode('utf-8'))
+                jme.append(v['HGTJME'])
+                mrje.append(v['HGTMRJE'])
+                mcje.append(v['HGTMCJE'])
+                cjje.append(v['HGTCJJE'])
+                ratio.append(v['HGTMRJE']/v['HGTCJJE'])
+                market.append(1)
+
+            for v in sgt_top_result:
+                code.append(v['Code'])
+                name.append(v['Name'].encode('utf-8'))
+                jme.append(v['SGTJME'])
+                mrje.append(v['SGTMRJE'])
+                mcje.append(v['SGTMCJE'])
+                cjje.append(v['SGTCJJE'])
+                ratio.append(v['SGTMRJE']/v['SGTCJJE'])
+                market.append(3)
+
+            data = {'code':code, 'name':name, 'jme':jme, 'mrje':mrje, 'mcje':mcje, 'cjje':cjje, 'ratio':ratio, 'market':market}
+            #d = pd.DataFrame(data, index=code, columns=['name', 'jme', 'mrje', 'mcje', 'cjje', 'market'])
+            d = pd.DataFrame(data, columns=['code','name', 'jme', 'mrje', 'mcje', 'cjje', 'ratio', 'market'])
+
+            #d.to_csv(file_path, sep='\t')
+            d.to_csv(file_path, sep='\t', index=False)
+
+        if not os.path.exists(file_path):
+            return pd.DataFrame()
+        #d = pd.read_csv(file_path, sep='\t', index_col=0)
+        d = pd.read_csv(file_path, sep='\t', index_col='code')
+        code = []
+        for c in d.index:
+            code.append("{:0>6d}".format(c))
+        name = list(d['name'])
+        jme = list(d['jme'])
+        mrje = list(d['mrje'])
+        mcje = list(d['mcje'])
+        cjje = list(d['cjje'])
+        ratio= list(d['ratio'])
+        market = list(d['market'])
+        data = {'code':code, 'name':name, 'jme':jme, 'mrje':mrje, 'mcje':mcje, 'cjje':cjje, 'ratio':ratio, 'market':market}
+        d = pd.DataFrame(data, index = code, columns=['code', 'name', 'jme', 'mrje', 'mcje', 'cjje', 'ratio', 'market'])
+
+        return d
+
+    def get_hsgt_his(self, days=30, market_type=1, expire = 60*6):
+        """
+        得到沪股通、深股通 历史资金数据
+        资金单位百万
+        """
+        if not os.path.exists(CT.HSGT_DIR):
+            os.makedirs(CT.HSGT_DIR)
+
+        file_path = CT.HSGT_DIR + 'hsgt_his_%d_%d' % (days, market_type)
+        expired = date_time.check_file_expired(file_path, expire)
+        if expired or not os.path.exists(file_path):
+            hsgt_his_detail = self._request(self.hsgt_his_api % (market_type, days))
+            hsgt_his_result = json.loads(hsgt_his_detail)
+            date = []
+            zjlr = []
+            jme = []
+            mrcje = []
+            mccje = []
+            for v in hsgt_his_result:
+                date.append(v['DetailDate'][:10])
+                zjlr.append(v['DRZJLR'])
+                jme.append(v['DRCJJME'])
+                mrcje.append(v['MRCJE'])
+                mccje.append(v['MCCJE'])
+
+            data = {'date':date, 'zjlr':zjlr, 'jme':jme, 'mrcje':mrcje, 'mccje':mccje}
+            d = pd.DataFrame(data, columns=['date', 'zjlr', 'jme', 'mrcje', 'mccje'])
+            d.to_csv(file_path, sep='\t', index=False)
+
+        if not os.path.exists(file_path):
+            return None
+        d = pd.read_csv(file_path, sep='\t', index_col='date')
+
+        return d
 
 
 def main(argv):
@@ -192,7 +318,11 @@ def main(argv):
     #d = q.get_today_ticks('sh')
     #print d.symbol
     #print d.df
-    d = q.get_hgt_capital()
+    #d = q.get_hgt_capital()
+    #print d
+    #d = q.get_hsgt_top('2017-04-11', 0)
+    #print d
+    d = q.get_hsgt_his()
     print d
 
 

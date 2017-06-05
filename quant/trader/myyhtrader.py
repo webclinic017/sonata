@@ -55,25 +55,65 @@ class MyYHTrader(easytrader.YHTrader):
 
     def position(self):
         """持仓"""
+        result = False
+        exception = False
+
         if self.s == None:
             self.prepare(self.conf)
         try:
-            return super(MyYHTrader, self).position
+            retry = 0
+            while(result == False and retry < 3):
+                result = super(MyYHTrader, self).position
+                retry += 1
+                time.sleep(1)
         except Exception, e:
-            logging.warning(e)
+            exception = e
+
+        if result == False or exception != False:
+            logging.warning('trader error, relogin and retry, err: ' + str(exception))
             self.prepare(self.conf)
-            return super(MyYHTrader, self).position
+            result = super(MyYHTrader, self).position
+        return result
+
+        #if self.s == None:
+        #    self.prepare(self.conf)
+        #try:
+        #    return super(MyYHTrader, self).position
+        #except Exception, e:
+        #    logging.warning(e)
+        #    self.prepare(self.conf)
+        #    return super(MyYHTrader, self).position
 
     def entrust(self):
         """委托单"""
+        result = False
+        exception = False
+
         if self.s == None:
             self.prepare(self.conf)
         try:
-            return super(MyYHTrader, self).entrust
+            retry = 0
+            while(result == False and retry < 3):
+                result = super(MyYHTrader, self).entrust
+                retry += 1
+                time.sleep(1)
         except Exception, e:
-            logging.warning(e)
+            exception = e
+
+        if result == False or exception != False:
+            logging.warning('trader error, relogin and retry, err: ' + str(exception))
             self.prepare(self.conf)
-            return super(MyYHTrader, self).entrust
+            result = super(MyYHTrader, self).entrust
+        return result
+
+        #if self.s == None:
+        #    self.prepare(self.conf)
+        #try:
+        #    return super(MyYHTrader, self).entrust
+        #except Exception, e:
+        #    logging.warning(e)
+        #    self.prepare(self.conf)
+        #    return super(MyYHTrader, self).entrust
 
     def buy(self, stock_code, price, amount=0, volume=0, entrust_prop='limit'):
         """买入股票
@@ -115,6 +155,7 @@ class MyYHTrader(easytrader.YHTrader):
         @Contact: Emptyset <21324784@qq.com>
         检查撤单列表
         """
+
         try:
             return super(MyYHTrader, self).check_available_cancels(parsed)
         except Exception, e:

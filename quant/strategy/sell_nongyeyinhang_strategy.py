@@ -86,7 +86,6 @@ class SellNongyeyinhangStrategy(BaseStrategy):
             elif sell == 2:
                 v.price = v_position.keep_cost_price
 
-            # TODO 取消托单量
             #设置卖出参数
             v.amount = v_position.enable_amount
             job.result.append(v)

@@ -33,8 +33,7 @@
       - name: 'SellStrategy'
         switch: 1
 #- name: 'buy_nongyeyinhang'
-#  # TODO testing
-#  switch: 0
+#  switch: 1
 #  type: 'buy'
 #  trader: 'yh'
 #  portfolio: 'nongyeyinhang.yaml'
@@ -52,25 +51,26 @@
 #      - name: 'BuyStrategy'
 #        switch: 1
 #- name: 'sell_nongyeyinhang'
-#  # TODO testing
-#  switch: 0
+#  switch: 1
 #  type: 'sell'
 #  trader: 'yh'
 #  portfolio: 'nongyeyinhang.yaml'
 #  cron:
 #      second: '0'
-#      minute: '19'
-#      hour: '3'
+#      minute: '55'
+#      hour: '22'
 #      day: '*'
 #      month: '*'
 #      year: '*'
-#      day_of_week: '*'
+#      day_of_week: 'mon-fri'
 #  strategies:
 #      - name: 'SellNongyeyinhangStrategy'
 #        switch: 1
+#      - name: 'SetSellAmountAll'
+#        switch: 1
 #      - name: 'SellStrategy'
 #        switch: 1
-#
+
 
 
 #限时撤单

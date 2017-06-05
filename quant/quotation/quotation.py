@@ -56,7 +56,7 @@ class Quotation:
         return d
 
 
-    def get_h_data(self, symbol, expire=60):
+    def get_h_data(self, symbol, expire=60*6):
         """
         获取一支股票所有历史数据保存到本地
         """
@@ -94,6 +94,35 @@ class Quotation:
         d = self.eastmoney.get_hgt_capital()
         return d
 
+    def get_hsgt_top(self, date_str):
+        """
+        得到沪股通、深股通 十大成交股
+        """
+        d = self.eastmoney.get_hsgt_top(date_str)
+        return d
+
+    def get_hsgt_his(self, days=30, market_type=1, expire = 60*6):
+        """
+        得到沪股通、深股通 历史资金数据
+        资金单位百万
+        """
+        d = self.eastmoney.get_hsgt_his(days, market_type, expire)
+        return d
+
+
+    def get_trade_date(self, days = -1):
+        """
+        得到交易日期
+        通过上证指数的日期来得到有交易的时间
+        """
+        d = self.get_h_data('000001')
+
+        if days != -1:
+            d = d.head(days)
+
+        return list(d.index)
+
+
 
 def main(argv):
     q = Quotation()
@@ -101,13 +130,13 @@ def main(argv):
     #for (k,v) in r.items():
     #    string = v.__str__()
     #    print string.encode('utf-8')
-    d = q.get_realtime_quotes(['000001', '000002'])
-    print len(d)
-    for (k,v) in d.items():
-        print k
-        string = v.__str__()
-        print string.encode('utf-8')
-        print v.name.encode('utf-8')
+    #d = q.get_realtime_quotes(['000001', '000002'])
+    #print len(d)
+    #for (k,v) in d.items():
+    #    print k
+    #    string = v.__str__()
+    #    print string.encode('utf-8')
+    #    print v.name.encode('utf-8')
     #d = q.get_one_realtime_quotes('131800')
     #for (k,v) in d.items():
     #    string = v.__str__()
@@ -117,12 +146,12 @@ def main(argv):
     #print d.symbol
     #print d.df
 
-    #d = q.get_stock_basics()
-    #print d
-    #print d.index
-    #print len(d['name'])
+    d = q.get_stock_basics()
+    print d
+    print d.index
+    print len(d['name'])
 
-    #d = q.get_h_data('000001')
+    #d = q.get_h_data('600001')
     #print d
     #d = q.get_tick_data('000001', '2016-05-20')
     #print d
@@ -135,6 +164,8 @@ def main(argv):
 
     #d = q.get_sina_dd('600340', date='2017-04-21', vol=400)
     #d.to_csv('tt.csv', sep='\t')
+    #d = q.get_trade_date(30)
+    #print d
 
     return
 
