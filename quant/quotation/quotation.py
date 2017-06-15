@@ -94,11 +94,11 @@ class Quotation:
         d = self.eastmoney.get_hgt_capital()
         return d
 
-    def get_hsgt_top(self, date_str):
+    def get_hsgt_top(self, date_str, expire = 60*24*30):
         """
         得到沪股通、深股通 十大成交股
         """
-        d = self.eastmoney.get_hsgt_top(date_str)
+        d = self.eastmoney.get_hsgt_top(date_str, expire)
         return d
 
     def get_hsgt_his(self, days=30, market_type=1, expire = 60*6):

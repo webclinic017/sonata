@@ -35,6 +35,7 @@ class EastmoneyQuotation(BaseQuotation):
     hsgt_format = re.compile(r'data:\[\"(.+)\",\"(.+)\"\]')
     #hsgt_top_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTCJB&token=70f12f2f4f091e459a279469fe49eca5&sty=HGT&filter=(DetailDate=^2017-04-11^)(MarketType=1)&js=var%20amRIvPQq={%22data%22:(x),%22pages%22:(tp)}&ps=10&p=1&sr=1&st=Rank&rt=49882594'
     hsgt_top_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTCJB&token=70f12f2f4f091e459a279469fe49eca5&sty=%s&filter=(DetailDate=^%s^)(MarketType=%d)&js=var%%20amRIvPQq={%%22data%%22:(x),%%22pages%%22:(tp)}&ps=10&p=1&sr=1&st=Rank&rt=49882594'
+    #hsgt_top_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTCJB&token=70f12f2f4f091e459a279469fe49eca5&sty=HGT&filter=(DetailDate=^2016-06-01^)(MarketType=1)&ps=10&p=1&sr=1&st=Rank&rt=49888784'
     hsgt_top_format = re.compile(r'\"data\":(\[.+\]),\"\pages":1')
     #hsgt_his_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTHIS&token=70f12f2f4f091e459a279469fe49eca5&filter=(MarketType=%d)&js=var%%20FDehqpDw={%%22data%22:(x),%22pages%22:(tp)}&ps=%d&p=1&sr=-1&st=DetailDate&rt=49883996'
     #hsgt_his_api = 'http://dcfm.eastmoney.com/EM_MutiSvcExpandInterface/api/js/get?type=HSGTHIS&token=70f12f2f4f091e459a279469fe49eca5&filter=(MarketType=1)&ps=5&p=1&sr=-1&st=DetailDate&rt=49883996'
@@ -200,11 +201,9 @@ class EastmoneyQuotation(BaseQuotation):
                 groups = stock_match_object.groups()
                 sgt_top_result = json.loads(groups[0])
 
-            if not hgt_top_result or not sgt_top_result:
-                return pd.DataFrame()
-
             code = []
             name = []
+            change = []
             jme = []
             mrje = []
             mcje = []
@@ -212,29 +211,41 @@ class EastmoneyQuotation(BaseQuotation):
             ratio = []
             market = []
 
-            for v in hgt_top_result:
-                code.append(v['Code'])
-                name.append(v['Name'].encode('utf-8'))
-                jme.append(v['HGTJME'])
-                mrje.append(v['HGTMRJE'])
-                mcje.append(v['HGTMCJE'])
-                cjje.append(v['HGTCJJE'])
-                ratio.append(v['HGTMRJE']/v['HGTCJJE'])
-                market.append(1)
+            if hgt_top_result:
+                for v in hgt_top_result:
+                    code.append(v['Code'])
+                    name.append(v['Name'].encode('utf-8'))
+                    change.append(v['ChangePercent'])
+                    if v['HGTJME'] == '-':
+                        v['HGTJME'] = 0
+                    if v['HGTMRJE'] == '-':
+                        v['HGTMRJE'] = 0
+                    if v['HGTMCJE'] == '-':
+                        v['HGTMCJE'] = 0
+                    if v['HGTCJJE'] == '-':
+                        v['HGTCJJE'] = 0.1/(2^64 -1)
+                    jme.append(v['HGTJME'])
+                    mrje.append(v['HGTMRJE'])
+                    mcje.append(v['HGTMCJE'])
+                    cjje.append(v['HGTCJJE'])
+                    ratio.append(v['HGTMRJE']/v['HGTCJJE'])
+                    market.append(1)
 
-            for v in sgt_top_result:
-                code.append(v['Code'])
-                name.append(v['Name'].encode('utf-8'))
-                jme.append(v['SGTJME'])
-                mrje.append(v['SGTMRJE'])
-                mcje.append(v['SGTMCJE'])
-                cjje.append(v['SGTCJJE'])
-                ratio.append(v['SGTMRJE']/v['SGTCJJE'])
-                market.append(3)
+            if sgt_top_result:
+                for v in sgt_top_result:
+                    code.append(v['Code'])
+                    name.append(v['Name'].encode('utf-8'))
+                    change.append(v['ChangePercent'])
+                    jme.append(v['SGTJME'])
+                    mrje.append(v['SGTMRJE'])
+                    mcje.append(v['SGTMCJE'])
+                    cjje.append(v['SGTCJJE'])
+                    ratio.append(v['SGTMRJE']/v['SGTCJJE'])
+                    market.append(3)
 
-            data = {'code':code, 'name':name, 'jme':jme, 'mrje':mrje, 'mcje':mcje, 'cjje':cjje, 'ratio':ratio, 'market':market}
+            data = {'code':code, 'name':name, 'change':change, 'jme':jme, 'mrje':mrje, 'mcje':mcje, 'cjje':cjje, 'ratio':ratio, 'market':market}
             #d = pd.DataFrame(data, index=code, columns=['name', 'jme', 'mrje', 'mcje', 'cjje', 'market'])
-            d = pd.DataFrame(data, columns=['code','name', 'jme', 'mrje', 'mcje', 'cjje', 'ratio', 'market'])
+            d = pd.DataFrame(data, columns=['code','name', 'change', 'jme', 'mrje', 'mcje', 'cjje', 'ratio', 'market'])
 
             #d.to_csv(file_path, sep='\t')
             d.to_csv(file_path, sep='\t', index=False)
@@ -247,14 +258,15 @@ class EastmoneyQuotation(BaseQuotation):
         for c in d.index:
             code.append("{:0>6d}".format(c))
         name = list(d['name'])
+        change = list(d['change'])
         jme = list(d['jme'])
         mrje = list(d['mrje'])
         mcje = list(d['mcje'])
         cjje = list(d['cjje'])
         ratio= list(d['ratio'])
         market = list(d['market'])
-        data = {'code':code, 'name':name, 'jme':jme, 'mrje':mrje, 'mcje':mcje, 'cjje':cjje, 'ratio':ratio, 'market':market}
-        d = pd.DataFrame(data, index = code, columns=['code', 'name', 'jme', 'mrje', 'mcje', 'cjje', 'ratio', 'market'])
+        data = {'code':code, 'name':name, 'change':change, 'jme':jme, 'mrje':mrje, 'mcje':mcje, 'cjje':cjje, 'ratio':ratio, 'market':market}
+        d = pd.DataFrame(data, index = code, columns=['code', 'name', 'change', 'jme', 'mrje', 'mcje', 'cjje', 'ratio', 'market'])
 
         return d
 
@@ -320,10 +332,10 @@ def main(argv):
     #print d.df
     #d = q.get_hgt_capital()
     #print d
-    #d = q.get_hsgt_top('2017-04-11', 0)
-    #print d
-    d = q.get_hsgt_his()
+    d = q.get_hsgt_top('2016-06-01', 0)
     print d
+    #d = q.get_hsgt_his()
+    #print d
 
 
 if __name__ == "__main__":
