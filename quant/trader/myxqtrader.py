@@ -75,7 +75,7 @@ class MyXueQiuTrader(easytrader.XueQiuTrader):
         """
         #TODO
         self.prepare(self.conf)
-        return super(MyXueQiuTrader, self).cancel_entrust(long(entrust_no))
+        return super(MyXueQiuTrader, self).cancel_entrust(int(entrust_no))
 
     def cancel_all_entrust(self):
         """

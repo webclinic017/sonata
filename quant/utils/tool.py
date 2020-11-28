@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*- coding: utf-8 -*- 
+#-*- coding: utf-8 -*-
 #****************************************************************#
 # @Brief: date_time.py 定义工具
 # @@Author: www.zhangyunsheng.com@gmail.com
@@ -12,7 +12,7 @@ import sys
 import os
 import datetime
 import time
-from date_time import get_exchange_time
+from .date_time import get_exchange_time
 
 
 def estimate_to_close(value):
@@ -63,17 +63,17 @@ def get_turnover_brokerage(turnover):
 
 def get_value_by_key(data, key, default = ''):
     value = default
-    if data.has_key(key):
+    if key in data:
         value = data[key]
     return value
 
 def main(argv):
-    #print estimate_to_close(0.89)
-    #print net_deduct_trading_fees(30000)
-    #data = {'abc':123, 'cd':'aaa'}
-    #print get_value_by_key(data, 'abc', 'default')
-    #print get_value_by_key(data, 'bbb', 'default')
-    print get_total_balance(30000)
+    print((estimate_to_close(0.89)))
+    print((net_deduct_trading_fees(30000)))
+    data = {'abc': 123, 'cd': 'aaa'}
+    print((get_value_by_key(data, 'abc', 'default')))
+    print((get_value_by_key(data, 'bbb', 'default')))
+    #print get_total_balance(30000)
 
 if __name__ == "__main__":
     main(sys.argv)

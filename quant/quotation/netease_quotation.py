@@ -12,9 +12,9 @@ import sys
 import os
 import re
 import xlrd
-from ticks import Ticks
-from base_quotation import BaseQuotation
-from quote import Quote
+from .ticks import Ticks
+from .base_quotation import BaseQuotation
+from .quote import Quote
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.date_time as date_time
 from utils.symbol import symbol_of
@@ -62,9 +62,9 @@ class NeteaseQuotation(BaseQuotation):
 
 def main(argv):
     q = NeteaseQuotation()
-    #print q._gen_tick_data_url('sh', '2016-05-20')
-    #print q._gen_tick_data_url('000001', '2016-05-20')
-    print q.get_tick_data('sh', '2016-05-20')
+    print((q._gen_tick_data_url('sh', '2016-05-20')))
+    print((q._gen_tick_data_url('000001', '2016-05-20')))
+    print((q.get_tick_data('sh', '2016-05-20')))
 
 if __name__ == "__main__":
     main(sys.argv)

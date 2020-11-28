@@ -131,7 +131,7 @@ def get_tick_data_since(date, index, thrd_cnt):
     return True
 
 def help():
-    print( u'''
+    print(( '''
         -d,--debug	开启debug log
         -f,--force	强制更新
         -i,--index	线程索引
@@ -151,14 +151,14 @@ def help():
         python tick.py -m date -a $2 -i i -t HIS_THRD_CNT &
         获取所有股票从指定日期至今所有的tick数据:
         python tick.py -m allsince -a $2 -i i -t HIS_THRD_CNT &
-    '''.encode('utf-8'));
+    '''.encode('utf-8')));
 
 def main(argv):
     #get_all_tick_data('000001')
     try:
         opts, args = getopt.getopt(argv[1:], "dhe:m:i:t:s:a:")
-    except getopt.GetoptError, err:
-        print err
+    except getopt.GetoptError as err:
+        print(err)
         return -1
     log_level = logging.INFO
     mode = ''
@@ -193,7 +193,7 @@ def main(argv):
             filemode='a')
 
     log_str = 'running model[%s] index[%d] thread[%d] symbol[%s] date[%s]' %(mode, index, thread, symbol, date)
-    print log_str
+    print(log_str)
     logging.info(log_str)
     if mode == 'symbol':
         get_tick_data_symbol(symbol, index, thread)
@@ -207,7 +207,7 @@ def main(argv):
         q = Quotation()
         q.get_tick_data(symbol, date)
     else:
-        print('args err mode[%s]' %(mode))
+        print(('args err mode[%s]' %(mode)))
         logging.error('args err mode[%s]' %(mode))
     return
 

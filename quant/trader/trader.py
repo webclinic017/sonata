@@ -14,11 +14,11 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
 #from myhttrader import MyHTTrader
-from myxqtrader import MyXueQiuTrader
-from myyhtrader import MyYHTrader
+from .myxqtrader import MyXueQiuTrader
+from .myyhtrader import MyYHTrader
 from config import config
 import threading
-from info import Info
+from .info import Info
 
 mutex = threading.Lock()
 
@@ -260,16 +260,16 @@ def main(argv):
     #d = t.cancel_all_entrust()
     #d = t.get_deal('2017-04-11')
 
-    print str(d).encode('utf-8')
+    print((str(d).encode('utf-8')))
 
     if isinstance(d.raw_data, list):
         for b in d.raw_data:
-            for (k,v) in b.items():
-                print (k + ':' + str(v)).encode('utf-8')
-            print '--------------------------------'
+            for (k,v) in list(b.items()):
+                print(((k + ':' + str(v)).encode('utf-8')))
+            print('--------------------------------')
     if isinstance(d.raw_data, dict):
-        for (k,v) in d.raw_data.items():
-            print (k + ':' + str(v)).encode('utf-8')
+        for (k,v) in list(d.raw_data.items()):
+            print(((k + ':' + str(v)).encode('utf-8')))
 
 
 

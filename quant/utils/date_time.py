@@ -121,13 +121,13 @@ def main(argv):
     #for date in d.index:
     #    print date
 
-    #print get_today_str()
-    #print date_to_str(datetime.date(2005, 7, 14))
-    #print str_to_date('2016-04-09')
-    #print compute_date('2016-04-09', -3)
-    #print compute_date(datetime.datetime.today(), -3)
-    #print get_today_time(0)
-    print get_exchange_time()
+    print((get_today_str()))
+    print((date_to_str(datetime.date(2005, 7, 14))))
+    print((str_to_date('2016-04-09')))
+    print((compute_date('2016-04-09', -3)))
+    print((compute_date(datetime.datetime.today(), -3)))
+    print((get_today_time(0)))
+    print((get_exchange_time()))
 
 if __name__ == "__main__":
     main(sys.argv)

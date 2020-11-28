@@ -12,8 +12,8 @@ import sys
 import os
 import re
 import datetime
-from base_quotation import BaseQuotation
-from quote import Quote
+from .base_quotation import BaseQuotation
+from .quote import Quote
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.date_time as date_time
 from utils.symbol import code_from_symbol
@@ -82,10 +82,10 @@ def main(argv):
     q = TencentQuotation()
     r = q.get_realtime_quotes(['sh', '000001', '000006'])
     #r = q.get_realtime_quotes(['sh','sz','hs300','sz50','zxb','cyb'])
-    for (k,v) in r.items():
-        print k
+    for (k,v) in list(r.items()):
+        print(k)
         string = v.__str__()
-        print string.encode('utf-8')
+        print((string.encode('utf-8')))
 
 
 if __name__ == "__main__":

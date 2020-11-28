@@ -10,6 +10,7 @@
 import sys
 import os
 import time
+import importlib
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from quotation.quotation import Quotation
 import tushare as ts
@@ -32,7 +33,7 @@ def dd_analysis():
         d = t.get_sina_dd(code, date=date, vol=1)
         for i in d.index:
             total += d['volume'][i]
-        print date + '\t' + str(total/len(d))
+        print((date + '\t' + str(total/len(d))))
 
         #d = t.get_sina_dd(code, date=date, vol=600)
         #if d is None:
@@ -79,13 +80,13 @@ def hsgt_top_analysis():
         next_day = days[i + 1]
         next_2_day = days[i + 2]
 
-        print '\n' + next_day
+        print(('\n' + next_day))
         #资金流入
         zjlr = 0
         day_zjlr = day
         if day_zjlr in hsgt_his['zjlr']:
             zjlr = hsgt_his['zjlr'][day_zjlr]
-            print zjlr
+            print(zjlr)
             #if zjlr < 0:
             #    continue
         d = q.get_hsgt_top(day, 60 * 24 * 30)
@@ -125,7 +126,7 @@ def hsgt_top_analysis():
             #if profit < 0.00136:
             #    continue
 
-            print '\n%s\t%s\t%f\t%f\t%f\t%f\t%f\t%f\t%d\t%f\t%f\t%f' % (l[1]['code'], l[1]['name'].encode('utf-8'), l[1]['change'], l[1]['jme'], l[1]['mrje'], l[1]['mcje'], l[1]['cjje'], l[1]['ratio'], l[1]['market'], buy_price, sell_price, profit)
+            print(('\n%s\t%s\t%f\t%f\t%f\t%f\t%f\t%f\t%d\t%f\t%f\t%f' % (l[1]['code'], l[1]['name'].encode('utf-8'), l[1]['change'], l[1]['jme'], l[1]['mrje'], l[1]['mcje'], l[1]['cjje'], l[1]['ratio'], l[1]['market'], buy_price, sell_price, profit)))
 
             jme_key = int(l[1]['jme']/10000000)
             if jme_key > 20 or jme_key < -20:
@@ -180,48 +181,48 @@ def hsgt_top_analysis():
             # 只取第一个
             #break
 
-    print '\njme:\n'
-    keys = jme_statistics.keys()
+    print('\njme:\n')
+    keys = list(jme_statistics.keys())
     keys.sort()
     for k in keys:
-        print str(k) + '\t' + str(jme_count[k]) + '\t' + str(float(jme_statistics[k])/jme_count[k])
+        print((str(k) + '\t' + str(jme_count[k]) + '\t' + str(float(jme_statistics[k])/jme_count[k])))
 
-    print '\nratio:\n'
-    keys = ratio_statistics.keys()
+    print('\nratio:\n')
+    keys = list(ratio_statistics.keys())
     keys.sort()
     for k in keys:
-        print str(k) + '\t' + str(ratio_count[k]) + '\t' + str(float(ratio_statistics[k])/ratio_count[k])
+        print((str(k) + '\t' + str(ratio_count[k]) + '\t' + str(float(ratio_statistics[k])/ratio_count[k])))
 
-    print '\nchange:\n'
-    keys = change_statistics.keys()
+    print('\nchange:\n')
+    keys = list(change_statistics.keys())
     keys.sort()
     for k in keys:
-        print str(k) + '\t' + str(change_count[k]) + '\t' + str(float(change_statistics[k])/change_count[k])
+        print((str(k) + '\t' + str(change_count[k]) + '\t' + str(float(change_statistics[k])/change_count[k])))
 
-    print '\n================='
+    print('\n=================')
     win = 0
-    for k,v in profit_count.items():
+    for k,v in list(profit_count.items()):
         if k >= 1:
             win = win + v
-    print '\ncount:'
-    print count
-    print '\nwin:'
-    print float(win)/count
-    print '\naverage:'
-    print statistics/count
-    print '\ntotal:'
-    print statistics
-    print '\n================='
-    keys = profit_count.keys()
+    print('\ncount:')
+    print(count)
+    print('\nwin:')
+    print((float(win)/count))
+    print('\naverage:')
+    print((statistics/count))
+    print('\ntotal:')
+    print(statistics)
+    print('\n=================')
+    keys = list(profit_count.keys())
     keys.sort()
     for k in keys:
-        print str(k) + '\t' + str(profit_count[k])
+        print((str(k) + '\t' + str(profit_count[k])))
 
     return
 
 
 def main(argv):
-    reload(sys)
+    importlib.reload(sys)
     sys.setdefaultencoding( "utf-8" )
     #dd_analysis()
 

@@ -20,14 +20,14 @@ import yaml
 t = Trader('xq')
 
 def my_job(conf):
-    print conf
+    print(conf)
     global t
     #d = t.sell('131810', price=1, amount=20)
     d = t.balance()
-    print d
+    print(d)
     for b in d:
-        for (k,v) in b.items():
-            print (k + ':' + str(v)).encode('utf-8')
+        for (k,v) in list(b.items()):
+            print((k + ':' + str(v)).encode('utf-8'))
 
 def add_job(sched):
     #sched.add_job(my_job, 'interval', seconds=5)

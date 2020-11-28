@@ -13,10 +13,11 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from utils.symbol import symbol_of
 
-try:
-    from urllib.request import urlopen, Request
-except ImportError:
-    from urllib2 import urlopen, Request
+from urllib.request import urlopen, Request
+#try:
+#    from urllib.request import urlopen, Request
+#except ImportError:
+#    from urllib2 import urlopen, Request
 
 class BaseQuotation:
     """行情获取基类"""
@@ -113,14 +114,14 @@ class BaseQuotation:
                 if '' != self.encoding:
                     lines = lines.decode(self.encoding)
             except Exception as e:
-                print (str(e))
+                print((str(e)))
             else:
                 return lines
         raise IOError('network url error, url:%s' % (url))
 
 def main(argv):
     q = BaseQuotation()
-    #print q._gen_quotation_url(['sh', '000001'])
+    print((q._gen_quotation_url(['sh', '000001'])))
     q.get_realtime_quotes(['sh', '000001'])
 
 

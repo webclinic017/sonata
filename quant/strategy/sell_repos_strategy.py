@@ -11,11 +11,11 @@
 import sys
 import os
 import time
-from base_strategy import BaseStrategy
+from .base_strategy import BaseStrategy
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from quotation.quotation import Quotation
 from trader.trader import Trader
-from portfolio import Invest
+from .portfolio import Invest
 
 class SellReposStrategy(BaseStrategy):
     """
@@ -100,12 +100,12 @@ class SellReposStrategy(BaseStrategy):
         return 0
 
 def main(argv):
-    from job import Job
+    from .job import Job
     conf = {'name':'all repos', 'switch':1, 'trader':'yh', 'portfolio': 'repos.yaml'}
     job = Job(conf)
     strategy = SellReposStrategy()
     strategy.execute(job)
-    print job.result.__str__().encode('utf-8')
+    print((job.result.__str__().encode('utf-8')))
 
 if __name__ == "__main__":
     main(sys.argv)

@@ -70,7 +70,7 @@ class Basics:
 def main(argv):
     b = Basics()
     d = b.get_stock_basics(0)
-    print d
+    print(d)
     #d.sort_values(by='pe').to_csv(CT.BASICS_DIR + './basics_by_pe.csv')
     return
 

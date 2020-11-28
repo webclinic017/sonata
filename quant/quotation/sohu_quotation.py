@@ -11,9 +11,9 @@ import sys
 import os
 import re
 import json
-from base_quotation import BaseQuotation
-from quote import Quote
-from ticks import Ticks
+from .base_quotation import BaseQuotation
+from .quote import Quote
+from .ticks import Ticks
 import pandas as pd
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.date_time as date_time
@@ -192,30 +192,30 @@ class SohuQuotation(BaseQuotation):
 
 def main(argv):
     q = SohuQuotation()
-    #r = q.get_realtime_quotes('sh')
-    #for (k,v) in r.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #r = q.get_realtime_quotes('000001')
-    #for (k,v) in r.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #r = q.get_realtime_quotes('204001')
-    #for (k,v) in r.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    r = q.get_realtime_quotes('131810')
-    for (k,v) in r.items():
-        print k
+    r = q.get_realtime_quotes('sh')
+    for (k,v) in list(r.items()):
         string = v.__str__()
-        print string.encode('utf-8')
-    #r = q.get_realtime_quotes('000006')
-    #for (k,v) in r.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #d = q.get_today_ticks('sh')
-    #print d.symbol
-    #print d.df
+        print((string.encode('utf-8')))
+    r = q.get_realtime_quotes('000001')
+    for (k,v) in list(r.items()):
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    r = q.get_realtime_quotes('204001')
+    for (k,v) in list(r.items()):
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    r = q.get_realtime_quotes('131810')
+    for (k,v) in list(r.items()):
+        print(k)
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    r = q.get_realtime_quotes('000006')
+    for (k,v) in list(r.items()):
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    d = q.get_today_ticks('sh')
+    print((d.symbol))
+    print((d.df))
 
 
 if __name__ == "__main__":

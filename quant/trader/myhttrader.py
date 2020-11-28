@@ -114,15 +114,15 @@ def main(argv):
     #d = t.cancel_all_entrust()
 
 
-    print d
+    print(d)
     if isinstance(d, list):
         for b in d:
-            for (k,v) in b.items():
-                print (k + ':' + str(v)).encode('utf-8')
-            print '--------------------------------'
+            for (k,v) in list(b.items()):
+                print(((k + ':' + str(v)).encode('utf-8')))
+            print('--------------------------------')
     if isinstance(d, dict):
-        for (k,v) in d.items():
-            print (k + ':' + str(v)).encode('utf-8')
+        for (k,v) in list(d.items()):
+            print(((k + ':' + str(v)).encode('utf-8')))
 
 if __name__ == "__main__":
     main(sys.argv)

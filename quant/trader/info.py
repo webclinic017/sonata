@@ -34,21 +34,21 @@ class Status(object):
             return self.format_xq(information)
 
     def format_yh(self, information):
-        if information.has_key('result_type') and information['result_type'] == 'error':
+        if 'result_type' in information and information['result_type'] == 'error':
             self.status = 'error'
-            if information.has_key('result_msg'):
+            if 'result_msg' in information:
                 self.msg = information['result_msg']
-        if information.has_key('ordersno'):
+        if 'ordersno' in information:
             self.entrust_no = information['ordersno']
-        if information.has_key('msgok'):
+        if 'msgok' in information:
             self.msg = information['msgok']
-        if information.has_key('failed') and information['failed'] != '0':
+        if 'failed' in information and information['failed'] != '0':
             self.status = 'error'
         return True
 
     def format_xq(self, information):
 
-        if information.has_key('entrust_no'):
+        if 'entrust_no' in information:
             self.entrust_no = information['entrust_no']
         return True
 
@@ -74,9 +74,9 @@ class Balance(Status):
         if self.status == 'error':
             return 'error'
 
-        if not information.has_key(u'可用资金'):
+        if '可用资金' not in information:
             return False
-        self.enable_balance = information[u'可用资金']
+        self.enable_balance = information['可用资金']
         return True
 
     def format_xq(self, information):
@@ -84,9 +84,9 @@ class Balance(Status):
         if self.status == 'error':
             return 'error'
 
-        if not information.has_key(u'current_balance'):
+        if 'current_balance' not in information:
             return False
-        self.enable_balance = information[u'current_balance']
+        self.enable_balance = information['current_balance']
         return True
 
 
@@ -130,15 +130,15 @@ class Position(Status):
         if self.status == 'error':
             return 'error'
 
-        self.stock_name = information[u'证券名称']
-        self.stock_code = information[u'证券代码']
-        self.current_amount = information[u'当前持仓']
-        self.enable_amount = information[u'股份可用']
-        self.keep_cost_price = information[u'参考成本价']
-        self.last_price = information[u'参考市价']
-        self.income_balance = information[u'参考盈亏']
-        self.income_balance_ratio = information[u'盈亏比例(%)']
-        self.market_value = information[u'参考市值']
+        self.stock_name = information['证券名称']
+        self.stock_code = information['证券代码']
+        self.current_amount = information['当前持仓']
+        self.enable_amount = information['股份可用']
+        self.keep_cost_price = information['参考成本价']
+        self.last_price = information['参考市价']
+        self.income_balance = information['参考盈亏']
+        self.income_balance_ratio = information['盈亏比例(%)']
+        self.market_value = information['参考市值']
 
         return True
 
@@ -147,15 +147,15 @@ class Position(Status):
         if self.status == 'error':
             return 'error'
 
-        self.stock_name = information[u'stock_name']
-        self.stock_code = symbol.code_from_symbol(information[u'stock_code'])
-        self.current_amount = information[u'current_amount']
-        self.enable_amount = information[u'enable_amount']
-        self.keep_cost_price = information[u'keep_cost_price']
-        self.last_price = information[u'last_price']
-        self.income_balance = information[u'income_balance']
-        self.income_balance_ratio = information[u'income_balance'] #TODO
-        self.market_value = information[u'market_value']
+        self.stock_name = information['stock_name']
+        self.stock_code = symbol.code_from_symbol(information['stock_code'])
+        self.current_amount = information['current_amount']
+        self.enable_amount = information['enable_amount']
+        self.keep_cost_price = information['keep_cost_price']
+        self.last_price = information['last_price']
+        self.income_balance = information['income_balance']
+        self.income_balance_ratio = information['income_balance'] #TODO
+        self.market_value = information['market_value']
 
         return True
 
@@ -201,32 +201,32 @@ class Entrust(Status):
         if self.status == 'error':
             return 'error'
 
-        if information.has_key(u'委托序号'):
-            self.entrust_no = information[u'委托序号']
-            self.entrust_status = information[u'状态说明']
-            self.stock_name = information[u'证券名称']
-            self.stock_code = information[u'证券代码']
-            self.entrust_price = information[u'委托价格']
-            self.entrust_amount = information[u'委托数量']
-            self.business_amount = information[u'成交数量']
-            if information[u'买卖标志'] == u'买入':
+        if '委托序号' in information:
+            self.entrust_no = information['委托序号']
+            self.entrust_status = information['状态说明']
+            self.stock_name = information['证券名称']
+            self.stock_code = information['证券代码']
+            self.entrust_price = information['委托价格']
+            self.entrust_amount = information['委托数量']
+            self.business_amount = information['成交数量']
+            if information['买卖标志'] == '买入':
                 self.iotype = 'buy'
-            elif information[u'买卖标志'] == u'卖出':
+            elif information['买卖标志'] == '卖出':
                 self.iotype = 'sell'
-            self.time = date_time.str_to_date(information[u'委托时间'], '%H:%M:%S')
+            self.time = date_time.str_to_date(information['委托时间'], '%H:%M:%S')
         else:
-            self.entrust_no = information[u'entrust_num']
-            self.entrust_status = information[u'status']
-            self.stock_name = information[u'name']
-            self.stock_code = information[u'code']
-            self.entrust_price = information[u'price']
-            self.entrust_amount = information[u'volume']
-            self.business_amount = information[u'trans_vol']
-            if information[u'iotype'] == u'买入':
+            self.entrust_no = information['entrust_num']
+            self.entrust_status = information['status']
+            self.stock_name = information['name']
+            self.stock_code = information['code']
+            self.entrust_price = information['price']
+            self.entrust_amount = information['volume']
+            self.business_amount = information['trans_vol']
+            if information['iotype'] == '买入':
                 self.iotype = 'buy'
-            elif information[u'iotype'] == u'卖出':
+            elif information['iotype'] == '卖出':
                 self.iotype = 'sell'
-            self.time = date_time.str_to_date(information[u'time'], '%H:%M:%S')
+            self.time = date_time.str_to_date(information['time'], '%H:%M:%S')
 
         return True
 
@@ -235,14 +235,14 @@ class Entrust(Status):
         if self.status == 'error':
             return 'error'
 
-        self.entrust_no = information[u'entrust_no']
-        self.entrust_status = information[u'entrust_status']
-        self.stock_name = information[u'stock_name']
-        self.stock_code = symbol.code_from_symbol(information[u'stock_code'])
-        self.entrust_price = information[u'entrust_price']
-        self.entrust_amount = information[u'entrust_amount']
-        self.business_amount = information[u'business_amount']
-        self.time = date_time.str_to_date(information[u'report_time'], '%Y-%m-%d %H:%M:%S')
+        self.entrust_no = information['entrust_no']
+        self.entrust_status = information['entrust_status']
+        self.stock_name = information['stock_name']
+        self.stock_code = symbol.code_from_symbol(information['stock_code'])
+        self.entrust_price = information['entrust_price']
+        self.entrust_amount = information['entrust_amount']
+        self.business_amount = information['business_amount']
+        self.time = date_time.str_to_date(information['report_time'], '%Y-%m-%d %H:%M:%S')
 
         return True
 
@@ -281,13 +281,13 @@ class Deal(Status):
             return 'error'
 
         #当天的成交有 委托序号
-        if information.has_key(u'委托序号'):
-            self.entrust_no = information[u'委托序号']
-        self.stock_name = information[u'证券名称']
-        self.stock_code = information[u'证券代码']
-        self.business_price= information[u'成交价格']
-        self.business_amount = information[u'成交数量']
-        self.time = date_time.str_to_date(information[u'成交日期']+information[u'成交时间'], '%Y%m%d%H:%M:%S')
+        if '委托序号' in information:
+            self.entrust_no = information['委托序号']
+        self.stock_name = information['证券名称']
+        self.stock_code = information['证券代码']
+        self.business_price= information['成交价格']
+        self.business_amount = information['成交数量']
+        self.time = date_time.str_to_date(information['成交日期']+information['成交时间'], '%Y%m%d%H:%M:%S')
 
         return True
 
@@ -313,7 +313,7 @@ class Info():
         return len(self.items)
 
     def items(self):
-        return self.items.items()
+        return list(self.items.items())
 
     def append(self, item):
         self.items.append(item)
@@ -326,7 +326,7 @@ class Info():
         return result
 
     def format(self, raw_data):
-        print >> sys.stderr, 'format raw_data:\n' + str(raw_data) + '\n'
+        print('format raw_data:\n' + str(raw_data) + '\n', file=sys.stderr)
 
         self.raw_data = raw_data
         info_list = []

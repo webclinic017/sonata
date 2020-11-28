@@ -10,7 +10,7 @@
 
 import sys
 import os
-from base_strategy import BaseStrategy
+from .base_strategy import BaseStrategy
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from quotation.quotation import Quotation
 
@@ -27,7 +27,7 @@ class ShiborStrategy(BaseStrategy):
     def execute(self, job):
         q = Quotation()
         shibor_ON = q.get_today_shibor_ON()
-        print shibor_ON
+        print(shibor_ON)
         job.status = 1
 
         return 0

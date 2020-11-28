@@ -46,7 +46,7 @@ def get_h_data_mul(index, thread):
         q.get_h_data(c, g_expire)
 
 def help():
-    print( u'''
+    print(( '''
         -d,--debug	开启debug log
         -f,--force	强制更新
         -i,--index	线程索引
@@ -60,7 +60,7 @@ def help():
         python get_history.py -m all -i i -t HIS_THRD_CNT &
         获取指定股票历史数据:
         python get_history.py -m symbol -s $1
-    '''.encode('utf-8'));
+    '''.encode('utf-8')));
     return
 
 def main(argv):
@@ -70,8 +70,8 @@ def main(argv):
     #return
     try:
         opts, args = getopt.getopt(argv[1:], "dhe:m:i:t:s:a:")
-    except getopt.GetoptError, err:
-        print err
+    except getopt.GetoptError as err:
+        print(err)
         return -1
     log_level = logging.INFO
     mode = ''
@@ -106,7 +106,7 @@ def main(argv):
             filemode='a')
 
     log_str = 'running model[%s] index[%d] thread[%d] symbol[%s] date[%s]' %(mode, index, thread, symbol, date)
-    print log_str
+    print(log_str)
     logging.info(log_str)
     if mode == 'all':
         get_h_data_mul(index, thread)
@@ -114,7 +114,7 @@ def main(argv):
         q = Quotation()
         q.get_h_data(symbol, g_expire)
     else:
-        print ('args err mode[%s]' %(mode))
+        print(('args err mode[%s]' %(mode)))
         logging.error('args err mode[%s]' %(mode))
     return
 

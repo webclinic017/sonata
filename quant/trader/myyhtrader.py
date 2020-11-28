@@ -35,7 +35,7 @@ class MyYHTrader(easytrader.YHTrader):
                 result = super(MyYHTrader, self).balance
                 retry += 1
                 time.sleep(1)
-        except Exception, e:
+        except Exception as e:
             exception = e
 
         if result == False or exception != False:
@@ -66,7 +66,7 @@ class MyYHTrader(easytrader.YHTrader):
                 result = super(MyYHTrader, self).position
                 retry += 1
                 time.sleep(1)
-        except Exception, e:
+        except Exception as e:
             exception = e
 
         if result == False or exception != False:
@@ -97,7 +97,7 @@ class MyYHTrader(easytrader.YHTrader):
                 result = super(MyYHTrader, self).entrust
                 retry += 1
                 time.sleep(1)
-        except Exception, e:
+        except Exception as e:
             exception = e
 
         if result == False or exception != False:
@@ -128,7 +128,7 @@ class MyYHTrader(easytrader.YHTrader):
             self.prepare(self.conf)
         try:
             return super(MyYHTrader, self).buy(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
-        except Exception, e:
+        except Exception as e:
             logging.warning(e)
             self.prepare(self.conf)
             return super(MyYHTrader, self).buy(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
@@ -145,7 +145,7 @@ class MyYHTrader(easytrader.YHTrader):
             self.prepare(self.conf)
         try:
             return super(MyYHTrader, self).sell(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
-        except Exception, e:
+        except Exception as e:
             logging.warning(e)
             self.prepare(self.conf)
             return super(MyYHTrader, self).sell(stock_code, price=price, amount=amount, volume=volume, entrust_prop=entrust_prop)
@@ -158,7 +158,7 @@ class MyYHTrader(easytrader.YHTrader):
 
         try:
             return super(MyYHTrader, self).check_available_cancels(parsed)
-        except Exception, e:
+        except Exception as e:
             logging.warning(e)
             self.prepare(self.conf)
             return super(MyYHTrader, self).check_available_cancels(parsed)
@@ -171,7 +171,7 @@ class MyYHTrader(easytrader.YHTrader):
             self.prepare(self.conf)
         try:
             return super(MyYHTrader, self).cancel_entrust(entrust_no, stock_code)
-        except Exception, e:
+        except Exception as e:
             logging.warning(e)
             self.prepare(self.conf)
             return super(MyYHTrader, self).cancel_entrust(entrust_no, stock_code)
@@ -217,7 +217,7 @@ class MyYHTrader(easytrader.YHTrader):
             self.prepare(self.conf)
         try:
             return super(MyYHTrader, self).get_current_deal(date)
-        except Exception, e:
+        except Exception as e:
             logging.warning(e)
             self.prepare(self.conf)
             return super(MyYHTrader, self).get_current_deal(date)
@@ -259,15 +259,15 @@ def main(argv):
     #d = t.get_deal()
 
 
-    print d
+    print(d)
     if isinstance(d, list):
         for b in d:
-            for (k,v) in b.items():
-                print (k + ':' + str(v)).encode('utf-8')
-            print '--------------------------------'
+            for (k,v) in list(b.items()):
+                print(((k + ':' + str(v)).encode('utf-8')))
+            print('--------------------------------')
     if isinstance(d, dict):
-        for (k,v) in d.items():
-            print (k + ':' + str(v)).encode('utf-8')
+        for (k,v) in list(d.items()):
+            print(((k + ':' + str(v)).encode('utf-8')))
 
 if __name__ == "__main__":
     main(sys.argv)

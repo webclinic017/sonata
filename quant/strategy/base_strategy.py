@@ -26,11 +26,11 @@ class BaseStrategy:
         #    for (k,v) in b.items():
         #        print (k + ':' + str(v)).encode('utf-8')
 
-        print job.result.__str__().encode('utf-8')
+        print((job.result.__str__().encode('utf-8')))
         for p in job.result:
             if p.code == '601288':
                 job.result.remove(p)
-        print job.result.__str__().encode('utf-8')
+        print((job.result.__str__().encode('utf-8')))
         return 0
 
 

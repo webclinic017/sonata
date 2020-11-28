@@ -11,7 +11,7 @@
 import sys
 import os
 import time
-from base_strategy import BaseStrategy
+from .base_strategy import BaseStrategy
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from quotation.quotation import Quotation
 from trader.trader import Trader
@@ -87,13 +87,13 @@ class BuyNongyeyinhangStrategy(BaseStrategy):
         return 0
 
 def main(argv):
-    from job import Job
+    from .job import Job
     conf = {'name':'nongyeyinhang', 'switch':1, 'trader':'yh', 'portfolio': 'nongyeyinhang.yaml'}
     job = Job(conf)
     strategy = BuyNongyeyinhangStrategy()
     strategy.execute(job)
-    print job.status
-    print job.result.__str__().encode('utf-8')
+    print((job.status))
+    print((job.result.__str__().encode('utf-8')))
 
 if __name__ == "__main__":
     main(sys.argv)

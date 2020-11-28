@@ -34,11 +34,11 @@ if __name__ == '__main__':
     #print unittest.main()
     suite = unittest.TestLoader().loadTestsFromTestCase(TestTrader)
     test_result = unittest.TextTestRunner(verbosity=2).run(suite)
-    print test_result.wasSuccessful()
+    print((test_result.wasSuccessful()))
     #print test_result.failures
     for failure in test_result.failures:
         for i in range(len(failure)):
-            print failure[i]
+            print((failure[i]))
 
 
     #fp = file('test_report.html','wb')

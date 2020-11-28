@@ -149,27 +149,27 @@ def main(argv):
     t = TushareQuotation()
 
     d = t.get_stock_basics(0)
-    print d.index
-    print d['pe'][d.index[0]]
-    print d['name']
+    print((d.index))
+    print((d['pe'][d.index[0]]))
+    print((d['name']))
     d.to_csv('tt.csv', sep='\t', index=True)
 
-    #d = t.get_h_data('002337', expire=0)
-    #print d.index[0]
-    #print d.index
-    #d.to_csv('tt.csv', sep='\t', index=True)
-    #print d
+    d = t.get_h_data('002337', expire=0)
+    print((d.index[0]))
+    print((d.index))
+    d.to_csv('tt.csv', sep='\t', index=True)
+    print(d)
 
-    #d = t.get_tick_data('000001', '2017-04-20', expire=0)
-    #print d
-    #print d.index
-    #d.to_csv('tt.csv', sep='\t')
+    d = t.get_tick_data('000001', '2017-04-20', expire=0)
+    print(d)
+    print((d.index))
+    d.to_csv('tt.csv', sep='\t')
 
-    #d = t.get_today_shibor_ON()
-    #print d
+    d = t.get_today_shibor_ON()
+    print(d)
 
-    #d = t.get_sina_dd('600340', date='2017-04-21', vol=400)
-    #d.to_csv('tt.csv', sep='\t')
+    d = t.get_sina_dd('600340', date='2017-04-21', vol=400)
+    d.to_csv('tt.csv', sep='\t')
     return
 
 if __name__ == "__main__":

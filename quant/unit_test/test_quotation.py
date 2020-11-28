@@ -13,7 +13,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from quotation.quotation import Quotation
-import HTMLTestRunner,StringIO
+import HTMLTestRunner,io
 
 class TestQuotation(unittest.TestCase):
 
@@ -29,7 +29,7 @@ class TestQuotation(unittest.TestCase):
         self.assertIn('sh', d)
         self.assertEqual(d['sh'].symbol, 'sh000001')
         self.assertEqual(d['sh'].code, 'sh')
-        self.assertEqual(d['sh'].name, u'上证指数')
+        self.assertEqual(d['sh'].name, '上证指数')
 
         d = q.get_realtime_quotes(['000002', '601992'])
         self.assertIn('000002', d)
@@ -72,11 +72,11 @@ if __name__ == '__main__':
     #print unittest.main()
     suite = unittest.TestLoader().loadTestsFromTestCase(TestQuotation)
     test_result = unittest.TextTestRunner(verbosity=2).run(suite)
-    print test_result.wasSuccessful()
+    print((test_result.wasSuccessful()))
     #print test_result.failures
     for failure in test_result.failures:
         for i in range(len(failure)):
-            print failure[i]
+            print((failure[i]))
 
 
     #fp = file('test_report.html','wb')

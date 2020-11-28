@@ -9,11 +9,11 @@
 #***************************************************************#
 
 import sys
-from eastmoney_quotation import EastmoneyQuotation
-from sohu_quotation import SohuQuotation
-from sina_quotation import SinaQuotation
-from tencent_quotation import TencentQuotation
-from tushare_quotation import TushareQuotation
+from .eastmoney_quotation import EastmoneyQuotation
+from .sohu_quotation import SohuQuotation
+from .sina_quotation import SinaQuotation
+from .tencent_quotation import TencentQuotation
+from .tushare_quotation import TushareQuotation
 
 class Quotation:
     """ 行情类 """
@@ -126,46 +126,46 @@ class Quotation:
 
 def main(argv):
     q = Quotation()
-    #r = q.get_realtime_quotes('sh')
-    #for (k,v) in r.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #d = q.get_realtime_quotes(['000001', '000002'])
-    #print len(d)
-    #for (k,v) in d.items():
-    #    print k
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #    print v.name.encode('utf-8')
-    #d = q.get_one_realtime_quotes('131800')
-    #for (k,v) in d.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
+    r = q.get_realtime_quotes('sh')
+    for (k,v) in list(r.items()):
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    d = q.get_realtime_quotes(['000001', '000002'])
+    print((len(d)))
+    for (k,v) in list(d.items()):
+        print(k)
+        string = v.__str__()
+        print((string.encode('utf-8')))
+        print((v.name.encode('utf-8')))
+    d = q.get_one_realtime_quotes('131800')
+    for (k,v) in list(d.items()):
+        string = v.__str__()
+        print((string.encode('utf-8')))
 
-    #d = q.get_today_ticks('sh')
-    #print d.symbol
-    #print d.df
+    d = q.get_today_ticks('sh')
+    print((d.symbol))
+    print((d.df))
 
     d = q.get_stock_basics()
-    print d
-    print d.index
-    print len(d['name'])
+    print(d)
+    print((d.index))
+    print((len(d['name'])))
 
-    #d = q.get_h_data('600001')
-    #print d
-    #d = q.get_tick_data('000001', '2016-05-20')
-    #print d
-    #print len(d)
+    d = q.get_h_data('600001')
+    print(d)
+    d = q.get_tick_data('000001', '2016-05-20')
+    print(d)
+    print((len(d)))
 
-    #d = q.get_today_shibor_ON()
-    #print d
-    #d = q.get_hgt_capital()
-    #print d
+    d = q.get_today_shibor_ON()
+    print(d)
+    d = q.get_hgt_capital()
+    print(d)
 
-    #d = q.get_sina_dd('600340', date='2017-04-21', vol=400)
-    #d.to_csv('tt.csv', sep='\t')
-    #d = q.get_trade_date(30)
-    #print d
+    d = q.get_sina_dd('600340', date='2017-04-21', vol=400)
+    d.to_csv('tt.csv', sep='\t')
+    d = q.get_trade_date(30)
+    print(d)
 
     return
 

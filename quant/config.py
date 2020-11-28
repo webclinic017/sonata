@@ -7,6 +7,7 @@
 # @ModifyDate: 2017-04-10 01:22
 # Copyright ? 2017 Baidu Incorporated. All rights reserved.
 #***************************************************************#
+from pyglet.resource import file
 
 import utils.const as CT
 import yaml

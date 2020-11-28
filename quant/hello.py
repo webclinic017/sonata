@@ -69,8 +69,8 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     with app.test_request_context():
-        print url_for('projects')
-        print url_for('show_user_profile', username = 'zhang')
+        print((url_for('projects')))
+        print((url_for('show_user_profile', username = 'zhang')))
 
     #logging.basicConfig(level=logging.DEBUG,
     #        format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',

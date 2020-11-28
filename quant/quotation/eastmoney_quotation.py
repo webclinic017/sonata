@@ -12,9 +12,9 @@ import sys
 import os
 import re
 import json
-from base_quotation import BaseQuotation
-from quote import Quote
-from ticks import Ticks
+from .base_quotation import BaseQuotation
+from .quote import Quote
+from .ticks import Ticks
 import pandas as pd
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
@@ -170,9 +170,9 @@ class EastmoneyQuotation(BaseQuotation):
             sgt = groups[1]
             sp = re.split(r',', hgt)
             capital = sp[6]
-            if capital[-2:] == u'亿元':
+            if capital[-2:] == '亿元':
                 capital = float(capital[:-2])
-            elif capital[-2:] == u'万元':
+            elif capital[-2:] == '万元':
                 capital = float(capital[:-2])/10000
 
         return capital
@@ -308,34 +308,34 @@ class EastmoneyQuotation(BaseQuotation):
 
 def main(argv):
     q = EastmoneyQuotation()
-    #r = q.get_realtime_quotes('sh')
-    #for (k,v) in r.items():
-    #    print k
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #r = q.get_realtime_quotes('000001')
-    #for (k,v) in r.items():
-    #    print k
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #r = q.get_realtime_quotes('204001')
-    #for (k,v) in r.items():
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #r = q.get_realtime_quotes('131810')
-    #for (k,v) in r.items():
-    #    print k
-    #    string = v.__str__()
-    #    print string.encode('utf-8')
-    #d = q.get_today_ticks('sh')
-    #print d.symbol
-    #print d.df
-    #d = q.get_hgt_capital()
-    #print d
+    r = q.get_realtime_quotes('sh')
+    for (k,v) in list(r.items()):
+        print(k)
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    r = q.get_realtime_quotes('000001')
+    for (k,v) in list(r.items()):
+        print(k)
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    r = q.get_realtime_quotes('204001')
+    for (k,v) in list(r.items()):
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    r = q.get_realtime_quotes('131810')
+    for (k,v) in list(r.items()):
+        print(k)
+        string = v.__str__()
+        print((string.encode('utf-8')))
+    d = q.get_today_ticks('sh')
+    print((d.symbol))
+    print((d.df))
+    d = q.get_hgt_capital()
+    print(d)
     d = q.get_hsgt_top('2016-06-01', 0)
-    print d
-    #d = q.get_hsgt_his()
-    #print d
+    print(d)
+    d = q.get_hsgt_his()
+    print(d)
 
 
 if __name__ == "__main__":

@@ -15,16 +15,16 @@ import utils.const as CT
 import yaml
 import logging
 import time
-from base_strategy import BaseStrategy
-from unittest_strategy import UnittestStrategy
-from shibor_strategy import ShiborStrategy
-from sell_repos_strategy import SellReposStrategy
-from buy_strategy import BuyStrategy
-from sell_strategy import SellStrategy
-from portfolio import Portfolio
-from buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
-from sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
-from set_sell_amount_all import SetSellAmountAll
+from .base_strategy import BaseStrategy
+from .unittest_strategy import UnittestStrategy
+from .shibor_strategy import ShiborStrategy
+from .sell_repos_strategy import SellReposStrategy
+from .buy_strategy import BuyStrategy
+from .sell_strategy import SellStrategy
+from .portfolio import Portfolio
+from .buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
+from .sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
+from .set_sell_amount_all import SetSellAmountAll
 
 class Job():
 
@@ -35,7 +35,7 @@ class Job():
         self.info = []
         self.contex = {}
         self.logid = conf['name'] + '-' + str(int(time.time()))
-        if 'portfolio' in self.conf.keys() and self.conf['portfolio'] != None:
+        if 'portfolio' in list(self.conf.keys()) and self.conf['portfolio'] != None:
             self.result = Portfolio(CT.CONF_DIR + 'portfolio/' + self.conf['portfolio'])
         #if 'portfolio' in self.conf.keys() and self.conf['portfolio'] != None:
         #    portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + self.conf['portfolio']))
@@ -51,7 +51,7 @@ class Job():
         return iter(self.conf['strategy'])
 
     def items(self):
-        return self.conf['strategy'].items()
+        return list(self.conf['strategy'].items())
 
     def append(self, strategy):
         self.conf['strategy'].append(strategy)
@@ -112,7 +112,7 @@ class Job():
         info_str = "["
         for item in info_list:
             info_str += "{"
-            for (k,v) in item.items():
+            for (k,v) in list(item.items()):
                 info_str += k + ':' + str(v) + ', '
             info_str += '}, '
         info_str += "]"
@@ -134,7 +134,7 @@ def main(argv):
     strategy.execute(job)
     strategy = SellStrategy()
     strategy.execute(job)
-    print job.result.__str__().encode('utf-8')
+    print((job.result.__str__().encode('utf-8')))
 
 
 if __name__ == "__main__":

@@ -51,7 +51,7 @@ class Portfolio():
         return len(self.invest)
 
     def items(self):
-        return self.invest.items()
+        return list(self.invest.items())
 
     def append(self, item):
         if isinstance(item, dict):
@@ -78,9 +78,9 @@ class Portfolio():
 def main(argv):
     p = Portfolio(CT.CONF_DIR + 'portfolio/' + 'portfolio_template.yaml')
 
-    print p.__str__().encode('utf-8')
+    print((p.__str__().encode('utf-8')))
     p = Portfolio()
-    print p.__str__().encode('utf-8')
+    print((p.__str__().encode('utf-8')))
     #print p[0].__str__().encode('utf-8')
     #print (p[0].name + 'aa').encode('utf-8')
 

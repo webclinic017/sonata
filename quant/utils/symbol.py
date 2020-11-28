@@ -30,9 +30,9 @@ def zs_symbol_of(code):
     """
     生成指数symbol代码标志
     """
-    for (k,v) in SH_INDEX_LIST.items():
+    for (k,v) in list(SH_INDEX_LIST.items()):
         return 'sh' + code
-    for (k,v) in SZ_INDEX_LIST.items():
+    for (k,v) in list(SZ_INDEX_LIST.items()):
         return 'sz' + code
 
 def em_symbol_of(code):
@@ -113,10 +113,10 @@ def _code_index_of(code, exchange):
     """
     code_to_index = {}
     if exchange == 'sh':
-        for k, v in SH_INDEX_LIST.items():
+        for k, v in list(SH_INDEX_LIST.items()):
             code_to_index[v] = k
     elif exchange == 'sz':
-        for k, v in SZ_INDEX_LIST.items():
+        for k, v in list(SZ_INDEX_LIST.items()):
             code_to_index[v] = k
 
     if code in code_to_index:
@@ -134,19 +134,19 @@ def is_index(code):
         return False
 
 if __name__ == '__main__':
-    print symbol_of('sh')
-    print symbol_of('000001')
-    print em_symbol_of('sh')
-    print em_symbol_of('000001')
-    print exchange_of('sh')
-    print exchange_of('cyb')
-    print exchange_of('000001')
-    print code_of('sh')
-    print code_of('000001')
-    print is_index('000001')
-    print is_index('sh')
-    print _code_index_of('000001', 'sh')
-    print _code_index_of('000001', 'sz')
-    print code_from_symbol('sh000001')
-    print code_from_em_symbol('0000011')
-    print code_from_em_symbol('0000012')
+    print((symbol_of('sh')))
+    print((symbol_of('000001')))
+    print((em_symbol_of('sh')))
+    print((em_symbol_of('000001')))
+    print((exchange_of('sh')))
+    print((exchange_of('cyb')))
+    print((exchange_of('000001')))
+    print((code_of('sh')))
+    print((code_of('000001')))
+    print((is_index('000001')))
+    print((is_index('sh')))
+    print((_code_index_of('000001', 'sh')))
+    print((_code_index_of('000001', 'sz')))
+    print((code_from_symbol('sh000001')))
+    print((code_from_em_symbol('0000011')))
+    print((code_from_em_symbol('0000012')))

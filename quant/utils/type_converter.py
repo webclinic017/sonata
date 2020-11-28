@@ -35,10 +35,10 @@ def to_float(str):
 
 
 def main(argv):
-    print to_int('123')
-    print to_int('a23')
-    print to_float('1.23')
-    print to_float('1.23f')
+    print((to_int('123')))
+    print((to_int('a23')))
+    print((to_float('1.23')))
+    print((to_float('1.23f')))
 
 
 

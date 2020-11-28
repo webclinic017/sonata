@@ -14,6 +14,8 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.jobstores.memory import MemoryJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
+from pyglet.resource import file
+
 from trader.trader import Trader
 import utils.const as CT
 import yaml

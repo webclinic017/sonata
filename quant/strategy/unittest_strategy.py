@@ -10,7 +10,7 @@
 
 import sys
 import os
-from base_strategy import BaseStrategy
+from .base_strategy import BaseStrategy
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import unittest
 import logging
