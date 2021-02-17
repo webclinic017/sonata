@@ -4,3 +4,4 @@ easytrader
 APScheduler
 xlrd
 Flask
+akshare

@@ -71,22 +71,22 @@ def time_to_str(time, format='%Y-%m-%d %H:%M:%S'):
     """
     return time.strftime(format)
 
-def check_file_expired(file, expire):
-    """
-    检查文档是否过期
-    --------
-    file: 文件路径
-    expire：过期时间(分)
-    """
-    if not os.path.exists(file):
-        return True
-    statinfo = os.stat(file)
-    mtime = statinfo.st_mtime
-    now = time.time()
-    if (now - mtime)/60 > expire:
-        return True
-    else:
-        return False
+#def check_file_expired(file, expire):
+#    """
+#    检查文档是否过期
+#    --------
+#    file: 文件路径
+#    expire：过期时间(分)
+#    """
+#    if not os.path.exists(file):
+#        return True
+#    statinfo = os.stat(file)
+#    mtime = statinfo.st_mtime
+#    now = time.time()
+#    if (now - mtime)/60 > expire:
+#        return True
+#    else:
+#        return False
 
 def get_today_time(hour=0, minute=0, second=0):
     """

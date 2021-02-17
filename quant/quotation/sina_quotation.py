@@ -1,12 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: sinaquotation.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2016-04-27 19:37
-# @ModifyDate: 2016-04-27 19:37
-# Copyright ? 2016 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import sys
 import os
@@ -70,13 +63,25 @@ class SinaQuotation(BaseQuotation):
 
         return result
 
+    def _gen_realtime_quotes_url(self, codes):
+        """
+        生成行情获取链接
+        """
+        if len(codes) > self.realtime_max:
+            return ''
+        url = self.realtime_quotes_api
+        for code in codes:
+            symbol = self._code_to_symbol(code)
+            url += symbol + ','
+        return url
+
 
 def main(argv):
     q = SinaQuotation()
     #r = q.get_realtime_quotes(['sh', '000001', '000006'])
     #r = q.get_realtime_quotes(['sh'])
-    r = q.get_realtime_quotes(['sh','sz','hs300','sz50','zxb','cyb', 'zx300', 'zh500'])
-    for (k,v) in list(r.items()):
+    r = q.get_realtime_quotes(['sh', 'sz', 'hs300', 'sz50', 'zxb', 'cyb', 'zx300', 'zh500', 'kcb'])
+    for (k, v) in list(r.items()):
         print(k)
         string = v.__str__()
         print((string.encode('utf-8')))

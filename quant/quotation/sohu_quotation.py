@@ -1,12 +1,6 @@
 #!/usr/bin/python
-#-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: sohuquotation.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2016-04-27 19:37
-# @ModifyDate: 2016-04-27 19:37
-# Copyright ? 2016 Baidu Incorporated. All rights reserved.
-#***************************************************************#
+#-*- coding: utf-8 -*-
+
 import sys
 import os
 import re
@@ -31,7 +25,7 @@ class SohuQuotation(BaseQuotation):
     encoding = 'GBK'
     realtime_max = 1
     realtime_quotes_api = 'http://hq.stock.sohu.com/%s/%s/%s_%s-1.html'
-    realtime_quotes_format = re.compile(r'\'price_A1\':(\[.+\]),\'price_A2\':(\[.+\]),\'perform\':(\[.+\]),\'dealdetail\'.+,\'time\':(\[.+\]),\'news_m_r\'')
+    realtime_quotes_format = re.compile(r'\'price_A1\':(\[.+\]),\'price_A2\':(\[.+\]),\'price_A3\':\[.*\],\'perform\':(\[.+\]),\'dealdetail\'.+,\'time\':(\[.+\]),\'news_m_r\'')
     realtime_quotes_format_zs = re.compile(r'\'price_A1\':(\[.+\]),\'price_A2\':(\[.+\]),\'contribute_up\'.+,\'time\':(\[.+\])')
     today_ticks_api = 'http://hq.stock.sohu.com/%s/%s/%s_%s-3%s.html'
     today_ticks_format = re.compile(r'PEAK_ODIA\=parent\.PEAK_ODIA;\</script\>\<script\>PEAK_ODIA\((.+?)\)')
@@ -63,7 +57,8 @@ class SohuQuotation(BaseQuotation):
         if 'cn' == price_A1[0][:2]:
             q.symbol = symbol_of(price_A1[0][-6:])
         q.code = code_from_symbol(q.symbol)
-        q.name = price_A1[1].decode('utf-8')
+        #q.name = price_A1[1].decode('utf-8')
+        q.name = price_A1[1]
         q.now = to_float(price_A1[2])
         q.open = to_float(price_A2[3])
         q.close = to_float(price_A2[1])
@@ -127,7 +122,7 @@ class SohuQuotation(BaseQuotation):
         """
         self.ticks = Ticks()
         self.ticks.symbol = symbol_of(code)
-        pages = 16
+        pages = 15
         page = 1
         while (page <= pages):
             try:
@@ -163,7 +158,7 @@ class SohuQuotation(BaseQuotation):
                 #turnover = tick_groups[4]
                 t = 1 if float(tick_groups[1]) > 0 else -1
                 data.append([time, price, volume, t])
-            df = pd.DataFrame(data, columns = self.ticks.COLUMNS)
+            df = pd.DataFrame(data, columns=self.ticks.COLUMNS)
             self.ticks.df = pd.concat([self.ticks.df, df])
         return 0
 
@@ -177,10 +172,10 @@ class SohuQuotation(BaseQuotation):
         if '' == c:
             return ''
         if code_of(code) != code:
-            #指数链接
+            # 指数链接
             t = 'zs'
         else:
-            #股票链接
+            # 股票链接
             t = 'cn'
         g = code_of(code)[3:]
         if 0 == page:
@@ -192,30 +187,33 @@ class SohuQuotation(BaseQuotation):
 
 def main(argv):
     q = SohuQuotation()
-    r = q.get_realtime_quotes('sh')
-    for (k,v) in list(r.items()):
-        string = v.__str__()
-        print((string.encode('utf-8')))
-    r = q.get_realtime_quotes('000001')
-    for (k,v) in list(r.items()):
-        string = v.__str__()
-        print((string.encode('utf-8')))
-    r = q.get_realtime_quotes('204001')
-    for (k,v) in list(r.items()):
-        string = v.__str__()
-        print((string.encode('utf-8')))
-    r = q.get_realtime_quotes('131810')
-    for (k,v) in list(r.items()):
-        print(k)
-        string = v.__str__()
-        print((string.encode('utf-8')))
-    r = q.get_realtime_quotes('000006')
-    for (k,v) in list(r.items()):
-        string = v.__str__()
-        print((string.encode('utf-8')))
+    #r = q.get_realtime_quotes('sh')
+    #for (k, v) in list(r.items()):
+    #    string = v.__str__()
+    #    print((string.encode('utf-8')))
+    #r = q.get_realtime_quotes('000001')
+    #for (k, v) in list(r.items()):
+    #    string = v.__str__()
+    #    print((string.encode('utf-8')))
+    #r = q.get_realtime_quotes('204001')
+    #for (k, v) in list(r.items()):
+    #    string = v.__str__()
+    #    print((string.encode('utf-8')))
+    #r = q.get_realtime_quotes('131810')
+    #for (k, v) in list(r.items()):
+    #    print(k)
+    #    string = v.__str__()
+    #    print((string.encode('utf-8')))
+    #r = q.get_realtime_quotes('000006')
+    #for (k, v) in list(r.items()):
+    #    string = v.__str__()
+    #    print((string.encode('utf-8')))
     d = q.get_today_ticks('sh')
-    print((d.symbol))
-    print((d.df))
+    print(d.symbol)
+    print(d.df)
+    #d = q.get_today_ticks('000001')
+    #print(d.symbol)
+    #print(d.df)
 
 
 if __name__ == "__main__":

@@ -1,12 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: basequotation.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2016-04-27 16:47
-# @ModifyDate: 2016-04-27 16:47
-# Copyright ? 2016 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import sys
 import os
@@ -22,7 +15,7 @@ from urllib.request import urlopen, Request
 class BaseQuotation:
     """行情获取基类"""
     encoding = 'GBK'
-    realtime_max = 1
+    realtime_max = 800
     realtime_quotes_api = 'http://hq.sinajs.cn/?format=text&list='
     today_ticks_api = ''
 
@@ -121,8 +114,8 @@ class BaseQuotation:
 
 def main(argv):
     q = BaseQuotation()
-    print((q._gen_quotation_url(['sh', '000001'])))
-    q.get_realtime_quotes(['sh', '000001'])
+    #print((q._gen_quotation_url(['sh', '000001'])))
+    print(q.get_realtime_quotes(['sh', '000001']))
 
 
 if __name__ == "__main__":

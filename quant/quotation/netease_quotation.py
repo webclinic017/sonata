@@ -1,12 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: sinaquotation.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2016-04-27 19:37
-# @ModifyDate: 2016-04-27 19:37
-# Copyright ? 2016 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import sys
 import os
@@ -31,6 +24,7 @@ class NeteaseQuotation(BaseQuotation):
     def get_today_ticks(self, code):
         """
         获取当天tick数据
+        TODO
         """
         url = self._gen_today_ticks_url(code)
         lines = self._request(url)
@@ -62,9 +56,13 @@ class NeteaseQuotation(BaseQuotation):
 
 def main(argv):
     q = NeteaseQuotation()
-    print((q._gen_tick_data_url('sh', '2016-05-20')))
-    print((q._gen_tick_data_url('000001', '2016-05-20')))
-    print((q.get_tick_data('sh', '2016-05-20')))
+    #print((q._gen_tick_data_url('sh', '2016-05-20')))
+    #print((q._gen_tick_data_url('000001', '2016-05-20')))
+    #print((q.get_tick_data('sh', '2016-05-20')))
+    #print((q.get_today_ticks('000001')))
+    #print((q.get_today_ticks('sh')))
+    #print((q.get_tick_data('000001', '2020-12-01')))
+    #print((q.get_tick_data('sh', '2020-12-01')))
 
 if __name__ == "__main__":
     main(sys.argv)

@@ -1,12 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: tencentquotation.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2016-04-28 20:48
-# @ModifyDate: 2016-04-28 20:48
-# Copyright ? 2016 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import sys
 import os

@@ -12,9 +12,10 @@ import os
 #目录
 HOME = os.path.dirname(os.path.abspath(__file__)) + '/../../'
 BASICS_DIR = HOME + 'data/basics/'
-HIS_DIR = HOME + 'data/his/'
+DAILY_DIR = HOME + 'data/daily/'
 HFQ_DIR = HOME + 'data/hfq/'
 TICK_DIR = HOME + 'data/tick/'
+MINUTE_DIR = HOME + 'data/minute/'
 HSGT_DIR = HOME + 'data/hsgt/'
 LOG_DIR = HOME + 'log/'
 CONF_DIR = HOME + 'conf/'
