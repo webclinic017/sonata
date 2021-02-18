@@ -1,15 +1,9 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: portfolio.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2017-05-20 10:17
-# @ModifyDate: 2017-05-20 10:17
-# Copyright ? 2017 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import sys
 import os
+from pyglet.resource import file
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import yaml
 from utils.tool import get_value_by_key
@@ -70,7 +64,9 @@ class Portfolio():
     def init(self):
         conf = []
         if self.configure != '':
-            conf = yaml.load(file(self.configure))
+            with open(self.configure, encoding='utf-8') as f:
+                conf = yaml.safe_load(f)
+            #conf = yaml.load(file(self.configure))
         for c in conf:
             invest = Invest(c)
             self.append(invest)

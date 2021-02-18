@@ -1,37 +1,56 @@
-- name: 'unittest'
+- name: 'demo'
   switch: 1
   type: ~
-  trader: ~
-  portfolio: ~
+  broker: ~
+  portfolio: 'portfolio_template.yaml'
   cron:
-      second: '0'
-      minute: '*/10'
-      hour: '7-16'
+      second: '*/5'
+      minute: '*'
+      hour: '*'
       day: '*'
       month: '*'
       year: '*'
-      day_of_week: 'mon-fri'
+      day_of_week: '*'
   strategies:
-      - name: 'UnittestStrategy'
+      - name: 'BaseStrategy'
         switch: 1
-- name: 'all_repos'
-  switch: 1
-  type: 'sell'
-  trader: 'yh'
-  portfolio: 'repos.yaml'
-  cron:
-      second: '0'
-      minute: '0-10/2'
-      hour: '14'
-      day: '*'
-      month: '*'
-      year: '*'
-      day_of_week: 'mon-fri'
-  strategies:
-      - name: 'SellReposStrategy'
-        switch: 1
-      - name: 'SellStrategy'
-        switch: 1
+
+
+########## v1 ############
+#- name: 'unittest'
+#  switch: 1
+#  type: ~
+#  trader: ~
+#  portfolio: ~
+#  cron:
+#      second: '0'
+#      minute: '*/10'
+#      hour: '7-16'
+#      day: '*'
+#      month: '*'
+#      year: '*'
+#      day_of_week: 'mon-fri'
+#  strategies:
+#      - name: 'UnittestStrategy'
+#        switch: 1
+#- name: 'all_repos'
+#  switch: 1
+#  type: 'sell'
+#  trader: 'yh'
+#  portfolio: 'repos.yaml'
+#  cron:
+#      second: '0'
+#      minute: '0-10/2'
+#      hour: '14'
+#      day: '*'
+#      month: '*'
+#      year: '*'
+#      day_of_week: 'mon-fri'
+#  strategies:
+#      - name: 'SellReposStrategy'
+#        switch: 1
+#      - name: 'SellStrategy'
+#        switch: 1
 #- name: 'buy_nongyeyinhang'
 #  switch: 0
 #  type: 'buy'

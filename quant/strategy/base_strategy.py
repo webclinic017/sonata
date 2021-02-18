@@ -1,17 +1,10 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: basestrategy.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2017-04-05 22:03
-# @ModifyDate: 2017-04-05 22:03
-# Copyright ? 2017 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
-from trader.trader import Trader
+#from trader.trader import Trader
 
 class BaseStrategy:
     """策略基类 """

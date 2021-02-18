@@ -1,12 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: job.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2017-04-09 12:27
-# @ModifyDate: 2017-04-09 12:27
-# Copyright ? 2017 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import os
 import sys
@@ -15,16 +8,16 @@ import utils.const as CT
 import yaml
 import logging
 import time
-from .base_strategy import BaseStrategy
-from .unittest_strategy import UnittestStrategy
-from .shibor_strategy import ShiborStrategy
-from .sell_repos_strategy import SellReposStrategy
-from .buy_strategy import BuyStrategy
-from .sell_strategy import SellStrategy
 from .portfolio import Portfolio
-from .buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
-from .sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
-from .set_sell_amount_all import SetSellAmountAll
+from .base_strategy import BaseStrategy
+#from .unittest_strategy import UnittestStrategy
+#from .shibor_strategy import ShiborStrategy
+#from .sell_repos_strategy import SellReposStrategy
+#from .buy_strategy import BuyStrategy
+#from .sell_strategy import SellStrategy
+#from .buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
+#from .sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
+#from .set_sell_amount_all import SetSellAmountAll
 
 class Job():
 
@@ -112,7 +105,7 @@ class Job():
         info_str = "["
         for item in info_list:
             info_str += "{"
-            for (k,v) in list(item.items()):
+            for (k, v) in list(item.items()):
                 info_str += k + ':' + str(v) + ', '
             info_str += '}, '
         info_str += "]"
@@ -121,20 +114,20 @@ class Job():
 
 
 def main(argv):
-    #conf = {'name':'all repos', 'switch':1, 'trader':'xq', 'portfolio': 'portfolio_template.yaml'}
-    #job = Job(conf)
-    ##strategy = SellReposStrategy()
-    #strategy = BaseStrategy()
-    #strategy.execute(job)
-    #print job.result.__str__().encode('utf-8')
-
-    conf = {'name':'all repos', 'switch':1, 'trader':'yh', 'portfolio': 'repos.yaml'}
+    conf = {'name': 'all repos', 'switch': 1, 'broker': 'xq', 'portfolio': 'portfolio_template.yaml'}
     job = Job(conf)
-    strategy = SellReposStrategy()
+    #strategy = SellReposStrategy()
+    strategy = BaseStrategy()
     strategy.execute(job)
-    strategy = SellStrategy()
-    strategy.execute(job)
-    print((job.result.__str__().encode('utf-8')))
+    print(job.result.__str__().encode('utf-8'))
+
+    #conf = {'name':'all repos', 'switch':1, 'trader':'yh', 'portfolio': 'repos.yaml'}
+    #job = Job(conf)
+    #strategy = SellReposStrategy()
+    #strategy.execute(job)
+    #strategy = SellStrategy()
+    #strategy.execute(job)
+    #print((job.result.__str__().encode('utf-8')))
 
 
 if __name__ == "__main__":

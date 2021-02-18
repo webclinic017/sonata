@@ -1,12 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: const.py 定义常量
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2016-04-18 00:11
-# @ModifyDate: 2016-04-18 00:14
-# Copyright ? 2016 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 import os
 
 #目录
@@ -17,6 +10,7 @@ HFQ_DIR = HOME + 'data/hfq/'
 TICK_DIR = HOME + 'data/tick/'
 MINUTE_DIR = HOME + 'data/minute/'
 HSGT_DIR = HOME + 'data/hsgt/'
+MODEL_DIR = HOME + 'data/model/'
 LOG_DIR = HOME + 'log/'
 CONF_DIR = HOME + 'conf/'
 PORTFOLIO_CONF_DIR = CONF_DIR + 'portfolio/'

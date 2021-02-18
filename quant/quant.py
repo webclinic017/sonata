@@ -1,12 +1,5 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: quant.py
-# @Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2016-05-19 00:46
-# @ModifyDate: 2016-05-19 00:46
-# Copyright ? 2016 Baidu Incorporated. All rights reserved.
-#***************************************************************#
 
 import os
 import sys
@@ -16,7 +9,7 @@ from apscheduler.jobstores.memory import MemoryJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 from pyglet.resource import file
 
-from trader.trader import Trader
+#from trader.trader import Trader # TODO
 import utils.const as CT
 import yaml
 import logging
@@ -62,7 +55,7 @@ def main(argv):
     logging.config.fileConfig(CT.CONF_DIR + "logger.conf")
     #logging.getLogger("warn").warning('This is warning message')
 
-    jobstores = {'default':MemoryJobStore()}
+    jobstores = {'default': MemoryJobStore()}
     executors = {
         'default': ThreadPoolExecutor(10),
         #'processpool': ProcessPoolExecutor(3)
@@ -73,7 +66,9 @@ def main(argv):
     }
 
     scheduler = BlockingScheduler(jobstores=jobstores, executors=executors, job_defaults=job_defaults)
-    jobs = yaml.load(file(CT.CONF_DIR + 'jobs.yaml'))
+    #jobs = yaml.load(file(CT.CONF_DIR + 'jobs.yaml'))
+    with open(CT.CONF_DIR + 'jobs.yaml', encoding='utf-8') as f:
+        jobs = yaml.safe_load(f)
     add_job(scheduler, jobs)
     scheduler.start()
     return
