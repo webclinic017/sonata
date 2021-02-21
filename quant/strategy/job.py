@@ -10,6 +10,7 @@ import logging
 import time
 from .portfolio import Portfolio
 from .base_strategy import BaseStrategy
+from .rl_demo_strategy import RlDemoStrategy
 #from .unittest_strategy import UnittestStrategy
 #from .shibor_strategy import ShiborStrategy
 #from .sell_repos_strategy import SellReposStrategy
