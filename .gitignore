@@ -5,6 +5,3 @@ data
 log
 bin/daemontools
 bin/supervise
-conf/trader/yh.json
-conf/trader/xq.json
-conf/trader/ht.json
