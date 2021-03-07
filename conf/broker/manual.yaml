@@ -1,6 +1,6 @@
 
 balance:
-  enable_balance: 0.34
+  enable_balance: 120000
   market_value: 0.0
 
 position:

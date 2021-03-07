@@ -1,20 +1,14 @@
 #!/usr/bin/python
-#-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: test_trader.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2017-04-16 14:16
-# @ModifyDate: 2017-04-16 14:16
-# Copyright ? 2017 Baidu Incorporated. All rights reserved.
-#***************************************************************#
+# -*- coding: utf-8 -*-
 
 import unittest
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
-from trader.trader import Trader
+from broker.broker import Broker
+import utils.const as CT
 
-class TestTrader(unittest.TestCase):
+class TestBroker(unittest.TestCase):
 
     def setUp(self):
         pass
@@ -23,16 +17,16 @@ class TestTrader(unittest.TestCase):
         pass
 
     def test_balance(self):
-        t = Trader.get_instance('yh')
-        d = t.balance()
+        b = Broker(CT.BROKER_NAME_MANUAL)
+        d = b.balance()
 
         self.assertEqual(d[0].status, 'ok')
-        self.assertGreater(d[0].enable_balance, 0)
+        #self.assertGreater(d[0].enable_balance, 0)
 
 
 if __name__ == '__main__':
     #print unittest.main()
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestTrader)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestBroker)
     test_result = unittest.TextTestRunner(verbosity=2).run(suite)
     print((test_result.wasSuccessful()))
     #print test_result.failures

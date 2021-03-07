@@ -1,21 +1,65 @@
-- name: 'demo'
+- name: 'unittest'
   switch: 1
   type: ~
-  broker: 'manual'
-  portfolio: 'portfolio_template.yaml'
+  broker: ~
+  portfolio: ~
   cron:
-      second: '*/5'
-      minute: '*'
-      hour: '*'
+      second: '0'
+      minute: '*/10'
+      hour: '7-16'
       day: '*'
       month: '*'
       year: '*'
-      day_of_week: '*'
+      day_of_week: 'mon-fri'
   strategies:
-      - name: 'BaseStrategy'
+      - name: 'UnittestStrategy'
         switch: 1
-      - name: 'RlDemoStrategy'
-        switch: 1
+
+#- name: 'demo'
+#  switch: 1
+#  type: ~
+#  broker: 'manual'
+#  portfolio: 'portfolio_template.yaml'
+#  cron:
+#      second: '*/5'
+#      minute: '*'
+#      hour: '*'
+#      day: '*'
+#      month: '*'
+#      year: '*'
+#      day_of_week: '*'
+#  strategies:
+#      - name: 'BaseStrategy'
+#        switch: 1
+#      - name: 'RlDemoStrategy'
+#        switch: 1
+
+#- name: 'all_repos'
+#  switch: 1
+#  type: 'sell'
+#  broker: 'manual'
+#  portfolio: 'repos.yaml'
+#  cron:
+#      second: '*/10'
+#      minute: '*'
+#      hour: '*'
+#      day: '*'
+#      month: '*'
+#      year: '*'
+#      day_of_week: '*'
+##cron:
+##      second: '0'
+##      minute: '0-10/2'
+##      hour: '14'
+##      day: '*'
+##      month: '*'
+##      year: '*'
+##      day_of_week: 'mon-fri'
+#  strategies:
+#      - name: 'SellReposStrategy'
+#        switch: 1
+#      - name: 'DealStrategy'
+#        switch: 1
 
 
 ########## v1 ############

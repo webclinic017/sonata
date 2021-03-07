@@ -27,6 +27,14 @@ class Status(object):
         result = '<status:%s, msg:%s, entrust_no:%s>' % (self.status, self.msg, self.entrust_no)
         return result
 
+    def set_error(self):
+        self.status = Status.STATUS_ERR
+        return True
+
+    def set_black(self):
+        self.status = Status.STATUS_BLACK
+        return True
+
     def format(self, information):
         if self.broker == CT.BROKER_NAME_MANUAL:
             return self.format_manual(information)
@@ -36,6 +44,9 @@ class Status(object):
             return self.format_xq(information)
 
     def format_manual(self, information):
+        if not information:
+            self.set_error()
+            return False
         return True
 
     def format_yh(self, information):
@@ -83,10 +94,14 @@ class Balance(Status):
 
     def format_manual(self, information):
         try:
+            if not information:
+                self.set_error()
+                return False
             self.current_balance = information['enable_balance']
             self.enable_balance = information['enable_balance']
             self.market_value = information['market_value']
         except Exception as e:
+            self.set_error()
             Logger.warn('Balance.format_manual()  error, err: ' + str(e))
 
         return True
@@ -154,11 +169,15 @@ class Position(Status):
 
     def format_manual(self, information):
         try:
+            if not information:
+                self.set_error()
+                return False
             self.stock_name = information['stock_name']
             self.stock_code = information['stock_code']
             self.current_amount = information['current_amount']
             self.enable_amount = information['enable_amount']
         except Exception as e:
+            self.set_error()
             Logger.warn('Position.format_manual()  error, err: ' + str(e))
 
         return True
@@ -371,7 +390,8 @@ class Info:
         return result
 
     def format(self, raw_data):
-        print('format raw_data:\n' + str(raw_data) + '\n', file=sys.stderr)
+        # print('format raw_data:\n' + str(raw_data) + '\n', file=sys.stderr)
+        Logger.quant('format raw_data:\n' + str(raw_data))
 
         self.raw_data = raw_data
         info_list = []
@@ -398,6 +418,6 @@ class Info:
 
     def set_black(self):
         item = Status(self.broker)
-        item.status = Status.STATUS_BLACK
+        item.set_black()
         self.items.append(item)
         return True

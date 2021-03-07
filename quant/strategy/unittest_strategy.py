@@ -1,12 +1,5 @@
 #!/usr/bin/python
-#-*- coding: utf-8 -*- 
-#****************************************************************#
-# @Brief: unittest_strategy.py
-# @@Author: www.zhangyunsheng.com@gmail.com
-# @CreateDate: 2017-04-08 23:38
-# @ModifyDate: 2017-04-08 23:38
-# Copyright ? 2017 Baidu Incorporated. All rights reserved.
-#***************************************************************#
+# -*- coding: utf-8 -*-
 
 import sys
 import os
@@ -15,7 +8,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 from utils.logger import Logger
 import unittest
 from unit_test.test_quotation import TestQuotation
-from unit_test.test_trader import TestTrader
+from unit_test.test_broker import TestBroker
 from unit_test.HTMLTestRunner import HTMLTestRunner
 
 
@@ -38,10 +31,10 @@ class UnittestStrategy(BaseStrategy):
                 for i in range(len(failure)):
                     failure_report += str(failure[i])
                 failure_report += '--------------------------------------------------\n'
-            #Logger.smtp(failure_report)
-            job.smtp(failure_report)
+            Logger.smtp(failure_report)
+            #job.smtp(failure_report)
 
-        suite = unittest.TestLoader().loadTestsFromTestCase(TestTrader)
+        suite = unittest.TestLoader().loadTestsFromTestCase(TestBroker)
         test_result = unittest.TextTestRunner(verbosity=2).run(suite)
         if not test_result.wasSuccessful():
             failure_report = 'FAIL: unittest_strategy failed!\n'
@@ -50,8 +43,8 @@ class UnittestStrategy(BaseStrategy):
                 for i in range(len(failure)):
                     failure_report += str(failure[i])
                 failure_report += '--------------------------------------------------\n'
-            #Logger.smtp(failure_report)
-            job.smtp(failure_report)
+            Logger.smtp(failure_report)
+            #job.smtp(failure_report)
 
 
         return 0

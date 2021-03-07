@@ -21,7 +21,10 @@ class Logger:
     log_conf = CT.CONF_DIR + "logger.conf"
 
     def __init__(self):
+        cwd = os.getcwd()
+        os.chdir(CT.HOME)
         logging.config.fileConfig(CT.CONF_DIR + "logger.conf")
+        os.chdir(cwd)
 
     def __new__(cls, *args, **kwargs):
         if not cls.__instance:

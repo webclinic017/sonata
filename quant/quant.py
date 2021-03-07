@@ -69,6 +69,7 @@ def main(argv):
         jobs = yaml.safe_load(f)
     add_job(scheduler, jobs)
     scheduler.start()
+
     return
 
 if __name__ == "__main__":

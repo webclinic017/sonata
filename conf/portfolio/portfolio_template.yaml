@@ -1,12 +1,21 @@
-#- name: '农业银行'
-#  code: '601288'
-#  amount: 9000
-#  price: 3.12
-#- name: '格力电器'
-#  code: '000651'
-#  amount: 1000
-#  price: 30.02
-- name: '农业银行'
-  code: '601288'
+# code: 股票代码，必选。
+# name: 名称
+# amount: 持仓上限
+# price: 由策略决定含义
+# deal: 交易类型。 1:买入; -1:卖出; 0:待定;
+
+- code: '601288'
+  name: '农业银行'
   amount: 100
-  price: 3.69
+  price: 3.35
+  deal: 1
+- code: '000651'
+  name: '格力电器'
+  amount: 1000
+  price: 30.02
+  deal: -1
+- code: '300676'
+  name: '华大基因'
+  amount: 100
+  price: 130.63
+  deal: 0

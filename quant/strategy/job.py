@@ -1,37 +1,43 @@
 #!/usr/bin/python
-#-*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 import os
 import sys
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
 from utils.logger import Logger
 import yaml
 import time
+from broker.broker import Broker
 from .portfolio import Portfolio
 from .base_strategy import BaseStrategy
+from .sell_repos_strategy import SellReposStrategy
+from .deal_strategy import DealStrategy
+from .unittest_strategy import UnittestStrategy
 from .rl_demo_strategy import RlDemoStrategy
-#from .unittest_strategy import UnittestStrategy
-#from .shibor_strategy import ShiborStrategy
-#from .sell_repos_strategy import SellReposStrategy
-#from .buy_strategy import BuyStrategy
-#from .sell_strategy import SellStrategy
-#from .buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
-#from .sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
-#from .set_sell_amount_all import SetSellAmountAll
 
-class Job():
+
+# from .shibor_strategy import ShiborStrategy
+# from .buy_strategy import BuyStrategy
+# from .sell_strategy import SellStrategy
+# from .buy_nongyeyinhang_strategy import BuyNongyeyinhangStrategy
+# from .sell_nongyeyinhang_strategy import SellNongyeyinhangStrategy
+# from .set_sell_amount_all import SetSellAmountAll
+
+class Job:
 
     def __init__(self, conf):
         self.conf = conf
+        self.broker = Broker.get_instance(conf['broker'])
         self.status = 1
         self.result = Portfolio()
         self.info = []
         self.contex = {}
         self.logid = conf['name'] + '-' + str(int(time.time()))
-        if 'portfolio' in list(self.conf.keys()) and self.conf['portfolio'] != None:
+        if 'portfolio' in list(self.conf.keys()) and self.conf['portfolio'] is not None:
             self.result = Portfolio(CT.CONF_DIR + 'portfolio/' + self.conf['portfolio'])
-        #if 'portfolio' in self.conf.keys() and self.conf['portfolio'] != None:
+        # if 'portfolio' in self.conf.keys() and self.conf['portfolio'] != None:
         #    portfolio = yaml.load(file(CT.CONF_DIR + 'portfolio/' + self.conf['portfolio']))
         #    self.result = portfolio
 
@@ -52,7 +58,7 @@ class Job():
         return True
 
     def execute(self):
-        #self.notice('JOB[%s][%d:%s]' % (self.logid, self.status, ','.join(self.result)))
+        # self.notice('JOB[%s][%d:%s]' % (self.logid, self.status, ','.join(self.result)))
         self.notice('JOB[%s][%d:%s]' % (self.logid, self.status, self.result.__str__()))
         for strategy in self.conf['strategies']:
             if strategy['switch'] != 1:
@@ -63,36 +69,36 @@ class Job():
             obj = eval(strategy['name'])()
             obj.execute(self)
 
-            #self.notice('[%d:%s]' % (self.status, ','.join(self.result)))
+            # self.notice('[%d:%s]' % (self.status, ','.join(self.result)))
             self.notice('[%d:%s]' % (self.status, self.result.__str__()))
-            #job终止
+            # job终止
             if self.status == 0:
                 break
 
         Logger.quant(' '.join(self.info))
-        return 0
+        return True
 
     def notice(self, information):
         """
         打印info信息
         """
         self.info.append(information)
-        return 0
+        return True
 
     def warn(self, information):
         message = '[%s] %s' % (self.logid, information)
         Logger.warn(message)
-        return 0
+        return True
 
     def trade(self, information):
         message = '[%s] %s' % (self.logid, information)
         Logger.trade(message)
-        return 0
+        return True
 
     def smtp(self, information):
         message = '[%s] %s' % (self.logid, information)
         Logger.smtp(message)
-        return 0
+        return True
 
     def format(self, information):
         if isinstance(information, str):
@@ -113,28 +119,31 @@ class Job():
         return info_str
 
 
-
 def main(argv):
-    conf = {'name': 'all repos', 'switch': 1, 'broker': 'xq', 'portfolio': 'portfolio_template.yaml'}
-    job = Job(conf)
+    #conf = {'name': 'all repos', 'switch': 1, 'broker': 'xq', 'portfolio': 'portfolio_template.yaml'}
+    #job = Job(conf)
+    ##strategy = SellReposStrategy()
+    ##strategy = BaseStrategy()
+    ##strategy.execute(job)
+    ##print(job.result.__str__().encode('utf-8'))
+    #job.warn('test')
+    ##job.smtp('test')
 
-    #strategy = SellReposStrategy()
-    #strategy = BaseStrategy()
-    #strategy.execute(job)
-    #print(job.result.__str__().encode('utf-8'))
-
-    job.warn('test')
-    #job.smtp('test')
-
-    #conf = {'name':'all repos', 'switch':1, 'trader':'yh', 'portfolio': 'repos.yaml'}
+    #conf = {'name': 'all repos', 'switch': 1, 'broker': 'manual', 'portfolio': 'repos.yaml'}
     #job = Job(conf)
     #strategy = SellReposStrategy()
     #strategy.execute(job)
-    #strategy = SellStrategy()
+    #strategy = DealStrategy()
     #strategy.execute(job)
     #print((job.result.__str__().encode('utf-8')))
+
+    conf = {'name': 'all repos', 'switch': 1, 'broker': 'manual', 'portfolio': 'repos.yaml',
+            'strategies': [{'name': 'SellReposStrategy', 'switch': 1}, {'name': 'DealStrategy', 'switch': 0}]
+            }
+    job = Job(conf)
+    job.execute()
+    print((job.result.__str__().encode('utf-8')))
 
 
 if __name__ == "__main__":
     main(sys.argv)
-

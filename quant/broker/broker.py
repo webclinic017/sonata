@@ -56,6 +56,8 @@ class Broker:
 
     @staticmethod
     def _use(broker, debug=True, **kwargs):
+        if broker is None:
+            return None
         if broker.lower() in [CT.BROKER_NAME_MANUAL]:  # '手动'
             return ManualBroker(**kwargs)
         if broker.lower() in [CT.BROKER_NAME_XUEQIU]:  # '
@@ -120,10 +122,10 @@ class Broker:
 
 def main(argv):
     b = Broker(CT.BROKER_NAME_MANUAL)
-    #d = b.balance()
+    d = b.balance()
     #d = b.position()
     #d = b.buy('601288', 3.35, 200)
-    d = b.sell('601288', 3.35, 100)
+    #d = b.sell('601288', 3.35, 100)
     print(d)
 
     #b = Broker(CT.BROKER_NAME_XUEQIU)
