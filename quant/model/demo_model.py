@@ -7,12 +7,11 @@ from stable_baselines import PPO2
 
 from .gym_env.stock_trade_env import StockTradingEnv
 from .base_model import BaseModel
-import logging
-import logging.config
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
+from utils.logger import Logger
 from quotation.quotation import Quotation
 
 
@@ -42,6 +41,13 @@ class DemoModel(BaseModel):
         obs = env.reset()
         for i in range(2000):
             action, _states = m.predict(obs)
+            print(action) # TODO
+            if action[0][0] < 1:
+                if action[0][1] != 0:
+                    print('BUY')  # TODO
+            elif action[0][0] < 2:
+                if action[0][1] != 0:
+                    print('SELL')  # TODO
             obs, rewards, done, info = env.step(action)
             env.render()
         return True
@@ -57,7 +63,7 @@ class DemoModel(BaseModel):
             self.model = PPO2(MlpPolicy, env, verbose=1)
             self.model = PPO2.load(self.model_dir)
         except Exception as e:
-            logging.getLogger("warn").warning(e)
+            Logger.warn(e)
             return False
         return True
 

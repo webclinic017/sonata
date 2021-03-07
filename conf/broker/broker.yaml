@@ -1,0 +1,14 @@
+# 黑白名单功能大于开关
+buy:
+    switch: 1
+    white:
+        - ''
+    black:
+        - ''
+sell:
+    switch: 1
+    white:
+        - '204001'
+        - '131810'
+    black:
+        - ''

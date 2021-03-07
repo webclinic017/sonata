@@ -9,11 +9,10 @@ from apscheduler.jobstores.memory import MemoryJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 from pyglet.resource import file
 
-#from trader.trader import Trader # TODO
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
+from utils.logger import Logger
 import yaml
-import logging
-import logging.config
 #from strategy import *
 from strategy.job import Job
 
@@ -52,8 +51,7 @@ def add_job(scheduler, jobs):
 def main(argv):
     #设置当前工作目录
     os.chdir(CT.HOME)
-    logging.config.fileConfig(CT.CONF_DIR + "logger.conf")
-    #logging.getLogger("warn").warning('This is warning message')
+    Logger.get_instance()
 
     jobstores = {'default': MemoryJobStore()}
     executors = {

@@ -5,8 +5,8 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 import utils.const as CT
+from utils.logger import Logger
 import yaml
-import logging
 import time
 from .portfolio import Portfolio
 from .base_strategy import BaseStrategy
@@ -69,7 +69,7 @@ class Job():
             if self.status == 0:
                 break
 
-        logging.getLogger("quant").info(' '.join(self.info))
+        Logger.quant(' '.join(self.info))
         return 0
 
     def notice(self, information):
@@ -81,17 +81,17 @@ class Job():
 
     def warn(self, information):
         message = '[%s] %s' % (self.logid, information)
-        logging.getLogger("warn").warn(message)
+        Logger.warn(message)
         return 0
 
     def trade(self, information):
         message = '[%s] %s' % (self.logid, information)
-        logging.getLogger("trade").info(message)
+        Logger.trade(message)
         return 0
 
     def smtp(self, information):
         message = '[%s] %s' % (self.logid, information)
-        logging.getLogger("smtp").warning(message)
+        Logger.smtp(message)
         return 0
 
     def format(self, information):
@@ -117,10 +117,14 @@ class Job():
 def main(argv):
     conf = {'name': 'all repos', 'switch': 1, 'broker': 'xq', 'portfolio': 'portfolio_template.yaml'}
     job = Job(conf)
+
     #strategy = SellReposStrategy()
-    strategy = BaseStrategy()
-    strategy.execute(job)
-    print(job.result.__str__().encode('utf-8'))
+    #strategy = BaseStrategy()
+    #strategy.execute(job)
+    #print(job.result.__str__().encode('utf-8'))
+
+    job.warn('test')
+    #job.smtp('test')
 
     #conf = {'name':'all repos', 'switch':1, 'trader':'yh', 'portfolio': 'repos.yaml'}
     #job = Job(conf)

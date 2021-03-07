@@ -12,8 +12,8 @@ import sys
 import os
 from .base_strategy import BaseStrategy
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
+from utils.logger import Logger
 import unittest
-import logging
 from unit_test.test_quotation import TestQuotation
 from unit_test.test_trader import TestTrader
 from unit_test.HTMLTestRunner import HTMLTestRunner
@@ -38,7 +38,7 @@ class UnittestStrategy(BaseStrategy):
                 for i in range(len(failure)):
                     failure_report += str(failure[i])
                 failure_report += '--------------------------------------------------\n'
-            #logging.getLogger("smtp").warning(failure_report)
+            #Logger.smtp(failure_report)
             job.smtp(failure_report)
 
         suite = unittest.TestLoader().loadTestsFromTestCase(TestTrader)
@@ -50,7 +50,7 @@ class UnittestStrategy(BaseStrategy):
                 for i in range(len(failure)):
                     failure_report += str(failure[i])
                 failure_report += '--------------------------------------------------\n'
-            #logging.getLogger("smtp").warning(failure_report)
+            #Logger.smtp(failure_report)
             job.smtp(failure_report)
 
 

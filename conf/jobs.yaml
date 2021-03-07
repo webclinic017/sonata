@@ -1,7 +1,7 @@
 - name: 'demo'
   switch: 1
   type: ~
-  broker: ~
+  broker: 'manual'
   portfolio: 'portfolio_template.yaml'
   cron:
       second: '*/5'
