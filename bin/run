@@ -1,14 +1,15 @@
 #!/bin/sh
 
 PY='python3'
+BIN='quant/quant.py'
 
 os='Linux'
 if [ "$(uname)" == "Darwin" ];then
-    os='Mac'
+  os='Mac'
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ];then
-    os='Linux'
+  os='Linux'
 elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ];then
-    os='Windows'
+  os='Windows'
 fi
 
 #bin=`dirname $(readlink -f $0)`
@@ -16,8 +17,7 @@ bin=`dirname $0`
 root=$bin"/../"
 
 if [ $os == "Linux" ];then
-    ${PY} $root"/quant/quant.py" 2>&1 | awk '{print "["strftime("%F %H:%M:%S")"]"$0}' >>$root"/log/out.log"
+  ${PY} $root"/$BIN" 2>&1 | awk '{print "["strftime("%F %H:%M:%S")"]"$0}' >>$root"/log/out.log"
 elif [ $os == "Mac" ];then
-    ${PY} $root"/quant/quant.py" 2>&1 | awk '{system("date"); print}' >>$root"/log/out.log"
+  ${PY} $root"/$BIN" 2>&1 | awk '{system("date"); print}' >>$root"/log/out.log"
 fi
-#echo 'test' | awk '{system("date"); print}' >>$root"/log/out.log"
