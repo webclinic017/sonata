@@ -38,9 +38,9 @@ case "$INTERFACE" in
   stop)
     echo "stop"
     if [ $os == "Linux" ];then
-      ps -elx | grep "$BIN" | grep -v "grep" | awk awk '{printf "%s %s\n",$3,$10;}' > npipe
+      ps elx | grep "$BIN" | grep -v "grep" | awk '{printf "%s %s\n",$3,$10;}' > npipe
     elif [ $os == "Mac" ];then
-      ps -elx | grep "$BIN" | grep -v "grep" | awk '{printf "%s %s\n",$2,$11;}' > npipe
+      ps elx | grep "$BIN" | grep -v "grep" | awk '{printf "%s %s\n",$2,$11;}' > npipe
     fi
     while read pid_now_item
     do

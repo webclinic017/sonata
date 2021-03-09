@@ -5,3 +5,4 @@ APScheduler
 xlrd
 Flask
 akshare
+stable_baselines

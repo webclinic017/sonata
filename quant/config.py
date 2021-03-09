@@ -1,8 +1,6 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*- 
 
-from pyglet.resource import file
-
 import utils.const as CT
 import yaml
 
