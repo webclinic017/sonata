@@ -7,5 +7,5 @@ Flask
 akshare
 #opencv-python==3.4.9.31
 stable_baselines
-tensorflow==1.15.3
+tensorflow==2.5.3
 backtrader
