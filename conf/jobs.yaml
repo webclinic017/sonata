@@ -4,13 +4,21 @@
   broker: ~
   portfolio: ~
   cron:
-      second: '0'
-      minute: '*/10'
-      hour: '7-16'
+      second: '*/10'
+      minute: '*'
+      hour: '*'
       day: '*'
       month: '*'
       year: '*'
-      day_of_week: 'mon-fri'
+      day_of_week: '*'
+#  cron:
+#      second: '0'
+#      minute: '*/10'
+#      hour: '7-16'
+#      day: '*'
+#      month: '*'
+#      year: '*'
+#      day_of_week: 'mon-fri'
   strategies:
       - name: 'UnittestStrategy'
         switch: 1

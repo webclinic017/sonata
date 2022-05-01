@@ -9,15 +9,17 @@
 #***************************************************************#
 
 import sys
+import os
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.jobstores.memory import MemoryJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
-from trader.trader import Trader
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
+from broker.broker import Broker
 import utils.const as CT
 import yaml
 
-t = Trader('xq')
+t = Broker('xueqiu')
 
 def my_job(conf):
     print(conf)

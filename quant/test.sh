@@ -1,5 +1,5 @@
 
-python3 quant.py
+#python3 quant.py
 
 #python3 -m utils.logger
 
@@ -10,7 +10,7 @@ python3 quant.py
 #python3 -m quotation.sohu_quotation
 #python3 -m quotation.eastmoney_quotation
 #python3 -m quotation.tushare_quotation
-#python3 -m quotation.quotation
+python3 -m quotation.quotation
 
 #python3 -m broker.broker
 #python3 -m broker.manual_broker
@@ -26,6 +26,7 @@ python3 quant.py
 #python3 -m strategy.sell_repos_strategy
 #python3 -m strategy.rl_demo_strategy
 
+#python3 -m model.gym_env.stock_trade_env
 #python3 -m model.demo_model
 
 

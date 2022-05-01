@@ -43,7 +43,8 @@ class AkshareQuotation():
 
         if not os.path.exists(file_path):
             return None
-        d = pd.read_csv(file_path, sep='\t', index_col=0)
+        #d = pd.read_csv(file_path, sep='\t', index_col=0)
+        d = pd.read_csv(file_path, sep='\t', skiprows=0, parse_dates=True, header=0, index_col=0)
         return d
 
     #def get_daily_data(self, code, start_date='', end_date='', adjust='qfq'):
@@ -77,7 +78,8 @@ class AkshareQuotation():
         if not os.path.exists(file_path):
             return None
 
-        d = pd.read_csv(file_path, sep='\t', index_col=1)
+        #d = pd.read_csv(file_path, sep='\t', index_col=1)
+        d = pd.read_csv(file_path, sep='\t', skiprows=0, parse_dates=True, header=0, index_col=0)
 
         #过掉当天没数据的
         if d is None or len(d) < 10:
@@ -105,7 +107,8 @@ class AkshareQuotation():
 
         if not os.path.exists(file_path):
             return None
-        d = pd.read_csv(file_path, sep='\t', index_col=1)
+        #d = pd.read_csv(file_path, sep='\t', index_col=1)
+        d = pd.read_csv(file_path, sep='\t', skiprows=0, parse_dates=True, header=0, index_col=0)
         return d
 
     def stock_zh_a_minute(
@@ -175,8 +178,8 @@ class AkshareQuotation():
 
 def main(argv):
     q = AkshareQuotation()
-    #r = q.get_daily_data('000001')
-    #print(r)
+    r = q.get_daily_data('000001')
+    print(r)
     #r = q.get_daily_data('sh')
     #print(r)
 
@@ -187,8 +190,8 @@ def main(argv):
     #r = q.get_minute_data('sh')
     #print(r)
 
-    r = q.get_tick_data('000001', '2020-12-03')
-    print(r)
+    #r = q.get_tick_data('000001', '2020-12-03')
+    #print(r)
 
 if __name__ == '__main__':
     main(sys.argv)

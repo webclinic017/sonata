@@ -113,7 +113,7 @@ class Quotation:
 def main(argv):
     q = Quotation()
 
-    q.test()
+    #q.test()
 
     #r = q.get_realtime_quotes('sh')
     #for (k, v) in list(r.items()):
@@ -132,11 +132,11 @@ def main(argv):
     #print((d.symbol))
     #print((d.df))
 
-    #d = q.get_daily_data('000001')
-    #print(d)
-    #d = q.get_tick_data('000001', '2020-12-02')
-    #print(d)
-    #print((len(d)))
+    d = q.get_daily_data('000001')
+    print(d)
+    d = q.get_tick_data('000001', '2020-12-02')
+    print(d)
+    print((len(d)))
 
     ##d = q.get_one_realtime_quotes('131800')
     ##for (k,v) in list(d.items()):

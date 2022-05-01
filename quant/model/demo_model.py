@@ -26,30 +26,49 @@ class DemoModel(BaseModel):
     def train(self):
         q = Quotation()
         d = q.get_daily_data('000001')
+        #d = q.get_daily_data('000651')
         d = d.reset_index()
         # d = pd.read_csv('/Users/zhangyunsheng/Dev/sonata/data/AAPL.csv')
         d = d.sort_values('date')
 
+        #print(d.head(10).loc[0: 6, 'open'].values)
+        #return True
+        train_data = d.head(3718)
+        test_data = d.tail(1500).reset_index()
+
         # The algorithms require a vectorized environment to run
-        env = DummyVecEnv([lambda: StockTradingEnv(d)])
+        #env = DummyVecEnv([lambda: StockTradingEnv(d)])
+        #env = StockTradingEnv(d)
+        env = StockTradingEnv(train_data)
 
-        #m = PPO2(MlpPolicy, env, verbose=1)
-        #m.learn(total_timesteps=20000)
-        #m.save(self.model_dir)
+        m = PPO2(MlpPolicy, env, verbose=1)
+        m.learn(total_timesteps=200000)
+        m.save(self.model_dir)
 
+        env = StockTradingEnv(test_data)
         m = PPO2.load(self.model_dir)
+        #m = PPO2.load('/Users/zhangyunsheng/Dev/sonata/data/model/demo.2M.zip')
         obs = env.reset()
-        for i in range(2000):
+        for i in range(1500):
             action, _states = m.predict(obs)
-            print(action) # TODO
-            if action[0][0] < 1:
-                if action[0][1] != 0:
+            #print(action)  # TODO
+            act = ''
+            #if action[0][0] < 1:
+            #    if action[0][1] != 0:
+            if action[0] < 1:
+                if action[1] != 0:
+                    act = 'BUY'
                     print('BUY')  # TODO
-            elif action[0][0] < 2:
-                if action[0][1] != 0:
+            #elif action[0][0] < 2:
+            #    if action[0][1] != 0:
+            elif action[0] < 2:
+                if action[1] != 0:
+                    act = 'SELL'
                     print('SELL')  # TODO
             obs, rewards, done, info = env.step(action)
-            env.render()
+            if act != '':
+                env.render()
+        env.render()
         return True
 
     def load(self):
@@ -80,6 +99,7 @@ class DemoModel(BaseModel):
         print(action)
         print(_states)
         return
+
 
 def main(argv):
     m = DemoModel()
