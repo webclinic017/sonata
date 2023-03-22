@@ -6,6 +6,9 @@ xlrd
 Flask
 akshare
 #opencv-python==3.4.9.31
-stable_baselines
-tensorflow==1.15.3
-backtrader
+#stable_baselines
+#tensorflow==1.15.3
+#backtrader
+Ta-Lib
+pyqlib
+torch
